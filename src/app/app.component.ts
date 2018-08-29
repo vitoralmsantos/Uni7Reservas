@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Uni7Reservas';
+  logo:any = "../assets/images/background.jpg";
 }
