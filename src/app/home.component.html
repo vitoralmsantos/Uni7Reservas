@@ -1,0 +1,244 @@
+<div class="bodybackground">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-lg-12 alert alert-secondary">
+                CABEÇALHO
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-11 card" style="background-color: rgba(255, 255, 255, 0.6)">
+                        <div class="card-row">
+                            APRESENTAÇÃO<br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br> APRESENTAÇÃO
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
+
+            <!-- Login -->
+            <div class="col-lg-4 card" style="background-color: rgba(255, 255, 255, 0.8)">
+                <div class="card-body">
+                    <div class="form-row align-items-center" style="margin-bottom: 8px">
+                        <label class="sr-only" for="inlineFormInputGroupEmail">E-mail</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-user-md fa-fw"></i></div>
+                            </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroupEmail" placeholder="E-mail">
+                        </div>
+                    </div>
+
+                    <div class="form-row align-items-center" style="margin-bottom: 8px">
+                        <label class="sr-only" for="inlineFormInputGroupSenha">Senha</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-key fa-fw"></i></div>
+                            </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroupSenha" placeholder="Senha">
+                        </div>
+                    </div>
+
+                    <div class="form-row align-items-center" style="margin-bottom: 8px">
+                        <button id="btAutenticar" OnClick="btAutenticar_Click" class="btn btn-success btn-block">Entrar</button>
+                    </div>
+
+                    <div style="width: 100%"><a class="btn btn-link" data-toggle="modal" href="#modalEsqueci" style="width: auto">>>Esqueci
+                            a senha</a></div>
+                    <hr />
+                    <a class="btn btn-light" data-toggle="modal" href="#modalCadastro" style="width: 100%">Criar uma conta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">RODAPÉ</span>
+        </div>
+    </footer>
+</div>
+<!-- Modal Erro -->
+<div class="modal fade" id="modalErro" role="dialog">
+    <div class="modal-dialog">
+        <!-- Conteúdo -->
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: rgba(192, 64, 64, 0.75)">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Erro</h4>
+            </div>
+            <div class="modal-body">
+                <span id="lbErro" class="label-error"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Mensagem -->
+<div class="modal fade" id="modalMensagem" role="dialog">
+    <div class="modal-dialog">
+        <!-- Conteúdo -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <span ID="lbTituloMensagem" runat="server" ForeColor="White"></span></h4>
+            </div>
+            <div class="modal-body">
+                <span id="lbMessagem" class="label-msg"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Cadastrar -->
+<div class="modal fade" id="modalCadastro" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fas fa-user-md"></i>&nbsp;Cadastre-se</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 8px">
+                    <div class="col-lg-8">
+                        <strong style="margin-left: 2px">
+                            <span id="Label8">e-mail</span></strong><br />
+                        <span id="tbEmailCadastro" class="form-control"></span>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 8px">
+                    <div class="col-lg-3">
+                        <strong style="margin-left: 2px">
+                            <span id="Label1">setor</span></strong><br />
+                        <select class="form-control">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-9">
+                        <strong style="margin-left: 2px">
+                            <span id="Label4" runat="server" Text="nome"></span></strong><br />
+                        <input type="text" id="tbNome" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <strong style="margin-left: 2px">
+                            <span type="text" id="Label2">senha</span></strong><br />
+                        <input type="text" id="tbSenhaCadastro" class="form-control" TextMode="Password" />
+                    </div>
+                    <div class="col-lg-6">
+                        <strong style="margin-left: 2px">
+                            <span type="text" id="Label3">confirme senha</span></strong><br />
+                        <input type="password" id="tbSenhaConfirma" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr />
+                        <button id="btCadastrar" Text="Cadastrar" OnClick="btCadastrar_Click" class="btn btn-success pull-right"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Esqueci senha -->
+<div class="modal fade" id="modalEsqueci" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fas fa-key"></i>&nbsp;Esqueci a Senha</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input id="tbEmailEsqueci" class="form-control" placeholder="seu e-mail" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr />
+                        <input id="Button2" Text="Enviar" OnClick="btEsqueci_Click" class="btn btn-success pull-right" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Contato -->
+<div class="modal fade" id="modalContato" role="dialog">
+    <div class="modal-dialog">
+        <!-- Conteúdo -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">
+                    <span ID="lbTituloContato" runat="server" ForeColor="White">Contato</span></h4>
+            </div>
+            <div class="modal-body">
+                <div id="contato" class="card" style="background-color: rgba(255, 255, 255, 0.8)">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2 class="section-heading text-uppercase">Entre em Contato</h2>
+                                <br />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group-lg" style="margin-bottom: 10px">
+                                    <input type="text" id="tbNomeContato" class="form-control" placeholder="seu nome" style="width:100%" />
+                                </div>
+                                <div class="form-group-lg" style="margin-bottom: 10px">
+                                    <input type="text" id="tbEmailContato" class="form-control" placeholder="seu e-mail" style="width:100%" />
+                                </div>
+                                <div class="form-group-lg">
+                                    <input type="text" id="tbTelefoneContato" class="form-control" placeholder="seu telefone" style="width:100%" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group-lg">
+                                    <textarea id="tbMsgContato" rows="5" class="form-control" placeholder="sua mensagem" style="width:100%"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5">
+                            </div>
+                            <div class="col-lg-2">
+                                <br />
+                                <div class="form-group-lg" style="margin-bottom: 8px">
+                                    <button id="btContato" OnClick="btContato_Click" class="btn btn-success btn-block">Enviar</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
