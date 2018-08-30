@@ -8,10 +8,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Reservas <span class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink="/principal/reserva">Reservas <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Perfil</a>
+        <a class="nav-link" routerLink="/principal/perfil">Perfil</a>
       </li>
 
       <li class="nav-item dropdown">
@@ -31,9 +31,9 @@
           Administração
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Usuário</a>
-          <a class="dropdown-item" href="#">Equipamento</a>
-          <a class="dropdown-item" href="#">Local</a>
+          <a class="dropdown-item" routerLink="/principal/admin/usuario">Usuário</a>
+          <a class="dropdown-item" routerLink="/principal/admin/equipamento">Equipamento</a>
+          <a class="dropdown-item" routerLink="/principal/admin/local">Local</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>
@@ -44,3 +44,5 @@
     </ul>
   </div>
 </nav>
+
+<router-outlet></router-outlet>

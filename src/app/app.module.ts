@@ -10,14 +10,25 @@ import { PerfilComponent } from './perfil.component';
 import { UsuarioComponent } from './admin/usuario.component';
 import { LocalComponent } from './admin/local.component';
 import { EquipamentoComponent } from './admin/equipamento.component';
+import { AdminComponent } from './admin/admin.component';
+import { RelatorioReservasComponent } from './relatorio-reservas.component';
+import { RelatorioAvaliacaoComponent } from './relatorio-avaliacao.component';
 
 const appRoutes: Routes = [  
   { path: '', component: HomeComponent},
   { path: 'principal', component: PrincipalComponent,
       children:[
-      {path : '', component: ReservaComponent},
-      {path : 'reserva', component: ReservaComponent},
-      {path : 'perfil', component: PerfilComponent}] 
+        {path : '', component: ReservaComponent},
+        {path : 'reserva', component: ReservaComponent},
+        {path : 'perfil', component: PerfilComponent},
+        {path : 'admin', component: AdminComponent,
+          children:[
+            {path : 'usuario', component: UsuarioComponent},
+            {path : 'local', component: LocalComponent},
+            {path : 'equipamento', component: EquipamentoComponent}
+          ]
+        }
+      ] 
   } 
 ];
   
@@ -30,7 +41,10 @@ const appRoutes: Routes = [
     PerfilComponent,
     UsuarioComponent,
     LocalComponent,
-    EquipamentoComponent
+    EquipamentoComponent,
+    AdminComponent,
+    RelatorioReservasComponent,
+    RelatorioAvaliacaoComponent
   ],
   imports: [
     RouterModule.forRoot(
