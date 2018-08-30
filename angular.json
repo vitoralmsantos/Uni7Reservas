@@ -7,7 +7,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "uni7res",
+      "prefix": "app",
       "schematics": {},
       "architect": {
         "build": {
