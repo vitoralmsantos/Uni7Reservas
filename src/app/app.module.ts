@@ -34,7 +34,7 @@ const appRoutes: Routes = [
             {path : 'usuario', component: UsuarioComponent},
             {path : 'local', component: LocalComponent},
             {path : 'equipamento', component: EquipamentoComponent},
-            {path: 'avalicao', component: AvaliacaoComponent}
+            {path: 'avaliacao', component: AvaliacaoComponent}
           ]
         }
       ] 
