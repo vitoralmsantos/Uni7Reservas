@@ -1,3 +1,106 @@
-<p>
-  local igor
-</p>
+<div class="container">
+    <div class="row cabecalho">
+      <div class="col-lg-6">
+        <span>LOCAL</span>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-lg-4">
+  
+        <div class="card">
+          <div class="card-body">
+            <div class="form-row align-items-center" style="margin-bottom: 8px">
+              <label class="label-msg" for="inputNome">Nome</label>
+              <input type="text" class="form-control" id="inputNome">
+            </div>
+  
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                Reservavel
+              </label>
+            </div>
+  
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                Disponivel
+              </label>
+            </div>
+  
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-row align-items-center" style="margin-bottom: 8px">
+                  <div class="form-group">
+                    <label class="label-msg" for="selectTipo">Tipo</label>
+                    <select class="form-control" id="selectTipo">
+                      <option>Laboratório</option>
+                      <option>Sala</option>
+                      <option>Auditório</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="w-100">
+                <hr />
+                <button id="btAutenticar" class="btn btn-success float-right">Cadastrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+  
+        <div class="card">
+          <div class="card-body">
+  
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Reservavel</th>
+                  <th scope="col">Disponivel</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Sala 31</td>
+                  <td>Sim</td>
+                  <td>Não</td>
+                  <td>Laboratório</td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-primary btn-sm">X</button>
+                      <button type="button" class="btn btn-danger btn-sm">X</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Sala 41</td>
+                  <td>Não</td>
+                  <td>Sim</td>
+                  <td>Sala</td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-primary btn-sm">X</button>
+                      <button type="button" class="btn btn-danger btn-sm">X</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
