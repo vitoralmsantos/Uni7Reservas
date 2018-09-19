@@ -1,0 +1,7 @@
+- Reserva realizada por Admin para YYY; Ao fazer reserva de lote,
+atribuir direto ao usuário e enviar email.
+- Mostrar detalhes menos importantes na relação de reservas em um
+botão mouseover;
+- Se todos os labs estiverem reservados, um usuário pode disparar uma
+mensagem para os profs solicitando a liberação.
+- Mostrar a relação de softwares por labs; mostrar os labs que possuem determinado software.
