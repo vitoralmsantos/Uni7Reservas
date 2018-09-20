@@ -6,7 +6,7 @@ import { UsuariosResponse } from './response/usuarios.response';
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
   private headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-  private usuarioUrl = 'http://10.54.1.35:51859/api/usuario';
+  private usuarioUrl = 'http://localhost:51859/api/usuario';
 
   constructor(private http: HttpClient) { }
 
