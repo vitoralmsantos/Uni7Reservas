@@ -18,6 +18,13 @@ export class UsuarioComponent implements OnInit {
 
   getUsuarios(): void {
     this.usuarioService.getUsuarios()
-      .subscribe(response => {alert(response); this.usuarios = response.Usuarios});
+      .subscribe(response => {
+        if (response.Status == 0){
+          this.usuarios = response.Usuarios
+        } 
+        else{
+          
+        }
+      });
   }
 }
