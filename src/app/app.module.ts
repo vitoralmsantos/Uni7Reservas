@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http'; 
 
 import { RootComponent } from './view/root.component';
 import { HomeComponent } from './view/home.component';
@@ -65,7 +66,8 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true }
     ),  
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [RootComponent]

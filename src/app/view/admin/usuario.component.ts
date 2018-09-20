@@ -13,10 +13,11 @@ export class UsuarioComponent implements OnInit {
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
+    this.getUsuarios();
   }
 
   getUsuarios(): void {
     this.usuarioService.getUsuarios()
-      .subscribe(response => this.usuarios = response);;
+      .subscribe(response => {alert(response); this.usuarios = response.Usuarios});
   }
 }

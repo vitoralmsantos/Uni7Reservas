@@ -70,23 +70,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>José Medeiros Albuquerque</td>
-                <td>jose.medeiros@uni7.edu.br</td>
-                <td>Professor</td>
-                <td>
-                  <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-primary btn-sm">X</button>
-                    <button type="button" class="btn btn-danger btn-sm">X</button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Karla Maria Silva</td>
-                <td>karla.silva@uni7.edu.br</td>
-                <td>Coordenador</td>
+              <tr *ngFor="let usuario of usuarios">
+                <th scope="row">{{usuario.Id}}</th>
+                <td>{{usuario.Nome}}</td>
+                <td>{{usuario.Email}}</td>
+                <td>{{usuario.Tipo}}</td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic example">
                     <button type="button" class="btn btn-primary btn-sm">X</button>

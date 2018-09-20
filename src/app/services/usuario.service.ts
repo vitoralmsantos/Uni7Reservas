@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Usuario } from '../model/usuario.model';
+import { UsuariosResponse } from './response/usuarios.response';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UsuarioService {
-
-  private usuarioUrl = 'api/heroes';
+  private headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  private usuarioUrl = 'http://10.54.1.35:51859/api/usuario';
 
   constructor(private http: HttpClient) { }
 
-  getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.usuarioUrl)
+  getUsuarios(): Observable<UsuariosResponse> {
+    return this.http.get<UsuariosResponse>(this.usuarioUrl)
   }
 
 }
