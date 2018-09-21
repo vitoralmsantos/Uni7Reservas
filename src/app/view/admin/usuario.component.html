@@ -15,7 +15,7 @@
             <div class="col-lg-12">
               <div class="form-row align-items-center" style="margin-bottom: 8px">
                 <label class="label-msg" for="inputNome">Nome</label>
-                <input type="text" class="form-control" id="inputNome">
+                <input [(ngModel)]="usuario.Nome" type="text" class="form-control" id="inputNome">
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@
             <div class="col-lg-12">
               <div class="form-row align-items-center" style="margin-bottom: 8px">
                 <label class="label-msg" for="inputEmail">E-mail</label>
-                <input type="text" class="form-control" id="inputEmail">
+                <input [(ngModel)]="usuario.Email" type="text" class="form-control" id="inputEmail">
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@
           <div class="form-row">
             <div class="w-100">
               <hr />
-              <button id="btAutenticar" class="btn btn-success float-right">Cadastrar</button>
+              <button id="btCadastrar" class="btn btn-success float-right" (click)="registrar()">Cadastrar</button>
             </div>
           </div>
         </div>
@@ -70,15 +70,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let usuario of usuarios">
+              <tr *ngFor="let usuario of usuarios; let i = index">
                 <th scope="row">{{usuario.Id}}</th>
                 <td>{{usuario.Nome}}</td>
                 <td>{{usuario.Email}}</td>
                 <td>{{usuario.Tipo}}</td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-primary btn-sm">X</button>
-                    <button type="button" class="btn btn-danger btn-sm">X</button>
+                    <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
+                    <button type="button" (click)="remover(usuario.Id)" class="btn btn-danger btn-sm">X</button>
                   </div>
                 </td>
               </tr>
