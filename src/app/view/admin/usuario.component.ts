@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../model/usuario.model';
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'uni7res-usuario',
@@ -10,23 +12,24 @@ import { Usuario } from '../../model/usuario.model';
 export class UsuarioComponent implements OnInit {
   usuarios: Usuario[];
   usuario: Usuario;
-  selectedIndex : number;
+  erroDetalhe: string;
+  selectedIndex: number;
 
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     this.getUsuarios();
-    this.limpar()
+    this.limpar();
   }
 
   getUsuarios(): void {
     this.usuarioService.getUsuarios()
       .subscribe(response => {
-        if (response.Status == 0){
+        if (response.Status == 0) {
           this.usuarios = response.Usuarios
-        } 
-        else{
-          
+        }
+        else {
+          this.mostraErro(response.Detalhes)
         }
       });
   }
@@ -34,6 +37,19 @@ export class UsuarioComponent implements OnInit {
   getUsuario(id): void {
     this.usuarioService.getUsuario(id)
       .subscribe(response => { this.usuario = response.Usuario });
+  }
+
+  inserir(): void {
+    this.usuarioService.addUsuario(this.usuario)
+      .subscribe(response => {
+        if (response.Status == 0) {
+          this.limpar()
+          this.getUsuarios();
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+      });
   }
 
   atualizar(): void {
@@ -46,13 +62,32 @@ export class UsuarioComponent implements OnInit {
           this.usuarios[this.selectedIndex].Tipo = response.Usuario.Tipo;
         }
         else {
-          alert(response.Detalhes)
+          this.mostraErro(response.Detalhes)
+        }
+      });
+  }
+
+  remover(id): void {
+    this.usuarioService.deleteUsuario(id)
+      .subscribe(response => {
+        if (response.Status == 0) {
+          this.limpar()
+          this.getUsuarios();
+        }
+        else {
+          this.mostraErro(response.Detalhes)
         }
       });
   }
 
   limpar(): void {
     this.usuario = new Usuario()
+    this.usuario.Tipo = -1
+  }
+
+  mostraErro(detalhe): void {
+    this.erroDetalhe = detalhe
+    $('#modalErro').modal('show')
   }
 
   carregar(index): void {
@@ -65,7 +100,7 @@ export class UsuarioComponent implements OnInit {
 
   registrar(): void {
     if (this.usuario.Id === undefined) {
-
+      this.inserir()
     }
     else {
       this.atualizar()

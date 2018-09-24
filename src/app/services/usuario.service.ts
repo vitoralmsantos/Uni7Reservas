@@ -19,32 +19,42 @@ export class UsuarioService {
 
   getUsuarios(): Observable<UsuariosResponse> {
     return this.http.get<UsuariosResponse>(this.usuarioUrl)
-      .pipe(
-        catchError(this.handleError<UsuariosResponse>('getUsuarios'))
-      );
+      .pipe(catchError(this.handleError<UsuariosResponse>('getUsuarios')));
   }
 
   getUsuario(id: number): Observable<UsuarioResponse> {
     const url = `${this.usuarioUrl}/consulta/${id}`;
-    return this.http.get<UsuarioResponse>(url).pipe(
-      catchError(this.handleError<UsuarioResponse>(`getUsuario id=${id}`))
-    );
+    return this.http.get<UsuarioResponse>(url)
+      .pipe(catchError(this.handleError<UsuarioResponse>(`getUsuario id=${id}`)));
   }
 
   updateUsuario(usuario: Usuario): Observable<any> {
     let u = new URLSearchParams();
-	  u.set('Id', usuario.Id.toString());
+    u.set('Id', usuario.Id.toString());
     u.set('Nome', usuario.Nome.toString());
     u.set('Email', usuario.Email.toString());
     u.set('Tipo', usuario.Tipo.toString());
-    
+
     let url = `${this.usuarioUrl}/${usuario.Id}`;
-    return this.http.put<UsuariosResponse>(url, u.toString(), this.httpOptions).pipe(
-      catchError(this.handleError<UsuarioResponse>('updateUsuario'))
-    );
+    return this.http.put<UsuarioResponse>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<UsuarioResponse>('updateUsuario')));
   }
 
+  addUsuario(usuario: Usuario): Observable<any> {
+    let u = new URLSearchParams();
+    u.set('Nome', usuario.Nome.toString());
+    u.set('Email', usuario.Email.toString());
+    u.set('Tipo', usuario.Tipo.toString());
 
+    return this.http.post<UsuarioResponse>(this.usuarioUrl, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<UsuarioResponse>('addUsuario')));
+  }
+
+  deleteUsuario(id: Number): Observable<any> {
+    let url = `${this.usuarioUrl}/${id}`;
+    return this.http.delete<UsuarioResponse>(url, this.httpOptions)
+      .pipe(catchError(this.handleError<UsuarioResponse>('deleteUsuario')));
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
