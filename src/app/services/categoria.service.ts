@@ -7,13 +7,13 @@ import { CategoriaResponse } from './response/categoria.response';
 import { Categoria } from '../model/categoria.model';
 
 @Injectable({ providedIn: 'root' })
-export class LocalService { 
+export class CategoriaService { 
 
     readonly httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
       };
 
-    private categoriaUrl = 'http://equipamentohost:51859/api/categoria';
+    private categoriaUrl = 'http://localhost:51859/api/categoria';
 
     constructor(private http: HttpClient){}
 

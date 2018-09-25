@@ -15,7 +15,7 @@
                   <div class="col-lg-12">
                     <div class="form-row align-items-center" style="margin-bottom: 8px">
                       <label class="label-msg" for="inputNome">Nome</label>
-                      <input type="text" class="form-control" id="inputNome">
+                      <input [(ngModel)]="categoria.Nome" type="text" class="form-control" id="inputNome">
                     </div>
                   </div>
                 </div>
@@ -23,7 +23,8 @@
                 <div class="form-row">
                         <div class="w-100">
                           <hr />
-                          <button id="btAutenticar" class="btn btn-success float-right">Cadastrar</button>
+                          <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
+                          <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
                         </div>
                       </div>
                     </div>
@@ -44,23 +45,13 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
-                                  <th scope="row">1</th>
-                                  <td></td>
+                                <tr *ngFor="let categoria of categorias; let i = index">
+                                  <th scope="row">{{categoria.id}}</th>
+                                  <td>{{categoria.Nome}}</td>
                                   <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                                      <button type="button" class="btn btn-danger btn-sm">X</button>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">2</th>
-                                  <td></td>
-                                  <td>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                                      <button type="button" class="btn btn-danger btn-sm">X</button>
+                                      <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
+                                      <button type="button" (click)="remover(categoria.Id)" class="btn btn-danger btn-sm">X</button>
                                     </div>
                                   </td>
                                 </tr>

@@ -7,7 +7,7 @@ import { EquipamentoResponse } from './response/equipamento.response';
 import { Equipamento } from '../model/equipamento.model';
 
 @Injectable({ providedIn: 'root' })
-export class LocalService { 
+export class EquipamentoService { 
 
     readonly httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
