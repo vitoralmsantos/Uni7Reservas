@@ -1,5 +1,6 @@
 export class Local {
     Id: number;
+    Nome: string;
     Reservavel: boolean;
     Disponivel: boolean;
     Tipo: TIPOLOCAL;
