@@ -19,13 +19,13 @@ export class LocalService {
 
     getEquipamentos(): Observable<EquipamentosResponse> {
         return this.http.get<EquipamentosResponse>(this.equipamentoUrl)
-          .pipe(catchError(this.handleError<EquipamentosResponse>('getLocais')));
+          .pipe(catchError(this.handleError<EquipamentosResponse>('getEquipamentos')));
       }
     
     getEquipamento(id: number): Observable<EquipamentoResponse> {
         const url = `${this.equipamentoUrl}/consulta/${id}`;
         return this.http.get<EquipamentoResponse>(url)
-          .pipe(catchError(this.handleError<EquipamentoResponse>(`getLocal id=${id}`)));
+          .pipe(catchError(this.handleError<EquipamentoResponse>(`getEquipamento id=${id}`)));
       }
 
     updateEquipamento(equipamento: Equipamento): Observable<any> {
@@ -38,7 +38,7 @@ export class LocalService {
         return this.http.put<EquipamentoResponse>(url, u.toString(), this.httpOptions)
           .pipe(catchError(this.handleError<EquipamentoResponse>('updateEquipamento')));
       }  
-      addEquipamento(equipamento: Equipamento): Observable<any> {
+    addEquipamento(equipamento: Equipamento): Observable<any> {
         let u = new URLSearchParams();
         u.set('Modelo', equipamento.Modelo.toString());
         u.set('Disponivel', equipamento.Disponivel.toString());
@@ -47,13 +47,13 @@ export class LocalService {
           .pipe(catchError(this.handleError<EquipamentoResponse>('addEquipamento')));
       }
     
-      deleteEquipamento(id: Number): Observable<any> {
+    deleteEquipamento(id: Number): Observable<any> {
         let url = `${this.equipamentoUrl}/${id}`;
         return this.http.delete<EquipamentoResponse>(url, this.httpOptions)
           .pipe(catchError(this.handleError<EquipamentoResponse>('deleteEquipamento')));
       }
     
-      private handleError<T>(operation = 'operation', result?: T) {
+    private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
     
           // TODO: send the error to remote logging infrastructure

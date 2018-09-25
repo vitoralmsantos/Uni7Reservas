@@ -40,7 +40,7 @@ export class LocalService {
         return this.http.put<LocalResponse>(url, u.toString(), this.httpOptions)
           .pipe(catchError(this.handleError<LocalResponse>('updateLocal')));
       }  
-      addLocal(local: Local): Observable<any> {
+    addLocal(local: Local): Observable<any> {
         let u = new URLSearchParams();
         u.set('Nome', local.Nome.toString());
         u.set('Reservavel', local.Reservavel.toString());
@@ -51,13 +51,13 @@ export class LocalService {
           .pipe(catchError(this.handleError<LocalResponse>('addLocal')));
       }
     
-      deleteLocal(id: Number): Observable<any> {
+    deleteLocal(id: Number): Observable<any> {
         let url = `${this.localUrl}/${id}`;
         return this.http.delete<LocalResponse>(url, this.httpOptions)
           .pipe(catchError(this.handleError<LocalResponse>('deleteLocal')));
       }
     
-      private handleError<T>(operation = 'operation', result?: T) {
+    private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
     
           // TODO: send the error to remote logging infrastructure
