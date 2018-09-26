@@ -16,14 +16,14 @@
             </div>
   
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-              <label [(ngModel)]="local.Reservavel" class="form-check-label" for="defaultCheck1">
+              <input [checked]="local.Reservavel" (change)="local.Reservavel = !local.Reservavel" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
                 Reservavel
               </label>
             </div>
   
             <div class="form-check">
-              <input [(ngModel)]="local.Disponivel" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <input [checked]="local.Disponivel" (change)="local.Disponivel = !local.Disponivel" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
               <label class="form-check-label" for="defaultCheck1">
                 Disponivel
               </label>

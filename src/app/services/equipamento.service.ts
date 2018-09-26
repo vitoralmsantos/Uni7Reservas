@@ -13,7 +13,7 @@ export class EquipamentoService {
         headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
       };
 
-    private equipamentoUrl = 'http://equipamentohost:51859/api/equipamento';
+    private equipamentoUrl = 'http://localhost:51859/api/equipamento';
 
     constructor(private http: HttpClient){}
 
