@@ -16,7 +16,7 @@
             </div>
 
             <div class="form-check">
-              <input class="form-check-input" [checked]="equipamento.Disponivel" (change)="equipamento.Disponivel = !equipamento.Disponivel" type="checkbox" value="" id="defaultCheck1">
+              <input class="form-check-input" [(ngModel)]="equipamento.Disponivel" type="checkbox" value="" id="defaultCheck1">
               <label class="form-check-label" for="defaultCheck1">
                 Disponivel
               </label>
