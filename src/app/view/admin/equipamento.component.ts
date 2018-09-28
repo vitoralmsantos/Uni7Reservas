@@ -77,7 +77,7 @@ export class EquipamentoComponent implements OnInit {
         if (response.Status == 0) {
           this.equipamentos[this.selectedIndex].Modelo = response.Equipamento.Modelo;
           this.equipamentos[this.selectedIndex].Disponivel = response.Equipamento.Disponivel;
-
+          this.equipamentos[this.selectedIndex].IdCategoria = response.Equipamento.IdCategoria;
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -102,7 +102,7 @@ export class EquipamentoComponent implements OnInit {
     this.equipamento.Id = this.equipamentos[index].Id
     this.equipamento.Modelo = this.equipamentos[index].Modelo
     this.equipamento.Disponivel = this.equipamentos[index].Disponivel
-
+    this.equipamento.IdCategoria = this.equipamentos[index].IdCategoria
   }
 
 

@@ -3,4 +3,5 @@ export class Equipamento {
     Serie: string;
     Modelo: string;
     Disponivel: boolean;
+    IdCategoria : number;
 }

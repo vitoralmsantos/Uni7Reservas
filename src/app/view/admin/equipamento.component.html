@@ -27,8 +27,8 @@
                 <div class="form-row align-items-center" style="margin-bottom: 8px">
                   <div class="form-group">
                     <label class="label-msg" for="selectTipo">Categoria</label>
-                    <select  class="form-control" id="selectTipo">
-                      <option *ngFor="let categoria of categorias; let i = index">{{categoria.Nome}}</option>
+                    <select [(ngModel)]='equipamento.IdCategoria' class="form-control" id="selectTipo">
+                      <option *ngFor="let categoria of categorias" [value]="categoria.Id">{{categoria.Nome}}</option>
                     </select>
                   </div>
                 </div>
@@ -61,27 +61,27 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Positivo</td>
-                  <td>Sim</td>
+                <tr *ngFor="let equi of equipamentos; let i = index">
+                  <th scope="row">{{equi.Id}}</th>
+                  <td>{{equi.Modelo}}</td>
+                  <td>{{equi.Disponivel}}</td>
                   <td></td>
                   <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                      <button type="button" class="btn btn-danger btn-sm">X</button>
+                      <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
+                      <button type="button" (click)="remover(equi.Id)" class="btn btn-danger btn-sm">X</button>
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Intel</td>
-                  <td>Não</td>
+                <tr >
+                  <th scope="row"></th>
+                  <td></td>
+                  <td></td>
                   <td></td>
                   <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                      <button type="button" class="btn btn-danger btn-sm">X</button>
+                      <button type="button"  class="btn btn-primary btn-sm">X</button>
+                      <button type="button"  class="btn btn-danger btn-sm">X</button>
                     </div>
                   </td>
                 </tr>
