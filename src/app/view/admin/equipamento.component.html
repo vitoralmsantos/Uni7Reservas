@@ -31,9 +31,6 @@
               Disponivel
             </label>
           </div>
-
-
-
           <div class="form-row">
             <div class="w-100">
               <hr />
@@ -52,16 +49,19 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Modelo</th>
-                <th scope="col">Disponivel</th>
                 <th scope="col">Categoria</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Serie</th>
+                <th scope="col">Disponivel</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let equi of equipamentos; let i = index">
                 <th scope="row">{{equi.Id}}</th>
+                <td>{{equi.IdCategoria}}</td>
                 <td>{{equi.Modelo}}</td>
+                <td>{{equi.Serie}}</td>
                 <td>{{equi.Disponivel}}</td>
                 <td></td>
                 <td>

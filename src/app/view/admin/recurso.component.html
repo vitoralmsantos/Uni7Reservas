@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row cabecalho">
       <div class="col-lg-6">
-        <span>SOFTWARE</span>
+        <span>RECURSO</span>
       </div>
     </div>
   
@@ -12,14 +12,28 @@
           <div class="card-body">
             <div class="form-row align-items-center" style="margin-bottom: 8px">
               <label class="label-msg" for="inputNome">Nome</label>
-              <input type="text" class="form-control" id="inputNome">
+              <input [(ngModel)]="recurso.Nome" type="text" class="form-control" id="inputNome">
             </div>
   
             <div class="form-row align-items-center" style="margin-bottom: 8px">
-                <label class="label-msg" for="inputNome">Versão</label>
-                <input type="text" class="form-control" id="inputNome">
+                <label class="label-msg" for="inputNome">Detalhes</label>
+                <input [(ngModel)]="recurso.Detalhes" type="text" class="form-control" id="inputNome">
               </div>
   
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-row align-items-center" style="margin-bottom: 8px">
+                    <div class="form-group">
+                      <label class="label-msg" for="selectTipo">Tipo</label>
+                      <select [(ngModel)]="recurso.Tipo" class="form-control" id="selectTipo">
+                        <option value='0'>Hardware</option>
+                        <option value='1'>Software</option>
+                        <option value='2'>Outro</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
             <div class="form-row">
               <div class="w-100">
                 <hr />
