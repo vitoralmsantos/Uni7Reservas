@@ -1,3 +1,132 @@
-<p>
-  reserva works!
-</p>
+<br>
+<div class="container">
+  <div class="row cabecalho">
+    <div class="col-lg-6">
+      <span>RESERVAS</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+
+      <div class="card">
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <label class="label-msg" for="inputData">Data</label>
+              <input [(ngModel)]="reserva.Data" type="text" class="form-control" id="inputData" placeholder="Informe a Data">
+            </div>
+            <div class="col-lg-6">
+              <label class="label-msg" for="inputHorario">Horário</label>
+              <select [(ngModel)]='horario' class="form-control" id="selectHorario">
+                <option value='1'>--Horário--</option>
+                <option value='1'>Manhã AB</option>
+                <option value='2'>Manhã CD</option>
+                <option value='3'>Manhã EF</option>
+                <option value='4'>Tarde AB</option>
+                <option value='5'>Tarde CD</option>
+                <option value='6'>Tarde EF</option>
+                <option value='7'>Noite AB</option>
+                <option value='8'>Noite CD</option>
+              </select>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-lg-12">
+              <label class="label-msg" for="selectLocal">Local</label>
+              <select [(ngModel)]='reserva.IdLocal' class="form-control" id="selectLocal">
+                <option *ngFor="let local of locais" [value]="local.Id">{{local.Nome}}</option>
+              </select>
+              <div class="float-right" style="font-size: 14px">
+                <input type="checkbox" [(ngModel)]='somenteLabs'> Somente laboratórios
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <label class="label-msg" for="selectEquip1">Equipamento 1</label>
+              <select [(ngModel)]='reserva.IdEquipamento1' class="form-control" id="selectEquip1">
+                <option *ngFor="let equip of equipamentos1" [value]="equip.Id">{{equip.Nome}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <label class="label-msg" for="selectEquip2">Equipamento 2</label>
+              <select [(ngModel)]='reserva.IdEquipamento2' class="form-control" id="selectEquip2">
+                <option *ngFor="let equip of equipamentos2" [value]="equip.Id">{{equip.Nome}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="w-100">
+              <hr />
+              <div class="float-right">
+                <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
+                <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Reservar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+
+      <div class="card">
+        <div class="card-body">
+
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Categoria</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let usuario of usuarios; let i = index">
+                <th scope="row">{{usuario.Id}}</th>
+                <td>{{usuario.Nome}}</td>
+                <td>{{usuario.Email}}</td>
+                <td>{{usuario.Tipo}}</td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
+                    <button type="button" (click)="remover(usuario.Id)" class="btn btn-danger btn-sm">X</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="modalErro">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Erro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>{{erroDetalhe}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
