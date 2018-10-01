@@ -3,6 +3,9 @@ import { Reserva } from '../model/reserva.model';
 import { ReservaRegistro } from '../model/reservaregistro.model';
 import { Local } from '../model/local.model';
 import { Equipamento } from '../model/software.model';
+import { LocalService } from '../services/local.service';
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'uni7res-reserva',
@@ -18,9 +21,12 @@ export class ReservaComponent implements OnInit {
   equipamentos1: Equipamento[];
   equipamentos2: Equipamento[];
 
-  constructor() { }
+  erroDetalhe: string;
+
+  constructor(private localService: LocalService) { }
 
   ngOnInit() {
+    this.reserva = new ReservaRegistro()
   }
 
   iniciarReserva(): void {
@@ -58,6 +64,21 @@ export class ReservaComponent implements OnInit {
         this.reserva.Horario = 'CD';
         break;
     }
+
+    this.localService.getDisponibilidade(this.reserva.Data, this.reserva.Horario, this.reserva.Turno)
+    .subscribe(response => {
+      if (response.Status == 0) {
+        this.locais = response.Locais
+      }
+      else {
+        this.mostraErro(response.Detalhes)
+      }
+    });
+  }
+
+  mostraErro(detalhe): void {
+    this.erroDetalhe = detalhe
+    $('#modalErro').modal('show')
   }
 
 }
