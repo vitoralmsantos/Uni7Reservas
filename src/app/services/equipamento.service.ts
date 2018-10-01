@@ -33,6 +33,7 @@ export class EquipamentoService {
         u.set('Id', equipamento.Id.toString());
         u.set('Modelo', equipamento.Modelo.toString());
         u.set('Disponivel', equipamento.Disponivel.toString());
+        u.set('IdCategoria', equipamento.IdCategoria.toString());
     
         let url = `${this.equipamentoUrl}/${equipamento.Id}`;
         return this.http.put<EquipamentoResponse>(url, u.toString(), this.httpOptions)
@@ -42,7 +43,9 @@ export class EquipamentoService {
         let u = new URLSearchParams();
         u.set('Modelo', equipamento.Modelo.toString());
         u.set('Disponivel', equipamento.Disponivel.toString());
-    
+        u.set('IdCategoria', equipamento.IdCategoria.toString());
+        u.set('Serie', equipamento.Serie.toString());
+
         return this.http.post<EquipamentoResponse>(this.equipamentoUrl, u.toString(), this.httpOptions)
           .pipe(catchError(this.handleError<EquipamentoResponse>('addEquipamento')));
       }

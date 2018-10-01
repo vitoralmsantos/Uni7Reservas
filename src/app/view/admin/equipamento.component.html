@@ -1,95 +1,80 @@
 <div class="container">
-    <div class="row cabecalho">
-      <div class="col-lg-6">
-        <span>EQUIPAMENTO</span>
-      </div>
+  <div class="row cabecalho">
+    <div class="col-lg-6">
+      <span>EQUIPAMENTO</span>
     </div>
-  
-    <div class="row">
-      <div class="col-lg-4">
-  
-        <div class="card">
-          <div class="card-body">
-            <div class="form-row align-items-center" style="margin-bottom: 8px">
-              <label class="label-msg" for="inputNome">Modelo</label>
-              <input [(ngModel)]="equipamento.Modelo" type="text" class="form-control" id="inputNome">
-            </div>
+  </div>
 
-            <div class="form-check">
-              <input class="form-check-input" [(ngModel)]="equipamento.Disponivel" type="checkbox" value="" id="defaultCheck1">
-              <label class="form-check-label" for="defaultCheck1">
-                Disponivel
-              </label>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-row align-items-center" style="margin-bottom: 8px">
+            <div class="form-group">
+              <label class="label-msg" for="selectTipo">Categoria</label>
+              <select [(ngModel)]='equipamento.IdCategoria' class="form-control" id="selectTipo">
+                <option *ngFor="let categoria of categorias" [value]="categoria.Id">{{categoria.Nome}}</option>
+              </select>
             </div>
-  
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="form-row align-items-center" style="margin-bottom: 8px">
-                  <div class="form-group">
-                    <label class="label-msg" for="selectTipo">Categoria</label>
-                    <select [(ngModel)]='equipamento.IdCategoria' class="form-control" id="selectTipo">
-                      <option *ngFor="let categoria of categorias" [value]="categoria.Id">{{categoria.Nome}}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <div class="form-row">
-              <div class="w-100">
-                <hr />
-                <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
-                <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
-              </div>
+          </div>
+          <div class="form-row align-items-center" style="margin-bottom: 8px">
+            <label class="label-msg" for="inputNome">Modelo</label>
+            <input [(ngModel)]="equipamento.Modelo" type="text" class="form-control" id="inputNome">
+          </div>
+          <div class="form-row align-items-center" style="margin-bottom: 8px">
+            <label class="label-msg" for="inputNome">Numero de Serie</label>
+            <input [(ngModel)]="equipamento.Serie" type="text" class="form-control" id="inputNome">
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="equipamento.Disponivel" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Disponivel
+            </label>
+          </div>
+
+
+
+          <div class="form-row">
+            <div class="w-100">
+              <hr />
+              <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
+              <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-8">
-  
-        <div class="card">
-          <div class="card-body">
-  
-            <table class="table table-hover table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Modelo</th>
-                  <th scope="col">Disponivel</th>
-                  <th scope="col">Categoria</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let equi of equipamentos; let i = index">
-                  <th scope="row">{{equi.Id}}</th>
-                  <td>{{equi.Modelo}}</td>
-                  <td>{{equi.Disponivel}}</td>
-                  <td></td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
-                      <button type="button" (click)="remover(equi.Id)" class="btn btn-danger btn-sm">X</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr >
-                  <th scope="row"></th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button"  class="btn btn-primary btn-sm">X</button>
-                      <button type="button"  class="btn btn-danger btn-sm">X</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-  
-          </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Disponivel</th>
+                <th scope="col">Categoria</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let equi of equipamentos; let i = index">
+                <th scope="row">{{equi.Id}}</th>
+                <td>{{equi.Modelo}}</td>
+                <td>{{equi.Disponivel}}</td>
+                <td></td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
+                    <button type="button" (click)="remover(equi.Id)" class="btn btn-danger btn-sm">X</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
+</div>
