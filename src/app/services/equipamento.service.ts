@@ -34,6 +34,7 @@ export class EquipamentoService {
         u.set('Modelo', equipamento.Modelo.toString());
         u.set('Disponivel', equipamento.Disponivel.toString());
         u.set('IdCategoria', equipamento.IdCategoria.toString());
+        u.set('Serie', equipamento.Serie.toString());
     
         let url = `${this.equipamentoUrl}/${equipamento.Id}`;
         return this.http.put<EquipamentoResponse>(url, u.toString(), this.httpOptions)

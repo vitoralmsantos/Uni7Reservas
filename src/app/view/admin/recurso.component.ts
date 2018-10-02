@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'uni7res-software',
-  templateUrl: './software.component.html',
-  styleUrls: ['./software.component.css']
+  templateUrl: './recurso.component.html',
+  styleUrls: ['./recurso.component.css']
 })
-export class SoftwareComponent implements OnInit {
+export class RecursoComponent implements OnInit {
 
   constructor() { }
 

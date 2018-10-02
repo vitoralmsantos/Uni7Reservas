@@ -20,7 +20,7 @@ import { RelatorioAvaliacaoComponent } from './view/relatorios/relatorio-avaliac
 import { RelatoriosComponent } from './view/relatorios/relatorios.component';
 import { AvaliacaoComponent } from './view/admin/avaliacao.component';
 import { CategoriaComponent } from './view/admin/categoria.component';
-import { SoftwareComponent } from './view/admin/software.component';
+import { RecursoComponent } from './view/admin/recurso.component';
 
 const appRoutes: Routes = [  
   { path: '', component: HomeComponent},
@@ -42,7 +42,7 @@ const appRoutes: Routes = [
             {path : 'equipamento', component: EquipamentoComponent},
             {path: 'avaliacao', component: AvaliacaoComponent},
             {path: 'categoria', component: CategoriaComponent},
-            {path: 'software', component: SoftwareComponent}
+            {path: 'recurso', component: RecursoComponent}
           ]
         }
       ] 
@@ -65,7 +65,7 @@ const appRoutes: Routes = [
     RelatoriosComponent,
     AvaliacaoComponent,
     CategoriaComponent,
-    SoftwareComponent
+    RecursoComponent
   ],
   imports: [
     RouterModule.forRoot(
