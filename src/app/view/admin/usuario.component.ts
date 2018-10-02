@@ -42,7 +42,10 @@ export class UsuarioComponent implements OnInit {
   inserir(): void {
     this.usuarioService.addUsuario(this.usuario)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar o cadastro do usuário.')
+        }
+        else if (response.Status == 0) {
           this.limpar()
           this.getUsuarios();
         }
@@ -55,7 +58,10 @@ export class UsuarioComponent implements OnInit {
   atualizar(): void {
     this.usuarioService.updateUsuario(this.usuario)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar a atualização do usuário.')
+        }
+        else if (response.Status == 0) {
           this.limpar()
           this.usuarios[this.selectedIndex].Nome = response.Usuario.Nome;
           this.usuarios[this.selectedIndex].Email = response.Usuario.Email;
@@ -70,7 +76,10 @@ export class UsuarioComponent implements OnInit {
   remover(id): void {
     this.usuarioService.deleteUsuario(id)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar a remoção do usuário.')
+        }
+        else if (response.Status == 0) {
           this.limpar()
           this.getUsuarios();
         }
@@ -99,6 +108,19 @@ export class UsuarioComponent implements OnInit {
   }
 
   registrar(): void {
+    if (this.usuario.Nome === undefined || this.usuario.Nome === ''){
+      this.mostraErro('Digite o nome do usuário.')
+      return
+    }
+    if (this.usuario.Email === undefined || this.usuario.Email === ''){
+      this.mostraErro('Digite o e-mail do usuário.')
+      return
+    }
+    if (this.usuario.Tipo == -1){
+      this.mostraErro('Escolha um tipo de usuário.')
+      return
+    }
+    
     if (this.usuario.Id === undefined) {
       this.inserir()
     }

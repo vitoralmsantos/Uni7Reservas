@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+registerLocaleData(localePt, 'pt');
 
 import { RootComponent } from './view/root.component';
 import { HomeComponent } from './view/home.component';
@@ -77,7 +79,7 @@ const appRoutes: Routes = [
     FormsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [ { provide: LOCALE_ID, useValue: 'pt' } ],
   bootstrap: [RootComponent]
 })
 export class AppModule { }
