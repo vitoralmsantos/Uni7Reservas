@@ -78,12 +78,14 @@
                 <th scope="row">{{usuario.Id}}</th>
                 <td>{{usuario.Nome}}</td>
                 <td>{{usuario.Email}}</td>
-                <td>{{usuario.Tipo}}</td>
+                <td>{{usuario.TipoExtenso}}</td>
                 <td>
-                  <div class="btn-group" role="group">
-                    <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
-                    <button type="button" (click)="remover(usuario.Id)" class="btn btn-danger btn-sm">X</button>
+                  <div>
+                  <div class="float-right"role="group">
+                    <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
+                    <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
                   </div>
+                </div>
                 </td>
               </tr>
             </tbody>
@@ -97,7 +99,7 @@
   <div class="modal" tabindex="-1" role="dialog" id="modalErro">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header modal-header-erro">
           <h5 class="modal-title">Erro</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>

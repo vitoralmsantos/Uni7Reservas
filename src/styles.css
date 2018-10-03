@@ -53,3 +53,16 @@ body{
 hr {
 	border-top: 1px solid #8c8b8b;
 }
+
+.modal-header-erro {
+    background-color: #d9534f;
+    border: 1px solid #d9534f;
+    border-radius: 0px;
+    color: #FFFFFF;
+ }
+
+ .modal-content
+{
+    border: 0px solid #d9534f;
+    border-radius: 0px;
+}

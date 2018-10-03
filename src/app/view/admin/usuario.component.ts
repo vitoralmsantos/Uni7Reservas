@@ -22,11 +22,18 @@ export class UsuarioComponent implements OnInit {
     this.limpar();
   }
 
+  tipoUsuario(usuario: Usuario): string{
+    return Usuario.tipoExtenso(usuario.Tipo)
+  }
+
   getUsuarios(): void {
     this.usuarioService.getUsuarios()
       .subscribe(response => {
         if (response.Status == 0) {
           this.usuarios = response.Usuarios
+          for (let u of this.usuarios){
+            u.TipoExtenso = Usuario.tipoExtenso(u.Tipo)
+          }
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -36,7 +43,10 @@ export class UsuarioComponent implements OnInit {
 
   getUsuario(id): void {
     this.usuarioService.getUsuario(id)
-      .subscribe(response => { this.usuario = response.Usuario });
+      .subscribe(response => { 
+        this.usuario = response.Usuario 
+        this.usuario.TipoExtenso = Usuario.tipoExtenso(this.usuario.Tipo)
+      });
   }
 
   inserir(): void {
@@ -62,10 +72,11 @@ export class UsuarioComponent implements OnInit {
           this.mostraErro('Não foi possível realizar a atualização do usuário.')
         }
         else if (response.Status == 0) {
+          this.usuarios[this.selectedIndex].Nome = this.usuario.Nome;
+          this.usuarios[this.selectedIndex].Email = this.usuario.Email;
+          this.usuarios[this.selectedIndex].Tipo = this.usuario.Tipo;
+          this.usuarios[this.selectedIndex].TipoExtenso = Usuario.tipoExtenso(this.usuario.Tipo)
           this.limpar()
-          this.usuarios[this.selectedIndex].Nome = response.Usuario.Nome;
-          this.usuarios[this.selectedIndex].Email = response.Usuario.Email;
-          this.usuarios[this.selectedIndex].Tipo = response.Usuario.Tipo;
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -73,8 +84,10 @@ export class UsuarioComponent implements OnInit {
       });
   }
 
-  remover(id): void {
-    this.usuarioService.deleteUsuario(id)
+  remover(index): void {
+    if (confirm('Confirma remoção de ' + this.usuarios[index].Nome)) {
+      let id = this.usuarios[index].Id
+      this.usuarioService.deleteUsuario(id)
       .subscribe(response => {
         if (response === undefined){
           this.mostraErro('Não foi possível realizar a remoção do usuário.')
@@ -87,16 +100,12 @@ export class UsuarioComponent implements OnInit {
           this.mostraErro(response.Detalhes)
         }
       });
+    }
   }
 
   limpar(): void {
     this.usuario = new Usuario()
     this.usuario.Tipo = -1
-  }
-
-  mostraErro(detalhe): void {
-    this.erroDetalhe = detalhe
-    $('#modalErro').modal('show')
   }
 
   carregar(index): void {
@@ -105,6 +114,7 @@ export class UsuarioComponent implements OnInit {
     this.usuario.Nome = this.usuarios[index].Nome
     this.usuario.Email = this.usuarios[index].Email
     this.usuario.Tipo = this.usuarios[index].Tipo
+    this.usuario.TipoExtenso = this.usuarios[index].TipoExtenso
   }
 
   registrar(): void {
@@ -127,5 +137,10 @@ export class UsuarioComponent implements OnInit {
     else {
       this.atualizar()
     }
+  }
+
+  mostraErro(detalhe): void {
+    this.erroDetalhe = detalhe
+    $('#modalErro').modal('show')
   }
 }
