@@ -7,25 +7,23 @@ export class Usuario {
 
     public static tipoExtenso(tipo: TIPOUSUARIO): string {
         let resultado = ''
-        switch (tipo) {
-            case TIPOUSUARIO.ADMIN:
-                resultado = "Administrador(a)"
-                break
-            case TIPOUSUARIO.SECRETARIO:
-                resultado = "Secretário(a)"
-                break
-            case TIPOUSUARIO.COORDENADOR:
-                resultado = "Coordenador(a)"
-                break
-            case TIPOUSUARIO.PROFESSOR:
-                resultado = "Professor(a)"
-                break
-            case TIPOUSUARIO.BOLSISTA:
-                resultado = "Bolsista"
-                break
-            default: resultado = ""
+        
+        if (tipo == 0){
+            resultado = "Administrador(a)"
         }
-alert(tipo + ' ' + resultado)
+        else if (tipo == 1){
+            resultado = "Secretário(a)"
+        }
+        else if (tipo == 2){
+            resultado = "Coordenador(a)"
+        }
+        else if (tipo == 3){
+            resultado = "Professor(a)"
+        }
+        else if (tipo == 4){
+            resultado = "Bolsista"
+        }
+
         return resultado
     }
 }
