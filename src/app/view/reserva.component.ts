@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Reserva } from '../model/reserva.model';
 import { ReservaRegistro } from '../model/reservaregistro.model';
 import { Local } from '../model/local.model';
-import { Equipamento } from '../model/equipamento.model';
+import { Categoria } from '../model/categoria.model';
 import { LocalService } from '../services/local.service';
+import { CategoriaService } from '../services/categoria.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 declare var jquery:any;
 declare var $ :any;
@@ -18,15 +19,16 @@ export class ReservaComponent implements OnInit {
   ngbDate: NgbDateStruct;
   horario: number;
   somenteLabs : boolean;
-  desabilitado: boolean;
+  localDesabilitado: boolean;
+  catDesabilitado: boolean;
   reservas: Reserva[];
   locais: Local[];
-  equipamentos1: Equipamento[];
-  equipamentos2: Equipamento[];
+  categoria1: Categoria[];
+  categoria2: Categoria[];
 
   erroDetalhe: string;
 
-  constructor(private localService: LocalService) { }
+  constructor(private localService: LocalService, private categoriaService: CategoriaService) { }
 
   ngOnInit() {
     this.limparTotal()
@@ -35,8 +37,8 @@ export class ReservaComponent implements OnInit {
   limparParcial(): void{
     this.reserva = new ReservaRegistro()
     this.locais = []
-    this.equipamentos1 = []
-    this.equipamentos2 =[]
+    this.categoria1 = []
+    this.categoria2 =[]
     this.desabilitado = true
   }
 
@@ -98,10 +100,25 @@ export class ReservaComponent implements OnInit {
     this.localService.getDisponibilidade(this.reserva.Data, this.reserva.Horario, this.reserva.Turno)
     .subscribe(response => {
       if (response === undefined){
-        this.mostraErro('Não foi possível consultar a disponibilidade de locais e equipamentos.')
+        this.mostraErro('Não foi possível consultar a disponibilidade de locais.')
       }
       else if (response.Status == 0) {
         this.locais = response.Locais
+        this.desabilitado = false
+      }
+      else {
+        this.mostraErro(response.Detalhes)
+      }
+    });
+
+    this.categoriaService.getDisponibilidade(this.reserva.Data, this.reserva.Horario, this.reserva.Turno)
+    .subscribe(response => {
+      if (response === undefined){
+        this.mostraErro('Não foi possível consultar a disponibilidade de equipamentos.')
+      }
+      else if (response.Status == 0) {
+        this.categoria1 = response.Categorias
+        this.categoria2 = response.Categorias
         this.desabilitado = false
       }
       else {
