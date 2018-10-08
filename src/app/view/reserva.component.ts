@@ -50,6 +50,7 @@ export class ReservaComponent implements OnInit {
     this.iniciarReserva()
   }
 
+  //Consulta disponibilidade de locais e equipamentos
   iniciarReserva(): void {
     this.limparParcial()
 
@@ -96,7 +97,10 @@ export class ReservaComponent implements OnInit {
 
     this.localService.getDisponibilidade(this.reserva.Data, this.reserva.Horario, this.reserva.Turno)
     .subscribe(response => {
-      if (response.Status == 0) {
+      if (response === undefined){
+        this.mostraErro('Não foi possível consultar a disponibilidade de locais e equipamentos.')
+      }
+      else if (response.Status == 0) {
         this.locais = response.Locais
         this.desabilitado = false
       }
