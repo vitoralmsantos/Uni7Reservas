@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Usuario } from '../model/usuario.model';
+import { BaseResponse } from './response/base.response';
 import { UsuariosResponse } from './response/usuarios.response';
 import { UsuarioResponse } from './response/usuario.response';
 
@@ -36,8 +37,8 @@ export class UsuarioService {
     u.set('Tipo', usuario.Tipo.toString());
 
     let url = `${this.usuarioUrl}/${usuario.Id}`;
-    return this.http.put<UsuarioResponse>(url, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<UsuarioResponse>('updateUsuario')));
+    return this.http.put<BaseResponse>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<BaseResponse>('updateUsuario')));
   }
 
   addUsuario(usuario: Usuario): Observable<any> {
@@ -52,8 +53,8 @@ export class UsuarioService {
 
   deleteUsuario(id: Number): Observable<any> {
     let url = `${this.usuarioUrl}/${id}`;
-    return this.http.delete<UsuarioResponse>(url, this.httpOptions)
-      .pipe(catchError(this.handleError<UsuarioResponse>('deleteUsuario')));
+    return this.http.delete<BaseResponse>(url, this.httpOptions)
+      .pipe(catchError(this.handleError<BaseResponse>('deleteUsuario')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
