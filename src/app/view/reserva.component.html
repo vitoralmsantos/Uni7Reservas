@@ -54,7 +54,7 @@
             <div class="col-lg-12">
               <label class="label-msg" for="selectEquip1">Equipamento 1</label>
               <select [(ngModel)]='reserva.IdEquipamento1' class="form-control" id="selectEquip1" [disabled]="catDesabilitado">
-                <option *ngFor="let equip of equipamentos1" [value]="equip.Id">{{equip.Nome}}</option>
+                <option *ngFor="let equip of categoria1" [value]="equip.Id">{{equip.Nome}}</option>
               </select>
             </div>
           </div>
@@ -63,7 +63,7 @@
             <div class="col-lg-12">
               <label class="label-msg" for="selectEquip2">Equipamento 2</label>
               <select [(ngModel)]='reserva.IdEquipamento2' class="form-control" id="selectEquip2" [disabled]="catDesabilitado">
-                <option *ngFor="let equip of equipamentos2" [value]="equip.Id">{{equip.Nome}}</option>
+                <option *ngFor="let equip of categoria2" [value]="equip.Id">{{equip.Nome}}</option>
               </select>
             </div>
           </div>

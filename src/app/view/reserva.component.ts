@@ -39,7 +39,8 @@ export class ReservaComponent implements OnInit {
     this.locais = []
     this.categoria1 = []
     this.categoria2 =[]
-    this.desabilitado = true
+    this.localDesabilitado = true
+    this.catDesabilitado = true
   }
 
   limparTotal(): void{
@@ -101,13 +102,15 @@ export class ReservaComponent implements OnInit {
     .subscribe(response => {
       if (response === undefined){
         this.mostraErro('Não foi possível consultar a disponibilidade de locais.')
+        this.limparParcial()
       }
       else if (response.Status == 0) {
         this.locais = response.Locais
-        this.desabilitado = false
+        this.localDesabilitado = false
       }
       else {
         this.mostraErro(response.Detalhes)
+        this.limparParcial()
       }
     });
 
@@ -115,14 +118,16 @@ export class ReservaComponent implements OnInit {
     .subscribe(response => {
       if (response === undefined){
         this.mostraErro('Não foi possível consultar a disponibilidade de equipamentos.')
+        this.limparParcial()
       }
       else if (response.Status == 0) {
         this.categoria1 = response.Categorias
         this.categoria2 = response.Categorias
-        this.desabilitado = false
+        this.catDesabilitado = false
       }
       else {
         this.mostraErro(response.Detalhes)
+        this.limparParcial()
       }
     });
   }

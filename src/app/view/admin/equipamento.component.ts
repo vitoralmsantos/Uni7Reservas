@@ -75,10 +75,11 @@ export class EquipamentoComponent implements OnInit {
     this.equipamentoService.updateEquipamento(this.equipamento)
       .subscribe(response => {
         if (response.Status == 0) {
-          this.equipamentos[this.selectedIndex].Modelo = response.Equipamento.Modelo;
+          this.equipamentos[this.selectedIndex].Modelo = this.equipamento.Modelo;
           this.equipamentos[this.selectedIndex].Disponivel = response.Equipamento.Disponivel;
           this.equipamentos[this.selectedIndex].IdCategoria = response.Equipamento.IdCategoria;
           this.equipamentos[this.selectedIndex].Serie = response.Equipamento.Serie;
+          console.log(response.Equipamento)
         }
         else {
           this.mostraErro(response.Detalhes)
