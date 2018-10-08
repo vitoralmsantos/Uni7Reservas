@@ -46,7 +46,10 @@ export class CategoriaComponent implements OnInit {
   inserir(): void {
     this.categoriaService.addCategoria(this.categoria)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar o cadastro do usuário.')
+        }
+        else if (response.Status == 0) {
           this.getCategorias();
         }
         else {
@@ -58,9 +61,12 @@ export class CategoriaComponent implements OnInit {
   atualizar(): void {
     this.categoriaService.updateCategoria(this.categoria)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar a atualização do usuário.')
+        }
+        else if (response.Status == 0) {
           this.categorias[this.selectedIndex].Nome = response.Categoria.Nome;
-
+          this.limpar()
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -68,16 +74,23 @@ export class CategoriaComponent implements OnInit {
       });
   }
 
-  remover(id): void {
-    this.categoriaService.deleteCategoria(id)
+  remover(index): void {
+    if (confirm('Confirma remoção de ' + this.categorias[index].Nome)) {
+      let id = this.categorias[index].Id
+      this.categoriaService.deleteCategoria(id)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar a remoção da categoria.')
+        }
+        else if (response.Status == 0) {
+          this.limpar()
           this.getCategorias();
         }
         else {
           this.mostraErro(response.Detalhes)
         }
       });
+    }
   }
 
   carregar(index): void {
@@ -89,6 +102,10 @@ export class CategoriaComponent implements OnInit {
 
 
   registrar(): void {
+    if (this.categoria.Nome === undefined || this.categoria.Nome === ''){
+      this.mostraErro('Digite o nome da categoria.')
+      return
+    }
     if (this.categoria.Id === undefined) {
       this.inserir()
     }
