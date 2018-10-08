@@ -34,15 +34,22 @@
                   </div>
                 </div>
               </div>
-            <div class="form-row">
-              <div class="w-100">
-                <hr />
-                <button id="btAutenticar" class="btn btn-success float-right">Cadastrar</button>
+              <div class="form-row align-items-center" style="margin-bottom: 8px">
+                <label class="label-msg" for="inputNome">Vencimento</label>
+                <input [(ngModel)]="recurso.Vencimento" type="text" class="form-control" id="inputNome">
+              </div>
+              <div class="form-row">
+                <div class="w-100">
+                  <hr />
+                  <div class="float-right">
+                    <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
+                    <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       <div class="col-lg-8">
   
         <div class="card">
@@ -53,30 +60,23 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Nome</th>
-                  <th scope="col">Versão</th>
+                  <th scope="col">Detalhes</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Vencimento</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let re of recursos; let i = index">
                   <th scope="row">1</th>
-                  <td></td>
-                  <td></td>
+                  <td>{{re.Nome}}</td>
+                  <td>{{re.Detalhes}}</td>
+                  <td>{{re.Tipo}}</td>
+                  <td>{{re.Vencimento}}</td>
                   <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                      <button type="button" class="btn btn-danger btn-sm">X</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                      <button type="button" class="btn btn-danger btn-sm">X</button>
+                      <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
+                      <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
                     </div>
                   </td>
                 </tr>

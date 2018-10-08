@@ -33,6 +33,7 @@ export class RecursoService {
         u.set('Id', recurso.Id.toString());
         u.set('Nome', recurso.Nome.toString());
         u.set('Detalhes', recurso.Detalhes.toString());
+        u.set('Vencimento', recurso.Vencimento.toString());
         u.set('Tipo', recurso.Tipo.toString());
     
         let url = `${this.recursoUrl}/${recurso.Id}`;
@@ -43,6 +44,7 @@ export class RecursoService {
         let u = new URLSearchParams();
         u.set('Nome', recurso.Nome.toString());
         u.set('Detalhes', recurso.Detalhes.toString());
+        u.set('Vencimento', recurso.Vencimento.toString());
         u.set('Tipo', recurso.Tipo.toString());
 
         return this.http.post<RecursoResponse>(this.recursoUrl, u.toString(), this.httpOptions)

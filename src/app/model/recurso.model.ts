@@ -2,6 +2,7 @@ export class Recurso {
     Id: number;
     Nome: string;
     Detalhes: string;
+    Vencimento: string;
     Tipo: TIPORECURSO;
 }
 
