@@ -71,29 +71,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let lo of locais; let i = index">
                   <th scope="row">1</th>
-                  <td>Sala 31</td>
-                  <td>Sim</td>
-                  <td>Não</td>
-                  <td>Laboratório</td>
+                  <td>{{lo.Nome}}</td>
+                  <td>{{lo.Reservavel}}</td>
+                  <td>{{lo.Disponivel}}</td>
+                  <td>{{lo.Tipo}}</td>
                   <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                      <button type="button" class="btn btn-danger btn-sm">X</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Sala 41</td>
-                  <td>Não</td>
-                  <td>Sim</td>
-                  <td>Sala</td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-primary btn-sm">X</button>
-                      <button type="button" class="btn btn-danger btn-sm">X</button>
+                      <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
+                      <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
                     </div>
                   </td>
                 </tr>

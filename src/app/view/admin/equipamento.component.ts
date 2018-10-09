@@ -62,7 +62,10 @@ export class EquipamentoComponent implements OnInit {
   inserir(): void {
     this.equipamentoService.addEquipamento(this.equipamento)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar o cadastro do usuário.')
+        }
+        else if (response.Status == 0) {
           this.getEquipamentos();
         }
         else {
@@ -74,12 +77,15 @@ export class EquipamentoComponent implements OnInit {
   atualizar(): void {
     this.equipamentoService.updateEquipamento(this.equipamento)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar a atualização do usuário.')
+        }
+        else if (response.Status == 0) {
           this.equipamentos[this.selectedIndex].Modelo = this.equipamento.Modelo;
-          this.equipamentos[this.selectedIndex].Disponivel = response.Equipamento.Disponivel;
-          this.equipamentos[this.selectedIndex].IdCategoria = response.Equipamento.IdCategoria;
-          this.equipamentos[this.selectedIndex].Serie = response.Equipamento.Serie;
-          console.log(response.Equipamento)
+          this.equipamentos[this.selectedIndex].Disponivel = this.equipamento.Disponivel;
+          this.equipamentos[this.selectedIndex].IdCategoria = this.equipamento.IdCategoria;
+          this.equipamentos[this.selectedIndex].Serie = this.equipamento.Serie;
+          this.limpar()
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -87,16 +93,23 @@ export class EquipamentoComponent implements OnInit {
       });
   }
 
-  remover(id): void {
-    this.equipamentoService.deleteEquipamento(id)
+  remover(index): void {
+    if (confirm('Confirma remoção de ' + this.equipamentos[index].Modelo)) {
+      let id = this.equipamentos[index].Id
+      this.equipamentoService.deleteEquipamento(id)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar a remoção do equipamento.')
+        }
+        else if (response.Status == 0) {
+          this.limpar()
           this.getEquipamentos();
         }
         else {
           this.mostraErro(response.Detalhes)
         }
       });
+    }
   }
 
   carregar(index): void {
@@ -110,6 +123,14 @@ export class EquipamentoComponent implements OnInit {
 
 
   registrar(): void {
+    if (this.equipamento.Modelo === undefined || this.equipamento.Modelo === ''){
+      this.mostraErro('Digite o modelo do equipamento.')
+      return
+    }
+    if (this.equipamento.Serie=== undefined || this.equipamento.Serie === ''){
+      this.mostraErro('Digite o número da serie.')
+      return
+    }
     if (this.equipamento.Id === undefined) {
       this.inserir()
     }
