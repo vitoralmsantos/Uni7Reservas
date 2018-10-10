@@ -57,6 +57,7 @@ export class EquipamentoComponent implements OnInit {
 
   limpar(): void {
     this.equipamento = new Equipamento()
+    this.equipamento.Disponivel = false
   }
 
   inserir(): void {
