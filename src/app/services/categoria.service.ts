@@ -28,10 +28,10 @@ export class CategoriaService {
       .pipe(catchError(this.handleError<CategoriaResponse>(`getCategoria id=${id}`)));
   }
 
-  //Consulta locais disponíveis para reservas
+  //Consulta categorias disponíveis para reservas
   getDisponibilidade(data: string, horario: string, turno: string): Observable<CategoriasResponse> {
     let url = `${this.categoriaUrl}/disponibilidade/?data=${data}&horario=${horario}&turno=${turno}`;
-    return this.http.get<CategoriasResponse>(this.categoriaUrl)
+    return this.http.get<CategoriasResponse>(url)
       .pipe(catchError(this.handleError<CategoriasResponse>('getDisponibilidade')));
   }
 

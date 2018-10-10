@@ -25,7 +25,7 @@ export class LocalService {
   //Consulta locais disponíveis para reservas
   getDisponibilidade(data: string, horario: string, turno: string): Observable<LocaisResponse> {
     let url = `${this.localUrl}/disponibilidade/?data=${data}&horario=${horario}&turno=${turno}`;
-    return this.http.get<LocaisResponse>(this.localUrl)
+    return this.http.get<LocaisResponse>(url)
       .pipe(catchError(this.handleError<LocaisResponse>('getDisponibilidade')));
   }
 

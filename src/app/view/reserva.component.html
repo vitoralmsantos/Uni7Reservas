@@ -25,7 +25,7 @@
             <div class="col-lg-6">
               <label class="label-msg" for="inputHorario">Horário</label>
               <select [(ngModel)]='horario' class="form-control" id="selectHorario" 
-              (ngModelChange)="onChange($event)">
+                (ngModelChange)="onChangeHorario()">
                 <option value='1'>Manhã AB</option>
                 <option value='2'>Manhã CD</option>
                 <option value='3'>Manhã EF</option>
@@ -45,7 +45,8 @@
                 <option *ngFor="let local of locais" [value]="local.Id">{{local.Nome}}</option>
               </select>
               <div class="float-right" style="font-size: 14px">
-                <input type="checkbox" [(ngModel)]='somenteLabs' [disabled]="desabilitado"> Somente laboratórios
+                <input type="checkbox" [(ngModel)]='somenteLabs' [disabled]="desabilitado"
+                (ngModelChange)="onChangeSomenteLabs()"> Somente laboratórios
               </div>
             </div>
           </div>
@@ -53,7 +54,8 @@
           <div class="row">
             <div class="col-lg-12">
               <label class="label-msg" for="selectEquip1">Equipamento 1</label>
-              <select [(ngModel)]='reserva.IdEquipamento1' class="form-control" id="selectEquip1" [disabled]="catDesabilitado">
+              <select [(ngModel)]='reserva.IdEquipamento1' class="form-control" id="selectEquip1" 
+                [disabled]="cat1Desabilitado" (ngModelChange)="onChangeCat1()">
                 <option *ngFor="let equip of categoria1" [value]="equip.Id">{{equip.Nome}}</option>
               </select>
             </div>
@@ -62,7 +64,8 @@
           <div class="row">
             <div class="col-lg-12">
               <label class="label-msg" for="selectEquip2">Equipamento 2</label>
-              <select [(ngModel)]='reserva.IdEquipamento2' class="form-control" id="selectEquip2" [disabled]="catDesabilitado">
+              <select [(ngModel)]='reserva.IdEquipamento2' class="form-control" id="selectEquip2" 
+                [disabled]="cat2Desabilitado" (ngModelChange)="onChangeCat2()">
                 <option *ngFor="let equip of categoria2" [value]="equip.Id">{{equip.Nome}}</option>
               </select>
             </div>

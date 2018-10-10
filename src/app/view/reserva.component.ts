@@ -15,14 +15,17 @@ declare var $ :any;
   styleUrls: ['./reserva.component.css']
 })
 export class ReservaComponent implements OnInit {
+  titulo: string;
   reserva: ReservaRegistro;
   ngbDate: NgbDateStruct;
   horario: number;
   somenteLabs : boolean;
   localDesabilitado: boolean;
-  catDesabilitado: boolean;
+  cat1Desabilitado: boolean;
+  cat2Desabilitado: boolean;
   reservas: Reserva[];
   locais: Local[];
+  todosLocais: Local[];
   categoria1: Categoria[];
   categoria2: Categoria[];
 
@@ -31,16 +34,19 @@ export class ReservaComponent implements OnInit {
   constructor(private localService: LocalService, private categoriaService: CategoriaService) { }
 
   ngOnInit() {
+    this.titulo = 'Cadastrar Novo'
     this.limparTotal()
   }
 
   limparParcial(): void{
     this.reserva = new ReservaRegistro()
     this.locais = []
+    this.todosLocais = []
     this.categoria1 = []
-    this.categoria2 =[]
+    this.categoria2 = []
     this.localDesabilitado = true
-    this.catDesabilitado = true
+    this.cat1Desabilitado = true
+    this.cat2Desabilitado = true
   }
 
   limparTotal(): void{
@@ -48,9 +54,32 @@ export class ReservaComponent implements OnInit {
     this.horario = 0
   }
 
-  onChange(horario) {
-    this.horario = horario
+  onChangeHorario() {
     this.iniciarReserva()
+  }
+
+  onChangeSomenteLabs(){
+    this.locais = []
+    this.locais.push({Id:0, Nome:'--Escolha um local--', Reservavel:false, Disponivel:true, Tipo:0})
+    if (this.somenteLabs) {
+      this.locais.push.apply(this.locais, this.todosLocais.filter(l => l.Tipo == 0))
+    }
+    else {
+      this.locais.push.apply(this.locais, this.todosLocais)
+    }
+  }
+
+  //Adiciona as categorias no 2o select, com exceção da categoria escolhida no 1o
+  onChangeCat1() {
+    this.categoria2 = []
+    this.categoria2.push({Id:0,Nome:'--Escolha um equipamento--'})
+    this.reserva.IdEquipamento2 = 0
+    this.categoria2.push.apply(this.categoria2, this.categoria1.filter(c => c.Id != this.reserva.IdEquipamento1))
+    this.cat2Desabilitado = false
+  }
+
+  onChangeCat2() {
+    
   }
 
   //Consulta disponibilidade de locais e equipamentos
@@ -60,8 +89,11 @@ export class ReservaComponent implements OnInit {
     if (this.ngbDate === undefined || this.horario == 0){
       return;
     }
-    
-    this.reserva.Data = this.ngbDate.day + '/' + this.ngbDate.month + '/' + this.ngbDate.year
+
+    let dia = String(100 + this.ngbDate.day).substring(1,3);
+    let mes = String(100 + this.ngbDate.month).substring(1,3);
+
+    this.reserva.Data = dia + '/' + mes + '/' + this.ngbDate.year
 
     switch (this.horario) {
       case 1:
@@ -105,7 +137,13 @@ export class ReservaComponent implements OnInit {
         this.limparParcial()
       }
       else if (response.Status == 0) {
-        this.locais = response.Locais
+        this.todosLocais = []
+        this.todosLocais.push.apply(this.locais, response.Locais)
+        
+        this.locais = []
+        this.locais.push({Id:0,Nome:'--Escolha um local--',Reservavel:false,Disponivel:true,Tipo:0})
+        this.reserva.IdLocal = 0
+        
         this.localDesabilitado = false
       }
       else {
@@ -121,9 +159,11 @@ export class ReservaComponent implements OnInit {
         this.limparParcial()
       }
       else if (response.Status == 0) {
-        this.categoria1 = response.Categorias
-        this.categoria2 = response.Categorias
-        this.catDesabilitado = false
+        this.categoria1 = []
+        this.categoria1.push({Id:0,Nome:'--Escolha um equipamento--'})
+        this.reserva.IdEquipamento1 = 0
+        this.categoria1.push.apply(this.categoria1, response.Categorias)
+        this.cat1Desabilitado = false
       }
       else {
         this.mostraErro(response.Detalhes)
@@ -140,5 +180,4 @@ export class ReservaComponent implements OnInit {
     this.erroDetalhe = detalhe
     $('#modalErro').modal('show')
   }
-
 }
