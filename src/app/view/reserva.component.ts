@@ -62,11 +62,13 @@ export class ReservaComponent implements OnInit {
     this.locais = []
     this.locais.push({Id:0, Nome:'--Escolha um local--', Reservavel:false, Disponivel:true, Tipo:0})
     if (this.somenteLabs) {
-      this.locais.push.apply(this.locais, this.todosLocais.filter(l => l.Tipo == 0))
+      console.log(this.todosLocais)
+      this.locais.push.apply(this.locais, this.todosLocais.filter(l => Number(l.Tipo) === 0))
     }
     else {
       this.locais.push.apply(this.locais, this.todosLocais)
     }
+    this.reserva.IdLocal = 0
   }
 
   //Adiciona as categorias no 2o select, com exceção da categoria escolhida no 1o
@@ -138,12 +140,8 @@ export class ReservaComponent implements OnInit {
       }
       else if (response.Status == 0) {
         this.todosLocais = []
-        this.todosLocais.push.apply(this.locais, response.Locais)
-        
-        this.locais = []
-        this.locais.push({Id:0,Nome:'--Escolha um local--',Reservavel:false,Disponivel:true,Tipo:0})
-        this.reserva.IdLocal = 0
-        
+        this.todosLocais.push.apply(this.todosLocais, response.Locais)
+        this.onChangeSomenteLabs()
         this.localDesabilitado = false
       }
       else {

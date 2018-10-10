@@ -15,7 +15,6 @@ export class LocalComponent implements OnInit {
   erroDetalhe: string;
   selectedIndex: number;
 
-
   constructor(private localService: LocalService) { }
 
   ngOnInit() {
@@ -43,6 +42,8 @@ export class LocalComponent implements OnInit {
 
   limpar(): void {
     this.local = new Local()
+    this.local.Reservavel = false
+    this.local.Disponivel = false
   }
 
   inserir(): void {
