@@ -11,5 +11,4 @@ export class AvaliacaoComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

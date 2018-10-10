@@ -7,6 +7,5 @@ export class ReservaRegistro {
     Obs: string;
     IdLocal: number;
     IdUsuario: number;
-    IdEquipamento1: number;
-    IdEquipamento2: number;
+    IdCategoria: number;
 }

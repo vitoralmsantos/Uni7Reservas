@@ -31,8 +31,7 @@ export class ReservaService {
     u.set('Obs', reserva.Obs.toString());
     u.set('IdLocal', reserva.IdLocal.toString());
     u.set('IdUsuario', reserva.IdUsuario.toString());
-    u.set('IdEquipamento1', reserva.IdEquipamento1.toString());
-    u.set('IdEquipamento2', reserva.IdEquipamento2.toString());
+    u.set('IdCategoria', reserva.IdCategoria.toString());
 
     return this.http.post<ReservaResponse>(this.equipamentoUrl, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<ReservaResponse>('addReserva')));

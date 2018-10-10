@@ -31,9 +31,7 @@ export class UsuarioComponent implements OnInit {
       .subscribe(response => {
         if (response.Status == 0) {
           this.usuarios = response.Usuarios
-          for (let u of this.usuarios){
-            u.TipoExtenso = Usuario.tipoExtenso(u.Tipo)
-          }
+          this.usuarios.forEach(u => u.TipoExtenso = Usuario.tipoExtenso(u.Tipo))
         }
         else {
           this.mostraErro(response.Detalhes)
