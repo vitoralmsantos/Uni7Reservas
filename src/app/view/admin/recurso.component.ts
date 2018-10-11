@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Recurso } from '../../model/recurso.model';
 import { RecursoService } from '../../services/recurso.service';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 declare var jquery:any;
 declare var $ :any;
 
@@ -13,6 +14,7 @@ export class RecursoComponent implements OnInit {
 
   recursos: Recurso[];
   recurso: Recurso;
+  ngbDate: NgbDateStruct;
   erroDetalhe: string;
   selectedIndex: number;
 
@@ -48,6 +50,7 @@ export class RecursoComponent implements OnInit {
           this.mostraErro('Não foi possível realizar o cadastro do usuário.')
         }
         else if (response.Status == 0) {
+          this.limpar()
           this.getRecursos();
         }
         else {
@@ -66,6 +69,7 @@ export class RecursoComponent implements OnInit {
           this.recursos[this.selectedIndex].Nome = this.recurso.Nome;
           this.recursos[this.selectedIndex].Detalhes = this.recurso.Detalhes;
           this.recursos[this.selectedIndex].Tipo = this.recurso.Tipo;
+          this.recursos[this.selectedIndex].Vencimento = this.recurso.Vencimento
           this.limpar()
         }
         else {
@@ -100,6 +104,7 @@ export class RecursoComponent implements OnInit {
     this.recurso.Nome = this.recursos[index].Nome
     this.recurso.Detalhes = this.recursos[index].Detalhes
     this.recurso.Tipo = this.recursos[index].Tipo
+    this.recurso.Vencimento = this.recursos[index].Vencimento
   }
 
   limpar(): void {
