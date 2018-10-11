@@ -47,7 +47,7 @@ export class CategoriaComponent implements OnInit {
     this.categoriaService.addCategoria(this.categoria)
       .subscribe(response => {
         if (response === undefined){
-          this.mostraErro('Não foi possível realizar o cadastro do usuário.')
+          this.mostraErro('Não foi possível realizar o cadastro do equipamento.')
         }
         else if (response.Status == 0) {
           this.getCategorias();

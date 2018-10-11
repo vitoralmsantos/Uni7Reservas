@@ -23,8 +23,10 @@
           <div class="form-row">
             <div class="w-100">
               <hr />
-              <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
-              <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
+              <div class="float-right">
+                <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
+                <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
+              </div>
             </div>
           </div>
         </div>
@@ -51,8 +53,8 @@
                 <td>
                   <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
                     <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
-                    <button type="button" (click)="remover(categoria.Id)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
-                </div>
+                    <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
+                  </div>
                 </td>
               </tr>
             </tbody>

@@ -26,6 +26,10 @@ export class EquipamentoComponent implements OnInit {
     this.getCategoria();
   }
 
+  tipoBoolean(equipamento: Equipamento){
+    return Equipamento.TipoBoolean(equipamento.Disponivel)
+  }
+
   getCategoria(): void {
     this.categoriaService.getCategorias()
       .subscribe(response => {
