@@ -12,17 +12,17 @@
                 <div class="card-body">
                     <div class="form-row align-items-center" style="margin-bottom: 8px">
                         <label class="label-msg" for="inputNome">Descrição</label>
-                        <input [(ngModel)]="local.Nome" type="text" class="form-control" id="inputNome">
+                        <input [(ngModel)]="chamado.Descricao" type="text" class="form-control" id="inputNome">
                     </div>
 
                     <div class="form-row align-items-center" style="margin-bottom: 8px">
                         <label class="label-msg" for="inputNome">Data Limite</label>
-                        <input [(ngModel)]="local.Nome" type="text" class="form-control" id="inputNome">
+                        <input [(ngModel)]="chamado.DataLimite" type="text" class="form-control" id="inputNome">
                     </div>
 
                     <div class="form-row align-items-center" style="margin-bottom: 8px">
                         <label class="label-msg" for="inputNome">Telefone</label>
-                        <input [(ngModel)]="local.Nome" type="text" class="form-control" id="inputNome">
+                        <input [(ngModel)]="chamado.Telefone" type="text" class="form-control" id="inputNome">
                     </div>
 
 
@@ -55,12 +55,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let lo of locais; let i = index">
+                        <tr *ngFor="let lo of chamados; let i = index">
                             <th scope="row">{{lo.Id}}</th>
-                            <td>{{lo.Nome}}</td>
-                            <td>{{lo.Reservavel}}</td>
-                            <td>{{lo.Disponivel}}</td>
-                            <td>{{lo.Tipo}}</td>
+                            <td>{{lo.Descricao}}</td>
+                            <td>{{lo.DataLimite}}</td>
+                            <td>{{lo.Telefone}}</td>
                             <td>
                                 <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
                                     <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
