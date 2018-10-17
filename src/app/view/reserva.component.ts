@@ -6,6 +6,7 @@ import { Categoria } from '../model/categoria.model';
 import { LocalService } from '../services/local.service';
 import { CategoriaService } from '../services/categoria.service';
 import { ReservaService } from '../services/reserva.service';
+import { AuthService } from '../services/auth.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 declare var jquery: any;
 declare var $: any;
@@ -31,11 +32,18 @@ export class ReservaComponent implements OnInit {
   erroDetalhe: string;
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
-    private reservaService: ReservaService) { }
+    private reservaService: ReservaService, private authService: AuthService) { }
 
   ngOnInit() {
     this.titulo = 'Cadastrar Novo'
     this.limparTotal()
+    if (this.authService.retrieveUserId() !== undefined) {
+      this.reserva.IdUsuario = Number.parseInt(this.authService.retrieveUserId())
+      console.log(this.authService.retrieveUserId())
+    }
+    else {
+      //Usuário não autenticado
+    }
   }
 
   limparParcial(): void {

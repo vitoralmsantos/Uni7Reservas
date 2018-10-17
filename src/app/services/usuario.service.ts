@@ -29,6 +29,16 @@ export class UsuarioService {
       .pipe(catchError(this.handleError<UsuarioResponse>(`getUsuario id=${id}`)));
   }
 
+  autenticar(email: string, senha: string): Observable<any> {
+    const url = `${this.usuarioUrl}/login`;
+    let u = new URLSearchParams();
+    u.set('Email', email);
+    u.set('Senha', senha);
+
+    return this.http.post<UsuarioResponse>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<UsuarioResponse>('autenticarUsuario')));
+  }
+
   updateUsuario(usuario: Usuario): Observable<any> {
     let u = new URLSearchParams();
     u.set('Id', usuario.Id.toString());

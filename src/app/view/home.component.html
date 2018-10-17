@@ -37,7 +37,8 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fas fa-user-md fa-fw"></i></div>
                             </div>
-                            <input type="text" class="form-control" id="inlineFormInputGroupEmail" placeholder="E-mail">
+                            <input type="text" [(ngModel)]="email" class="form-control" id="inlineFormInputGroupEmail"
+                                placeholder="E-mail">
                         </div>
                     </div>
 
@@ -47,18 +48,20 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fas fa-key fa-fw"></i></div>
                             </div>
-                            <input type="text" class="form-control" id="inlineFormInputGroupSenha" placeholder="Senha">
+                            <input type="text" [(ngModel)]="senha" class="form-control" id="inlineFormInputGroupSenha"
+                                placeholder="Senha">
                         </div>
                     </div>
 
                     <div class="form-row align-items-center" style="margin-bottom: 8px">
-                        <button id="btAutenticar" routerLink="/principal" class="btn btn-success btn-block">Entrar</button>
+                        <button id="btAutenticar" (click)="login()" class="btn btn-success btn-block">Entrar</button>
                     </div>
 
                     <div style="width: 100%"><a class="btn btn-link" data-toggle="modal" href="#modalEsqueci" style="width: auto">>>Esqueci
                             a senha</a></div>
                     <hr />
-                    <a class="btn btn-light" data-toggle="modal" href="#modalCadastro" style="width: 100%">Desejo solicitar
+                    <a class="btn btn-light" data-toggle="modal" href="#modalCadastro" style="width: 100%">Desejo
+                        solicitar
                         acesso
                     </a>
                 </div>
@@ -72,17 +75,22 @@
         </div>
     </footer>
 </div>
-<!-- Modal Erro -->
-<div class="modal fade" id="modalErro" role="dialog">
-    <div class="modal-dialog">
-        <!-- Conteúdo -->
+
+<!-- Modal Mensagem -->
+<div class="modal" tabindex="-1" role="dialog" id="modalErro">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header" style="background-color: rgba(192, 64, 64, 0.75)">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Erro</h4>
+            <div class="modal-header modal-header-erro">
+                <h5 class="modal-title">Erro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <span id="lbErro" class="label-error"></span>
+                <p>{{erroDetalhe}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
@@ -209,18 +217,22 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group-lg" style="margin-bottom: 10px">
-                                    <input type="text" id="tbNomeContato" class="form-control" placeholder="seu nome" style="width:100%" />
+                                    <input type="text" id="tbNomeContato" class="form-control" placeholder="seu nome"
+                                        style="width:100%" />
                                 </div>
                                 <div class="form-group-lg" style="margin-bottom: 10px">
-                                    <input type="text" id="tbEmailContato" class="form-control" placeholder="seu e-mail" style="width:100%" />
+                                    <input type="text" id="tbEmailContato" class="form-control" placeholder="seu e-mail"
+                                        style="width:100%" />
                                 </div>
                                 <div class="form-group-lg">
-                                    <input type="text" id="tbTelefoneContato" class="form-control" placeholder="seu telefone" style="width:100%" />
+                                    <input type="text" id="tbTelefoneContato" class="form-control" placeholder="seu telefone"
+                                        style="width:100%" />
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group-lg">
-                                    <textarea id="tbMsgContato" rows="5" class="form-control" placeholder="sua mensagem" style="width:100%"></textarea>
+                                    <textarea id="tbMsgContato" rows="5" class="form-control" placeholder="sua mensagem"
+                                        style="width:100%"></textarea>
                                 </div>
                             </div>
                         </div>
