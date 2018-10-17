@@ -1,52 +1,53 @@
 <div class="container">
-    <div class="row cabecalho">
-      <div class="col-lg-6">
-        <span>LOCAL</span>
-      </div>
+  <div class="row cabecalho">
+    <div class="col-lg-6">
+      <span>LOCAL</span>
     </div>
-  
-    <div class="row">
-      <div class="col-lg-4">
-  
-        <div class="card">
-          <div class="card-body">
-            <div class="form-row align-items-center" style="margin-bottom: 8px">
-              <label class="label-msg" for="inputNome">Nome</label>
-              <input [(ngModel)]="local.Nome" type="text" class="form-control" id="inputNome">
-            </div>
-  
-            <div class="form-check">
-              <input [(ngModel)]="local.Reservavel" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-              <label class="form-check-label" for="defaultCheck1">
-                Reservavel
-              </label>
-            </div>
-  
-            <div class="form-check">
-              <input [(ngModel)]="local.Disponivel" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-              <label class="form-check-label" for="defaultCheck1">
-                Disponivel
-              </label>
-            </div>
-  
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="form-row align-items-center" style="margin-bottom: 8px">
-                  <div class="form-group">
-                    <label class="label-msg" for="selectTipo">Tipo</label>
-                    <select [(ngModel)]="local.Tipo" class="form-control" id="selectTipo">
-                      <option value='0'>Laboratório</option>
-                      <option value='1'>Sala</option>
-                      <option value='2'>Auditório</option>
-                    </select>
-                  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="form-row align-items-center" style="margin-bottom: 8px">
+            <label class="label-msg" for="inputNome">Nome</label>
+            <input [(ngModel)]="local.Nome" type="text" class="form-control" id="inputNome">
+          </div>
+
+          <div class="form-check">
+            <input [(ngModel)]="local.Reservavel" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Reservavel
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input [(ngModel)]="local.Disponivel" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Disponivel
+            </label>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-row align-items-center" style="margin-bottom: 8px">
+                <div class="form-group">
+                  <label class="label-msg" for="selectTipo">Tipo</label>
+                  <select [(ngModel)]="local.Tipo" class="form-control" id="selectTipo">
+                    <option value='0'>Laboratório</option>
+                    <option value='1'>Sala</option>
+                    <option value='2'>Auditório</option>
+                  </select>
                 </div>
               </div>
             </div>
-  
-            <div class="form-row">
-              <div class="w-100">
-                <hr />
+          </div>
+
+          <div class="form-row">
+            <div class="w-100">
+              <hr />
+              <div class="float-right">
                 <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
                 <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
               </div>
@@ -54,41 +55,42 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-8">
-  
-        <div class="card">
-          <div class="card-body">
-  
-            <table class="table table-hover table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Reservavel</th>
-                  <th scope="col">Disponivel</th>
-                  <th scope="col">Tipo</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let lo of locais; let i = index">
-                  <th scope="row">1</th>
-                  <td>{{lo.Nome}}</td>
-                  <td>{{lo.Reservavel}}</td>
-                  <td>{{lo.Disponivel}}</td>
-                  <td>{{lo.Tipo}}</td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
-                      <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-  
-          </div>
+    </div>
+    <div class="col-lg-8">
+
+      <div class="card">
+        <div class="card-body">
+
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Reservavel</th>
+                <th scope="col">Disponivel</th>
+                <th scope="col">Tipo</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let lo of locais; let i = index">
+                <th scope="row">{{lo.Id}}</th>
+                <td>{{lo.Nome}}</td>
+                <td>{{lo.Reservavel}}</td>
+                <td>{{lo.Disponivel}}</td>
+                <td>{{lo.Tipo}}</td>
+                <td>
+                  <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
+                    <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
+                    <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
         </div>
       </div>
     </div>
   </div>
+</div>

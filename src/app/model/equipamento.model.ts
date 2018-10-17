@@ -3,5 +3,22 @@ export class Equipamento {
     Serie: string;
     Modelo: string;
     Disponivel: boolean;
-    IdCategoria : number;
+    IdCategoria: number;
+    TipoBoolean: string;
+
+    public static TipoBoolean(boolean: boolean): string {
+        let resultado = ''
+    
+        if (boolean == false) {
+            resultado = "Não"
+        }
+        else if (boolean == true) {
+            resultado = "Sim"
+        }
+    
+        return resultado
+    }
 }
+
+
+

@@ -26,6 +26,10 @@ export class EquipamentoComponent implements OnInit {
     this.getCategoria();
   }
 
+  tipoBoolean(equipamento: Equipamento){
+    return Equipamento.TipoBoolean(equipamento.Disponivel)
+  }
+
   getCategoria(): void {
     this.categoriaService.getCategorias()
       .subscribe(response => {
@@ -43,6 +47,7 @@ export class EquipamentoComponent implements OnInit {
       .subscribe(response => {
         if (response.Status == 0) {
           this.equipamentos = response.Equipamentos
+          this.equipamentos.forEach(u => u.TipoBoolean = Equipamento.TipoBoolean(u.Disponivel))
         }
         else {
           this.mostraErro(response.Detalhes)

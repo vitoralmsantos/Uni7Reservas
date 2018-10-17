@@ -34,8 +34,10 @@
           <div class="form-row">
             <div class="w-100">
               <hr />
-              <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
-              <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
+              <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
+                <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
+                <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +64,7 @@
                 <td>{{equi.IdCategoria}}</td>
                 <td>{{equi.Modelo}}</td>
                 <td>{{equi.Serie}}</td>
-                <td>{{equi.Disponivel}}</td>
+                <td>{{equi.TipoBoolean}}</td>
                 <td></td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic example">
