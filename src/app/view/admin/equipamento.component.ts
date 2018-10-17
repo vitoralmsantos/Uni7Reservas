@@ -46,7 +46,7 @@ export class EquipamentoComponent implements OnInit {
     this.equipamentoService.getEquipamentos()
       .subscribe(response => {
         if (response.Status == 0) {
-          this.equipamentos = response.Equipamentos
+          this.equipamentos = response.Elementos
           this.equipamentos.forEach(u => u.TipoBoolean = Equipamento.TipoBoolean(u.Disponivel))
         }
         else {
@@ -57,7 +57,7 @@ export class EquipamentoComponent implements OnInit {
 
   getEquipamento(id): void {
     this.equipamentoService.getEquipamento(id)
-      .subscribe(response => { this.equipamento = response.Equipamento });
+      .subscribe(response => { this.equipamento = response.Elemento });
   }
 
   limpar(): void {

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { EquipamentosResponse } from './response/equipamentos.response';
-import { EquipamentoResponse } from './response/equipamento.response';
+import { EntidadesResponse } from './response/entidades.response';
 import { Equipamento } from '../model/equipamento.model';
+import { EntidadeResponse } from './response/entidade.response';
 
 @Injectable({ providedIn: 'root' })
 export class EquipamentoService { 
@@ -17,15 +17,15 @@ export class EquipamentoService {
 
     constructor(private http: HttpClient){}
 
-    getEquipamentos(): Observable<EquipamentosResponse> {
-        return this.http.get<EquipamentosResponse>(this.equipamentoUrl)
-          .pipe(catchError(this.handleError<EquipamentosResponse>('getEquipamentos')));
+    getEquipamentos(): Observable<EntidadesResponse<Equipamento>> {
+        return this.http.get<EntidadesResponse<Equipamento>>(this.equipamentoUrl)
+          .pipe(catchError(this.handleError<EntidadesResponse<Equipamento>>('getEquipamentos')));
       }
     
-    getEquipamento(id: number): Observable<EquipamentoResponse> {
+    getEquipamento(id: number): Observable<EntidadeResponse<Equipamento>> {
         const url = `${this.equipamentoUrl}/consulta/${id}`;
-        return this.http.get<EquipamentoResponse>(url)
-          .pipe(catchError(this.handleError<EquipamentoResponse>(`getEquipamento id=${id}`)));
+        return this.http.get<EntidadeResponse<Equipamento>>(url)
+          .pipe(catchError(this.handleError<EntidadeResponse<Equipamento>>(`getEquipamento id=${id}`)));
       }
 
     updateEquipamento(equipamento: Equipamento): Observable<any> {
@@ -37,8 +37,8 @@ export class EquipamentoService {
         u.set('Serie', equipamento.Serie.toString());
     
         let url = `${this.equipamentoUrl}/${equipamento.Id}`;
-        return this.http.put<EquipamentoResponse>(url, u.toString(), this.httpOptions)
-          .pipe(catchError(this.handleError<EquipamentoResponse>('updateEquipamento')));
+        return this.http.put<EntidadeResponse<Equipamento>>(url, u.toString(), this.httpOptions)
+          .pipe(catchError(this.handleError<EntidadeResponse<Equipamento>>('updateEquipamento')));
       }  
     addEquipamento(equipamento: Equipamento): Observable<any> {
         let u = new URLSearchParams();
@@ -47,14 +47,14 @@ export class EquipamentoService {
         u.set('IdCategoria', equipamento.IdCategoria.toString());
         u.set('Serie', equipamento.Serie.toString());
 
-        return this.http.post<EquipamentoResponse>(this.equipamentoUrl, u.toString(), this.httpOptions)
-          .pipe(catchError(this.handleError<EquipamentoResponse>('addEquipamento')));
+        return this.http.post<EntidadeResponse<Equipamento>>(this.equipamentoUrl, u.toString(), this.httpOptions)
+          .pipe(catchError(this.handleError<EntidadeResponse<Equipamento>>('addEquipamento')));
       }
     
     deleteEquipamento(id: Number): Observable<any> {
         let url = `${this.equipamentoUrl}/${id}`;
-        return this.http.delete<EquipamentoResponse>(url, this.httpOptions)
-          .pipe(catchError(this.handleError<EquipamentoResponse>('deleteEquipamento')));
+        return this.http.delete<EntidadeResponse<Equipamento>>(url, this.httpOptions)
+          .pipe(catchError(this.handleError<EntidadeResponse<Equipamento>>('deleteEquipamento')));
       }
     
     private handleError<T>(operation = 'operation', result?: T) {
