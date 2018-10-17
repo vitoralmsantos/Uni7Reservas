@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Recurso } from '../../model/recurso.model';
-import { RecursoService } from '../../services/recurso.service';
+import { Chamado } from '../../model/chamado.model';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ChamadoService } from 'src/app/services/chamado.service';
 declare var jquery:any;
 declare var $ :any;
 
@@ -12,87 +12,89 @@ declare var $ :any;
 })
 export class ChamadoComponent implements OnInit {
 
-  recursos: Recurso[];
-  recurso: Recurso;
+  chamados: Chamado[];
+  chamado: Chamado;
   ngbDate: NgbDateStruct;
   erroDetalhe: string;
   selectedIndex: number;
 
-  constructor(private recursoService: RecursoService) { }
+  constructor(private chamadoService: ChamadoService) { }
 
   ngOnInit() {
-    this.getRecursos();
+    this.getChamados();
     this.limpar();
   }
 
-  getRecursos(): void {
-    this.recursoService.getRecursos()
+  getChamados(): void {
+    this.chamadoService.getChamados()
       .subscribe(response => {
         if (response.Status == 0) {
-          this.recursos = response.Elementos
+          this.chamados = response.Elementos
         }
         else {
-          this.mostraErro(response.Detalhes)
+          this.mostraErro(response.Status)
         }
       });
   }
 
-  getRecurso(id): void {
-    this.recursoService.getRecurso(id)
-      .subscribe(response => { this.recurso = response.Elemento });
+  getChamado(id): void {
+    this.chamadoService.getChamado(id)
+      .subscribe(response => { this.chamado = response.Elemento });
   }
 
   
   inserir(): void {
-    this.recursoService.addRecurso(this.recurso)
+    this.chamadoService.addChamado(this.chamado)
       .subscribe(response => {
         if (response === undefined){
-          this.mostraErro('Não foi possível realizar o cadastro do usuário.')
+          this.mostraErro('Não foi possível realizar o cadastro do chamado.')
         }
         else if (response.Status == 0) {
           this.limpar()
-          this.getRecursos();
+          this.getChamados();
         }
         else {
-          this.mostraErro(response.Detalhes)
+          this.mostraErro(response.Status)
         }
       });
   }
 
   atualizar(): void {
-    this.recursoService.updateRecurso(this.recurso)
+    this.chamadoService.updateChamado(this.chamado)
       .subscribe(response => {
         if (response === undefined){
-          this.mostraErro('Não foi possível realizar a atualização do usuário.')
+          this.mostraErro('Não foi possível realizar a atualização do chamado.')
         }
         else if (response.Status == 0) {
-          this.recursos[this.selectedIndex].Nome = this.recurso.Nome;
-          this.recursos[this.selectedIndex].Detalhes = this.recurso.Detalhes;
-          this.recursos[this.selectedIndex].Tipo = this.recurso.Tipo;
-          this.recursos[this.selectedIndex].Vencimento = this.recurso.Vencimento
+          this.chamados[this.selectedIndex].Descricao = this.chamado.Descricao;
+          this.chamados[this.selectedIndex].Status = this.chamado.Status;
+          this.chamados[this.selectedIndex].Observacoes = this.chamado.Observacoes;
+          this.chamados[this.selectedIndex].DataLimite = this.chamado.DataLimite;
+          this.chamados[this.selectedIndex].DataPrevista = this.chamado.DataPrevista;
+          this.chamados[this.selectedIndex].Telefone = this.chamado.Telefone;
           this.limpar()
         }
         else {
-          this.mostraErro(response.Detalhes)
+          this.mostraErro(response.Status)
         }
       });
   }
 
   
   remover(index): void {
-    if (confirm('Confirma remoção de ' + this.recursos[index].Nome)) {
-      let id = this.recursos[index].Id
-      this.recursoService.deleteRecurso(id)
+    if (confirm('Confirma remoção de ' + this.chamados[index].Descricao)) {
+      let id = this.chamados[index].Id
+      this.chamadoService.deleteChamado(id)
       .subscribe(response => {
         if (response === undefined){
-          this.mostraErro('Não foi possível realizar a remoção do recurso.')
+          this.mostraErro('Não foi possível realizar a remoção do chamado.')
         }
         else if (response.Status == 0) {
           this.limpar()
-          this.getRecursos();
+          this.getChamados();
         }
         else {
-          this.mostraErro(response.Detalhes)
+          this.mostraErro(response.Status)
         }
       });
     }
@@ -100,32 +102,32 @@ export class ChamadoComponent implements OnInit {
 
   carregar(index): void {
     this.selectedIndex = index
-    this.recurso.Id = this.recursos[index].Id
-    this.recurso.Nome = this.recursos[index].Nome
-    this.recurso.Detalhes = this.recursos[index].Detalhes
-    this.recurso.Tipo = this.recursos[index].Tipo
-    this.recurso.Vencimento = this.recursos[index].Vencimento
+    this.chamado.Id = this.chamados[index].Id
+    this.chamado.Descricao = this.chamados[index].Descricao
+    this.chamado.Status = this.chamados[index].Status
+    this.chamado.Observacoes = this.chamados[index].Observacoes
+    this.chamado.DataLimite = this.chamados[index].DataLimite
   }
 
   limpar(): void {
-    this.recurso = new Recurso()
+    this.chamado = new Chamado()
   }
 
   registrar(): void {
-    if (this.recurso.Nome === undefined || this.recurso.Nome === ''){
-      this.mostraErro('Digite o nome do recurso.')
+    if (this.chamado.Descricao === undefined || this.chamado.Descricao === ''){
+      this.mostraErro('Digite a descrição do chamado.')
       return
     }
-    if (this.recurso.Detalhes === undefined || this.recurso.Detalhes === ''){
-      this.mostraErro('Digite os detalhes do recurso.')
+    if (this.chamado.Status === undefined){
+      this.mostraErro('Digite o estado do chamado.')
       return
     }
-    if (this.recurso.Tipo == -1){
-      this.mostraErro('Escolha um tipo de recurso.')
+    if (this.chamado.Observacoes == ''){
+      this.mostraErro('Digite a observação do chamado.')
       return
     }
     
-    if (this.recurso.Id === undefined) {
+    if (this.chamado.Id === undefined) {
       this.inserir()
     }
     else {
