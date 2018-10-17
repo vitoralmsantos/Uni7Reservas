@@ -143,7 +143,7 @@ export class ReservaComponent implements OnInit {
           this.categoria = []
           this.categoria.push({ Id: 0, Nome: '--Escolha um equipamento--' })
           this.reserva.IdCategoria = 0
-          this.categoria.push.apply(this.categoria, response.Categorias)
+          this.categoria.push.apply(this.categoria, response.Elementos)
           this.catDesabilitado = false
         }
         else {

@@ -26,7 +26,7 @@ export class CategoriaComponent implements OnInit {
     this.categoriaService.getCategorias()
       .subscribe(response => {
         if (response.Status == 0) {
-          this.categorias = response.Categorias
+          this.categorias = response.Elementos
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -36,7 +36,7 @@ export class CategoriaComponent implements OnInit {
 
   getCategoria(id): void {
     this.categoriaService.getCategoria(id)
-      .subscribe(response => { this.categoria = response.Categoria });
+      .subscribe(response => { this.categoria = response.Elemento });
   }
 
   limpar(): void {

@@ -30,7 +30,7 @@ export class EquipamentoComponent implements OnInit {
     this.categoriaService.getCategorias()
       .subscribe(response => {
       if (response.Status == 0) {
-        this.categorias = response.Categorias
+        this.categorias = response.Elementos
       }
       else {
         this.mostraErro(response.Detalhes)
