@@ -29,7 +29,7 @@ export class RecursoComponent implements OnInit {
     this.recursoService.getRecursos()
       .subscribe(response => {
         if (response.Status == 0) {
-          this.recursos = response.Recursos
+          this.recursos = response.Elementos
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -39,7 +39,7 @@ export class RecursoComponent implements OnInit {
 
   getRecurso(id): void {
     this.recursoService.getRecurso(id)
-      .subscribe(response => { this.recurso = response.Recurso });
+      .subscribe(response => { this.recurso = response.Elemento });
   }
 
   

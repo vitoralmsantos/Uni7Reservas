@@ -5,6 +5,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { RecursosResponse } from './response/recursos.response';
 import { RecursoResponse } from './response/recurso.response';
 import { Recurso } from '../model/recurso.model';
+import { EntidadeResponse } from './response/entidade.response';
+import { EntidadesResponse } from './response/entidades.response';
 
 @Injectable({ providedIn: 'root' })
 export class RecursoService { 
@@ -17,15 +19,15 @@ export class RecursoService {
 
     constructor(private http: HttpClient){}
 
-    getRecursos(): Observable<RecursosResponse> {
-        return this.http.get<RecursosResponse>(this.recursoUrl)
-          .pipe(catchError(this.handleError<RecursosResponse>('getRecursos')));
+    getRecursos(): Observable<EntidadesResponse<Recurso>> {
+        return this.http.get<EntidadesResponse<Recurso>>(this.recursoUrl)
+          .pipe(catchError(this.handleError<EntidadesResponse<Recurso>>('getRecursos')));
       }
 
-    getRecurso(id: number): Observable<RecursoResponse> {
+    getRecurso(id: number): Observable<EntidadeResponse<Recurso>> {
         const url = `${this.recursoUrl}/consulta/${id}`;
-        return this.http.get<RecursoResponse>(url)
-          .pipe(catchError(this.handleError<RecursoResponse>(`getRecurso id=${id}`)));
+        return this.http.get<EntidadeResponse<Recurso>>(url)
+          .pipe(catchError(this.handleError<EntidadeResponse<Recurso>>(`getRecurso id=${id}`)));
       }
 
     updateRecurso(recurso: Recurso): Observable<any> {
@@ -37,8 +39,8 @@ export class RecursoService {
         u.set('Tipo', recurso.Tipo.toString());
     
         let url = `${this.recursoUrl}/${recurso.Id}`;
-        return this.http.put<RecursoResponse>(url, u.toString(), this.httpOptions)
-          .pipe(catchError(this.handleError<RecursoResponse>('updateRecurso')));
+        return this.http.put<EntidadeResponse<Recurso>>(url, u.toString(), this.httpOptions)
+          .pipe(catchError(this.handleError<EntidadeResponse<Recurso>>('updateRecurso')));
       }  
     addRecurso(recurso: Recurso): Observable<any> {
         let u = new URLSearchParams();
@@ -47,14 +49,14 @@ export class RecursoService {
         u.set('Vencimento', recurso.Vencimento.toString());
         u.set('Tipo', recurso.Tipo.toString());
 
-        return this.http.post<RecursoResponse>(this.recursoUrl, u.toString(), this.httpOptions)
-          .pipe(catchError(this.handleError<RecursoResponse>('addRecurso')));
+        return this.http.post<EntidadeResponse<Recurso>>(this.recursoUrl, u.toString(), this.httpOptions)
+          .pipe(catchError(this.handleError<EntidadeResponse<Recurso>>('addRecurso')));
       }
 
     deleteRecurso(id: Number): Observable<any> {
         let url = `${this.recursoUrl}/${id}`;
-        return this.http.delete<RecursoResponse>(url, this.httpOptions)
-          .pipe(catchError(this.handleError<RecursoResponse>('deleteRecurso')));
+        return this.http.delete<EntidadeResponse<Recurso>>(url, this.httpOptions)
+          .pipe(catchError(this.handleError<EntidadeResponse<Recurso>>('deleteRecurso')));
       }
 
       private handleError<T>(operation = 'operation', result?: T) {

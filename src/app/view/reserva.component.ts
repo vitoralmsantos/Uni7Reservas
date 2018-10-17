@@ -131,7 +131,7 @@ export class ReservaComponent implements OnInit {
         }
         else if (response.Status == 0) {
           this.todosLocais = []
-          this.todosLocais.push.apply(this.todosLocais, response.Locais)
+          this.todosLocais.push.apply(this.todosLocais, response.Elementos)
           this.onChangeSomenteLabs()
           this.localDesabilitado = false
         }
@@ -165,7 +165,7 @@ export class ReservaComponent implements OnInit {
     this.reservaService.getReservas()
       .subscribe(response => {
         if (response.Status == 0) {
-          this.reservas = response.Reservas
+          this.reservas = response.Elementos
         }
         else {
           this.mostraErro(response.Detalhes)

@@ -26,7 +26,7 @@ export class LocalComponent implements OnInit {
     this.localService.getLocais()
       .subscribe(response => {
         if (response.Status == 0) {
-          this.locais = response.Locais
+          this.locais = response.Elementos
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -36,7 +36,7 @@ export class LocalComponent implements OnInit {
 
   getLocal(id): void {
     this.localService.getLocal(id)
-      .subscribe(response => { this.local = response.Local });
+      .subscribe(response => { this.local = response.Elemento });
   }
 
 

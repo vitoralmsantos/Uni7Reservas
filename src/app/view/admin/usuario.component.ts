@@ -30,7 +30,7 @@ export class UsuarioComponent implements OnInit {
     this.usuarioService.getUsuarios()
       .subscribe(response => {
         if (response.Status == 0) {
-          this.usuarios = response.Usuarios
+          this.usuarios = response.Elementos
           this.usuarios.forEach(u => u.TipoExtenso = Usuario.tipoExtenso(u.Tipo))
         }
         else {
@@ -42,7 +42,7 @@ export class UsuarioComponent implements OnInit {
   getUsuario(id): void {
     this.usuarioService.getUsuario(id)
       .subscribe(response => { 
-        this.usuario = response.Usuario 
+        this.usuario = response.Elemento 
         this.usuario.TipoExtenso = Usuario.tipoExtenso(this.usuario.Tipo)
       });
   }
