@@ -34,8 +34,8 @@ export class UsuarioService {
     u.set('Email', email);
     u.set('Senha', senha);
 
-    return this.http.post<UsuarioResponse>(url, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<UsuarioResponse>('autenticarUsuario')));
+    return this.http.post<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('autenticarUsuario')));
   }
 
   updateUsuario(usuario: Usuario): Observable<any> {
