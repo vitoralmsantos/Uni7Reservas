@@ -5,6 +5,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Local } from '../model/local.model';
 import { LocaisResponse } from './response/locais.response';
 import { LocalResponse } from './response/local.response';
+import { EntidadeResponse } from './response/entidade.response';
+import { EntidadesResponse } from './response/entidades.response';
 
 @Injectable({ providedIn: 'root' })
 export class LocalService {
@@ -17,22 +19,22 @@ export class LocalService {
 
   constructor(private http: HttpClient) { }
 
-  getLocais(): Observable<LocaisResponse> {
-    return this.http.get<LocaisResponse>(this.localUrl)
-      .pipe(catchError(this.handleError<LocaisResponse>('getLocais')));
+  getLocais(): Observable<EntidadesResponse<Local>> {
+    return this.http.get<EntidadesResponse<Local>>(this.localUrl)
+      .pipe(catchError(this.handleError<EntidadesResponse<Local>>('getLocais')));
   }
 
   //Consulta locais disponíveis para reservas
-  getDisponibilidade(data: string, horario: string, turno: string): Observable<LocaisResponse> {
+  getDisponibilidade(data: string, horario: string, turno: string): Observable<EntidadesResponse<Local>> {
     let url = `${this.localUrl}/disponibilidade/?data=${data}&horario=${horario}&turno=${turno}`;
-    return this.http.get<LocaisResponse>(url)
-      .pipe(catchError(this.handleError<LocaisResponse>('getDisponibilidade')));
+    return this.http.get<EntidadesResponse<Local>>(url)
+      .pipe(catchError(this.handleError<EntidadesResponse<Local>>('getDisponibilidade')));
   }
 
-  getLocal(id: number): Observable<LocalResponse> {
+  getLocal(id: number): Observable<EntidadeResponse<Local>> {
     const url = `${this.localUrl}/consulta/${id}`;
-    return this.http.get<LocalResponse>(url)
-      .pipe(catchError(this.handleError<LocalResponse>(`getLocal id=${id}`)));
+    return this.http.get<EntidadeResponse<Local>>(url)
+      .pipe(catchError(this.handleError<EntidadeResponse<Local>>(`getLocal id=${id}`)));
   }
 
   updateLocal(local: Local): Observable<any> {
@@ -44,8 +46,8 @@ export class LocalService {
     u.set('Tipo', local.Tipo.toString());
 
     let url = `${this.localUrl}/${local.Id}`;
-    return this.http.put<LocalResponse>(url, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<LocalResponse>('updateLocal')));
+    return this.http.put<EntidadeResponse<Local>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Local>>('updateLocal')));
   }
   addLocal(local: Local): Observable<any> {
     let u = new URLSearchParams();
@@ -54,14 +56,14 @@ export class LocalService {
     u.set('Disponivel', local.Disponivel.toString());
     u.set('Tipo', local.Tipo.toString());
 
-    return this.http.post<LocalResponse>(this.localUrl, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<LocalResponse>('addLocal')));
+    return this.http.post<EntidadeResponse<Local>>(this.localUrl, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Local>>('addLocal')));
   }
 
   deleteLocal(id: Number): Observable<any> {
     let url = `${this.localUrl}/${id}`;
-    return this.http.delete<LocalResponse>(url, this.httpOptions)
-      .pipe(catchError(this.handleError<LocalResponse>('deleteLocal')));
+    return this.http.delete<EntidadeResponse<Local>>(url, this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Local>>('deleteLocal')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

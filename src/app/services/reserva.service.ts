@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { BaseResponse } from './response/base.response';
-import { ReservasResponse } from './response/reservas.response';
-import { ReservaResponse } from './response/reserva.response';
 import { ReservaRegistro } from '../model/reservaregistro.model';
+import { EntidadeResponse } from './response/entidade.response';
+import { EntidadesResponse } from './response/entidades.response';
+import { Reserva } from '../model/reserva.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
@@ -18,9 +18,9 @@ export class ReservaService {
 
   constructor(private http: HttpClient) { }
 
-  getReservas(): Observable<ReservasResponse> {
-    return this.http.get<ReservasResponse>(this.equipamentoUrl)
-      .pipe(catchError(this.handleError<ReservasResponse>('getReservas')));
+  getReservas(): Observable<EntidadesResponse<Reserva>> {
+    return this.http.get<EntidadesResponse<Reserva>>(this.equipamentoUrl)
+      .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getReservas')));
   }
 
   addReserva(reserva: ReservaRegistro): Observable<any> {
@@ -33,14 +33,14 @@ export class ReservaService {
     u.set('IdUsuario', reserva.IdUsuario.toString());
     u.set('IdCategoria', reserva.IdCategoria.toString());
 
-    return this.http.post<ReservaResponse>(this.equipamentoUrl, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<ReservaResponse>('addReserva')));
+    return this.http.post<EntidadeResponse<Reserva>>(this.equipamentoUrl, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('addReserva')));
   }
 
   deleteReserva(id: Number): Observable<any> {
     let url = `${this.equipamentoUrl}/${id}`;
-    return this.http.delete<BaseResponse>(url, this.httpOptions)
-      .pipe(catchError(this.handleError<BaseResponse>('deleteReserva')));
+    return this.http.delete<EntidadeResponse<Reserva>>(url, this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('deleteReserva')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

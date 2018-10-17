@@ -3,9 +3,8 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Usuario } from '../model/usuario.model';
-import { BaseResponse } from './response/base.response';
-import { UsuariosResponse } from './response/usuarios.response';
-import { UsuarioResponse } from './response/usuario.response';
+import { EntidadesResponse } from './response/entidades.response';
+import { EntidadeResponse } from './response/entidade.response';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
@@ -18,15 +17,15 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) { }
 
-  getUsuarios(): Observable<UsuariosResponse> {
-    return this.http.get<UsuariosResponse>(this.usuarioUrl)
-      .pipe(catchError(this.handleError<UsuariosResponse>('getUsuarios')));
+  getUsuarios(): Observable<EntidadesResponse<Usuario>> {
+    return this.http.get<EntidadesResponse<Usuario>>(this.usuarioUrl)
+      .pipe(catchError(this.handleError<EntidadesResponse<Usuario>>('getUsuarios')));
   }
 
-  getUsuario(id: number): Observable<UsuarioResponse> {
+  getUsuario(id: number): Observable<EntidadeResponse<Usuario>> {
     const url = `${this.usuarioUrl}/consulta/${id}`;
-    return this.http.get<UsuarioResponse>(url)
-      .pipe(catchError(this.handleError<UsuarioResponse>(`getUsuario id=${id}`)));
+    return this.http.get<EntidadeResponse<Usuario>>(url)
+      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>(`getUsuario id=${id}`)));
   }
 
   updateUsuario(usuario: Usuario): Observable<any> {
@@ -37,8 +36,8 @@ export class UsuarioService {
     u.set('Tipo', usuario.Tipo.toString());
 
     let url = `${this.usuarioUrl}/${usuario.Id}`;
-    return this.http.put<BaseResponse>(url, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<BaseResponse>('updateUsuario')));
+    return this.http.put<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('updateUsuario')));
   }
 
   addUsuario(usuario: Usuario): Observable<any> {
@@ -47,14 +46,14 @@ export class UsuarioService {
     u.set('Email', usuario.Email.toString());
     u.set('Tipo', usuario.Tipo.toString());
 
-    return this.http.post<UsuarioResponse>(this.usuarioUrl, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<UsuarioResponse>('addUsuario')));
+    return this.http.post<EntidadeResponse<Usuario>>(this.usuarioUrl, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('addUsuario')));
   }
 
   deleteUsuario(id: Number): Observable<any> {
     let url = `${this.usuarioUrl}/${id}`;
-    return this.http.delete<BaseResponse>(url, this.httpOptions)
-      .pipe(catchError(this.handleError<BaseResponse>('deleteUsuario')));
+    return this.http.delete<EntidadeResponse<Usuario>>(url, this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('deleteUsuario')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
