@@ -37,13 +37,7 @@ export class ReservaComponent implements OnInit {
   ngOnInit() {
     this.titulo = 'Cadastrar Novo'
     this.limparTotal()
-    if (this.authService.retrieveUserId() !== undefined) {
-      this.reserva.IdUsuario = Number.parseInt(this.authService.retrieveUserId())
-      console.log(this.authService.retrieveUserId())
-    }
-    else {
-      //Usuário não autenticado
-    }
+    this.getReservas()
   }
 
   limparParcial(): void {
@@ -54,6 +48,14 @@ export class ReservaComponent implements OnInit {
     this.categoria = []
     this.localDesabilitado = true
     this.catDesabilitado = true
+    if (this.authService.retrieveUserId() !== 0) {
+      this.reserva.IdUsuario = Number.parseInt(this.authService.retrieveUserId())
+      console.log(this.authService.retrieveUserId())
+    }
+    else {
+      //Usuário não autenticado
+      this.reserva.IdUsuario = 1
+    }
   }
 
   limparTotal(): void {

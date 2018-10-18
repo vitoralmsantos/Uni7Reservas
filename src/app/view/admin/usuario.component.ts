@@ -10,16 +10,17 @@ declare var $ :any;
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit {
-  usuarios: Usuario[];
-  usuario: Usuario;
-  erroDetalhe: string;
-  selectedIndex: number;
+  usuarios: Usuario[]
+  usuario: Usuario
+  erroDetalhe: string
+  selectedIndex: number
+  titulo: string
 
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
-    this.getUsuarios();
-    this.limpar();
+    this.getUsuarios()
+    this.limpar()
   }
 
   tipoUsuario(usuario: Usuario): string{
@@ -104,6 +105,7 @@ export class UsuarioComponent implements OnInit {
   limpar(): void {
     this.usuario = new Usuario()
     this.usuario.Tipo = -1
+    this.titulo = 'Novo usuário'
   }
 
   carregar(index): void {
@@ -113,6 +115,7 @@ export class UsuarioComponent implements OnInit {
     this.usuario.Email = this.usuarios[index].Email
     this.usuario.Tipo = this.usuarios[index].Tipo
     this.usuario.TipoExtenso = this.usuarios[index].TipoExtenso
+    this.titulo = 'Editar usuário'
   }
 
   registrar(): void {
