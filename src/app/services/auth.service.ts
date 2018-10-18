@@ -22,8 +22,8 @@ export class AuthService {
 
     public retrieveUserId() {
         let storedUserId: string = localStorage.getItem(this.userId);
-        if (!storedUserId)
-            return 0;
+        if (storedUserId === 'undefined')
+            return "0";
         else
             return storedUserId;
     }

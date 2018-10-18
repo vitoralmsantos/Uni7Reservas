@@ -32,7 +32,7 @@ export class ReservaService {
     u.set('IdLocal', reserva.IdLocal.toString());
     u.set('IdUsuario', reserva.IdUsuario.toString());
     u.set('IdCategoria', reserva.IdCategoria.toString());
-
+console.log(u.toString())
     return this.http.post<EntidadeResponse<Reserva>>(this.equipamentoUrl, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('addReserva')));
   }

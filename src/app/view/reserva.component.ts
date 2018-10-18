@@ -48,9 +48,8 @@ export class ReservaComponent implements OnInit {
     this.categoria = []
     this.localDesabilitado = true
     this.catDesabilitado = true
-    if (this.authService.retrieveUserId() !== 0) {
+    if (Number.parseInt(this.authService.retrieveUserId()) != 0) {
       this.reserva.IdUsuario = Number.parseInt(this.authService.retrieveUserId())
-      console.log(this.authService.retrieveUserId())
     }
     else {
       //Usuário não autenticado
@@ -176,7 +175,6 @@ export class ReservaComponent implements OnInit {
   }
 
   reservar(): void {
-    console.log(this.reserva)
     this.reservaService.addReserva(this.reserva)
       .subscribe(response => {
         if (response === undefined) {
