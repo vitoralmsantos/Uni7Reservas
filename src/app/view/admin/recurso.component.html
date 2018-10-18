@@ -1,87 +1,95 @@
 <div class="container">
-    <div class="row cabecalho">
-      <div class="col-lg-6">
-        <span>RECURSO</span>
-      </div>
+  <div class="row cabecalho">
+    <div class="col-lg-6">
+      <span>RECURSO</span>
     </div>
-  
-    <div class="row">
-      <div class="col-lg-4">
-  
-        <div class="card">
-          <div class="card-body">
-            <div class="form-row align-items-center" style="margin-bottom: 8px">
-              <label class="label-msg" for="inputNome">Nome</label>
-              <input [(ngModel)]="recurso.Nome" type="text" class="form-control" id="inputNome">
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="form-row align-items-center" style="margin-bottom: 8px">
+            <label class="label-msg" for="inputNome">Nome</label>
+            <input [(ngModel)]="recurso.Nome" type="text" class="form-control" id="inputNome">
+          </div>
+
+          <div class="form-row align-items-center" style="margin-bottom: 8px">
+            <label class="label-msg" for="inputNome">Detalhes</label>
+            <input [(ngModel)]="recurso.Detalhes" type="text" class="form-control" id="inputNome">
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-row align-items-center" style="margin-bottom: 8px">
+                <div class="form-group">
+                  <label class="label-msg" for="selectTipo">Tipo</label>
+                  <select [(ngModel)]="recurso.Tipo" class="form-control" id="selectTipo">
+                    <option value='0'>Hardware</option>
+                    <option value='1'>Software</option>
+                    <option value='2'>Outro</option>
+                  </select>
+                </div>
+              </div>
             </div>
-  
-            <div class="form-row align-items-center" style="margin-bottom: 8px">
-                <label class="label-msg" for="inputNome">Detalhes</label>
-                <input [(ngModel)]="recurso.Detalhes" type="text" class="form-control" id="inputNome">
-              </div>
-  
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="form-row align-items-center" style="margin-bottom: 8px">
-                    <div class="form-group">
-                      <label class="label-msg" for="selectTipo">Tipo</label>
-                      <select [(ngModel)]="recurso.Tipo" class="form-control" id="selectTipo">
-                        <option value='0'>Hardware</option>
-                        <option value='1'>Software</option>
-                        <option value='2'>Outro</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="form-row">
-                <div class="w-100">
-                  <hr />
-                  <div class="float-right">
-                    <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
-                    <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
-                  </div>
-                </div>
+            <div class="col-lg-6">
+                <label class="label-msg" for="inputData">Vencimento</label>
+                <ng-template #t let-date="date">
+                  {{ date.day }}
+                </ng-template>
+                <input [(ngModel)]="ngbDate" (click)="d.toggle()" type="text" ngbDatepicker #d="ngbDatepicker" class="form-control"
+                  id="inputData" placeholder="Informe a Data">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="w-100">
+              <hr />
+              <div class="float-right">
+                <button id="btCancelar" class="btn btn-default" (click)="limpar()">Cancelar</button>
+                <button id="btCadastrar" class="btn btn-success" (click)="registrar()">Cadastrar</button>
               </div>
             </div>
           </div>
         </div>
-      <div class="col-lg-8">
-  
-        <div class="card">
-          <div class="card-body">
-  
-            <table class="table table-hover table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Detalhes</th>
-                  <th scope="col">Tipo</th>
-                  <th scope="col">Vencimento</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let re of recursos; let i = index">
-                  <th scope="row">1</th>
-                  <td>{{re.Nome}}</td>
-                  <td>{{re.Detalhes}}</td>
-                  <td>{{re.Tipo}}</td>
-                  <td>{{re.Vencimento}}</td>
-                  <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
-                      <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-  
-          </div>
+      </div>
+    </div>
+    <div class="col-lg-8">
+
+      <div class="card">
+        <div class="card-body">
+
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Detalhes</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Vencimento</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let re of recursos; let i = index">
+                <th scope="row">1</th>
+                <td>{{re.Nome}}</td>
+                <td>{{re.Detalhes}}</td>
+                <td>{{re.Tipo}}</td>
+                <td>{{re.Vencimento}}</td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
+                    <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
         </div>
       </div>
     </div>
   </div>
+</div>
