@@ -5,3 +5,5 @@ botão mouseover;
 - Se todos os labs estiverem reservados, um usuário pode disparar uma
 mensagem para os profs solicitando a liberação.
 - Mostrar a relação de softwares por labs; mostrar os labs que possuem determinado software.
+- Registro de chamados (instalação de software)
+- Acompanhamento de bolsistas: cada bolsista indicará os labs que abriu e fechou no dia.
