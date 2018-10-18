@@ -14,6 +14,7 @@ export class LocalComponent implements OnInit {
   local: Local;
   erroDetalhe: string;
   selectedIndex: number;
+  titulo: string;
 
   constructor(private localService: LocalService) { }
 
@@ -44,6 +45,7 @@ export class LocalComponent implements OnInit {
     this.local = new Local()
     this.local.Reservavel = false
     this.local.Disponivel = false
+    this.titulo = 'Novo local'
   }
 
   inserir(): void {
@@ -104,6 +106,7 @@ export class LocalComponent implements OnInit {
     this.local.Reservavel = this.locais[index].Reservavel
     this.local.Disponivel = this.locais[index].Disponivel
     this.local.Tipo = this.locais[index].Tipo
+    this.titulo = 'Editar local'
 
   }
 

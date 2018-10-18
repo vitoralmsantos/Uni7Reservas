@@ -9,6 +9,9 @@
     <div class="col-lg-4">
 
       <div class="card">
+        <div class="card-header">
+          {{titulo}}
+        </div>
         <div class="card-body">
           <div class="form-row align-items-center" style="margin-bottom: 8px">
             <label class="label-msg" for="inputNome">Nome</label>
@@ -34,12 +37,12 @@
               </div>
             </div>
             <div class="col-lg-6">
-                <label class="label-msg" for="inputData">Vencimento</label>
-                <ng-template #t let-date="date">
-                  {{ date.day }}
-                </ng-template>
-                <input [(ngModel)]="ngbDate" (click)="d.toggle()" type="text" ngbDatepicker #d="ngbDatepicker" class="form-control"
-                  id="inputData" placeholder="Informe a Data">
+              <label class="label-msg" for="inputData">Vencimento</label>
+              <ng-template #t let-date="date">
+                {{ date.day }}
+              </ng-template>
+              <input [(ngModel)]="ngbDate" (click)="d.toggle()" type="text" ngbDatepicker #d="ngbDatepicker" class="form-control"
+                id="inputData" placeholder="Informe a Data">
             </div>
           </div>
 

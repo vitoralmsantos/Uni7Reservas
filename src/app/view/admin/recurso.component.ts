@@ -17,6 +17,7 @@ export class RecursoComponent implements OnInit {
   ngbDate: NgbDateStruct;
   erroDetalhe: string;
   selectedIndex: number;
+  titulo: string;
 
   constructor(private recursoService: RecursoService) { }
 
@@ -105,10 +106,12 @@ export class RecursoComponent implements OnInit {
     this.recurso.Detalhes = this.recursos[index].Detalhes
     this.recurso.Tipo = this.recursos[index].Tipo
     this.recurso.Vencimento = this.recursos[index].Vencimento
+    this.titulo = 'Editar recurso'
   }
 
   limpar(): void {
     this.recurso = new Recurso()
+    this.titulo = 'Novo recurso'
   }
 
   registrar(): void {

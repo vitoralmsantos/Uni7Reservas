@@ -17,6 +17,7 @@ export class EquipamentoComponent implements OnInit {
   erroDetalhe: string;
   selectedIndex: number;
   categorias: Categoria[];
+  titulo: string;
 
   constructor(private equipamentoService: EquipamentoService, private categoriaService: CategoriaService) { }
 
@@ -63,6 +64,7 @@ export class EquipamentoComponent implements OnInit {
   limpar(): void {
     this.equipamento = new Equipamento()
     this.equipamento.Disponivel = false
+    this.titulo = 'Novo equipamento'
   }
 
   inserir(): void {
@@ -125,6 +127,7 @@ export class EquipamentoComponent implements OnInit {
     this.equipamento.Disponivel = this.equipamentos[index].Disponivel
     this.equipamento.IdCategoria = this.equipamentos[index].IdCategoria
     this.equipamento.Serie = this.equipamentos[index].Serie
+    this.titulo = 'Editar equipamento'
   }
 
 
