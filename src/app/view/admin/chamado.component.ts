@@ -17,6 +17,7 @@ export class ChamadoComponent implements OnInit {
   ngbDate: NgbDateStruct;
   erroDetalhe: string;
   selectedIndex: number;
+  titulo: string;
 
   constructor(private chamadoService: ChamadoService) { }
 
@@ -107,10 +108,12 @@ export class ChamadoComponent implements OnInit {
     this.chamado.Status = this.chamados[index].Status
     this.chamado.Observacoes = this.chamados[index].Observacoes
     this.chamado.DataLimite = this.chamados[index].DataLimite
+    this.titulo = 'Editar chamado'
   }
 
   limpar(): void {
     this.chamado = new Chamado()
+    this.titulo = 'Novo chamado'
   }
 
   registrar(): void {
