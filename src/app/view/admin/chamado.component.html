@@ -9,9 +9,9 @@
         <div class="col-lg-4">
 
             <div class="card">
-                    <div class="card-header">
-                            {{titulo}}
-                        </div>
+                <div class="card-header">
+                    {{titulo}}
+                </div>
                 <div class="card-body">
                     <div class="row">
 
@@ -21,14 +21,24 @@
                         </div>
                     </div>
 
-                    <div class="form-row align-items-center" style="margin-bottom: 8px">
-                        <label class="label-msg" for="inputNome">Data Limite</label>
-                        <input [(ngModel)]="chamado.DataLimite" type="text" class="form-control" id="inputNome">
-                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-row align-items-center" style="margin-bottom: 8px">
+                                <label class="label-msg" for="inputNome">Data Limite</label>
+                                <ng-template #t let-date="date">
+                                    {{ date.day }}
+                                </ng-template>
+                                <input [(ngModel)]="ngbDate" (click)="d.toggle()" type="text" ngbDatepicker #d="ngbDatepicker"
+                                    class="form-control" id="inputData" placeholder="Data">
+                            </div>
+                        </div>
 
-                    <div class="form-row align-items-center" style="margin-bottom: 8px">
-                        <label class="label-msg" for="inputNome">Telefone</label>
-                        <input [(ngModel)]="chamado.Telefone" type="text" class="form-control" id="inputNome">
+                        <div class="col-lg-6">
+                            <div class="form-row align-items-center" style="margin-bottom: 8px">
+                                <label class="label-msg" for="inputNome">Telefone</label>
+                                <input [(ngModel)]="chamado.Telefone" type="text" class="form-control" id="inputNome">
+                            </div>
+                        </div>
                     </div>
 
 
