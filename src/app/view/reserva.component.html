@@ -94,13 +94,15 @@
               <tr *ngFor="let reserva of reservas; let i = index">
                 <th scope="row">{{reserva.Id}}</th>
                 <td>{{reserva.Data}}</td>
-                <td>{{reserva.Horario}}</td>
+                <td>{{reserva.TurnoExtenso}} {{reserva.Horario}}</td>
                 <td>{{reserva.NomeLocal}}</td>
                 <td>{{reserva.Equipamentos}}</td>
                 <td>
-                  <div class="btn-group" role="group">
-                    <button type="button" (click)="carregar(i)" class="btn btn-primary btn-sm">X</button>
-                    <button type="button" (click)="remover(reserva.Id)" class="btn btn-danger btn-sm">X</button>
+                  <div>
+                    <div style="margin-bottom:-8px;margin-top:-8px" class="btn-group float-right">
+                      <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-marker"></i></button>
+                      <button type="button" (click)="remover(reserva.Id)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
+                    </div>
                   </div>
                 </td>
               </tr>

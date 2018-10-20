@@ -6,13 +6,13 @@ export class Equipamento {
     IdCategoria: number;
     TipoBoolean: string;
 
-    public static TipoBoolean(boolean: boolean): string {
+    public static TipoBoolean(tipo: boolean): string {
         let resultado = ''
     
-        if (boolean == false) {
+        if (tipo == false) {
             resultado = "Não"
         }
-        else if (boolean == true) {
+        else if (tipo == true) {
             resultado = "Sim"
         }
     

@@ -22,7 +22,7 @@ export class AuthService {
 
     public retrieveUserId() {
         let storedUserId: string = localStorage.getItem(this.userId);
-        if (storedUserId === 'undefined')
+        if (storedUserId === 'undefined' || storedUserId == null)
             return "0";
         else
             return storedUserId;

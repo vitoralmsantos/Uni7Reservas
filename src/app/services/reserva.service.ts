@@ -14,13 +14,19 @@ export class ReservaService {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
   };
 
-  private equipamentoUrl = 'http://localhost:51859/api/reserva';
+  private reservaUrl = 'http://localhost:51859/api/reserva';
 
   constructor(private http: HttpClient) { }
 
   getReservas(): Observable<EntidadesResponse<Reserva>> {
-    return this.http.get<EntidadesResponse<Reserva>>(this.equipamentoUrl)
+    return this.http.get<EntidadesResponse<Reserva>>(this.reservaUrl)
       .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getReservas')));
+  }
+
+  getPorUsuario(idUsuario: number): Observable<EntidadesResponse<Reserva>> {
+    let url = `${this.reservaUrl}/usuario/${idUsuario}`;
+    return this.http.get<EntidadesResponse<Reserva>>(url)
+      .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getPorUsuario')));
   }
 
   addReserva(reserva: ReservaRegistro): Observable<any> {
@@ -32,13 +38,13 @@ export class ReservaService {
     u.set('IdLocal', reserva.IdLocal.toString());
     u.set('IdUsuario', reserva.IdUsuario.toString());
     u.set('IdCategoria', reserva.IdCategoria.toString());
-console.log(u.toString())
-    return this.http.post<EntidadeResponse<Reserva>>(this.equipamentoUrl, u.toString(), this.httpOptions)
+    
+    return this.http.post<EntidadeResponse<Reserva>>(this.reservaUrl, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('addReserva')));
   }
 
   deleteReserva(id: Number): Observable<any> {
-    let url = `${this.equipamentoUrl}/${id}`;
+    let url = `${this.reservaUrl}/${id}`;
     return this.http.delete<EntidadeResponse<Reserva>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('deleteReserva')));
   }

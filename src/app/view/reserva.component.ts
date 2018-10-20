@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Reserva } from '../model/reserva.model';
 import { ReservaRegistro } from '../model/reservaregistro.model';
 import { Local } from '../model/local.model';
@@ -17,19 +18,19 @@ declare var $: any;
   styleUrls: ['./reserva.component.css']
 })
 export class ReservaComponent implements OnInit {
-  titulo: string;
-  reserva: ReservaRegistro;
-  ngbDate: NgbDateStruct;
-  horario: number;
-  somenteLabs: boolean;
-  localDesabilitado: boolean;
-  catDesabilitado: boolean;
-  reservas: Reserva[];
-  locais: Local[];
-  todosLocais: Local[];
-  categoria: Categoria[];
-
-  erroDetalhe: string;
+  titulo: string
+  reserva: ReservaRegistro
+  ngbDate: NgbDateStruct
+  horario: number
+  somenteLabs: boolean
+  localDesabilitado: boolean
+  catDesabilitado: boolean
+  reservas: Reserva[]
+  locais: Local[]
+  todosLocais: Local[]
+  categoria: Categoria[]
+  idUsuario: number
+  erroDetalhe: string
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService) { }
@@ -37,7 +38,18 @@ export class ReservaComponent implements OnInit {
   ngOnInit() {
     this.titulo = 'Cadastrar Novo'
     this.limparTotal()
+    if (Number.parseInt(this.authService.retrieveUserId()) != 0) {
+      this.idUsuario = Number.parseInt(this.authService.retrieveUserId())
+    }
+    else {
+      //Usuário não autenticado
+      this.idUsuario = 1
+    }
     this.getReservas()
+
+    let pipe = new DatePipe('en-US');
+    
+    console.log(pipe.transform('10/20/2018','EEEE'))
   }
 
   limparParcial(): void {
@@ -48,13 +60,7 @@ export class ReservaComponent implements OnInit {
     this.categoria = []
     this.localDesabilitado = true
     this.catDesabilitado = true
-    if (Number.parseInt(this.authService.retrieveUserId()) != 0) {
-      this.reserva.IdUsuario = Number.parseInt(this.authService.retrieveUserId())
-    }
-    else {
-      //Usuário não autenticado
-      this.reserva.IdUsuario = 1
-    }
+    this.reserva.IdUsuario = this.idUsuario
   }
 
   limparTotal(): void {
@@ -127,7 +133,7 @@ export class ReservaComponent implements OnInit {
     this.localService.getDisponibilidade(this.reserva.Data, this.reserva.Horario, this.reserva.Turno)
       .subscribe(response => {
         if (response === undefined) {
-          this.mostraErro('Não foi possível consultar a disponibilidade de locais.')
+          this.mostraErro('Não foi possível consultar a disponibilidade de locais. Verifique conexão com Internet.')
           this.limparParcial()
         }
         else if (response.Status == 0) {
@@ -145,7 +151,7 @@ export class ReservaComponent implements OnInit {
     this.categoriaService.getDisponibilidade(this.reserva.Data, this.reserva.Horario, this.reserva.Turno)
       .subscribe(response => {
         if (response === undefined) {
-          this.mostraErro('Não foi possível consultar a disponibilidade de equipamentos.')
+          this.mostraErro('Não foi possível consultar a disponibilidade de equipamentos. Verifique conexão com Internet.')
           this.limparParcial()
         }
         else if (response.Status == 0) {
@@ -163,10 +169,11 @@ export class ReservaComponent implements OnInit {
   }
 
   getReservas(): void {
-    this.reservaService.getReservas()
+    this.reservaService.getPorUsuario(this.idUsuario)
       .subscribe(response => {
         if (response.Status == 0) {
           this.reservas = response.Elementos
+          this.reservas.forEach(r => r.TurnoExtenso = Reserva.turnoExtenso(r.Turno))
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -178,7 +185,7 @@ export class ReservaComponent implements OnInit {
     this.reservaService.addReserva(this.reserva)
       .subscribe(response => {
         if (response === undefined) {
-          this.mostraErro('Não foi possível realizar a reserva solicitada.')
+          this.mostraErro('Não foi possível realizar a reserva solicitada. Verifique conexão com Internet.')
         }
         else if (response.Status == 0) {
           this.getReservas();
