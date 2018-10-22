@@ -32,6 +32,13 @@ export class ReservaComponent implements OnInit {
   categoria: Categoria[]
   idUsuario: number
   erroDetalhe: string
+  
+  obsDetalhe: string
+  nomeDetalhe: string
+  emailDetalhe: string
+  reservadoDetalhe: string
+  idDetalhe: number
+  indexDetalhe: number
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService) { }
@@ -173,6 +180,9 @@ export class ReservaComponent implements OnInit {
           this.reservas.forEach(r => {
             r.TurnoExtenso = Reserva.turnoExtenso(r.Turno)
             r.Data = moment(r.Data, 'DD/MM/YYYY').format('ddd').toUpperCase() + ' ' + r.Data
+            $(function () {
+              $('[data-toggle="tooltip"]').tooltip()
+            })
           })
         }
         else {
@@ -213,6 +223,20 @@ export class ReservaComponent implements OnInit {
         }
       });
     }
+  }
+
+  editar(index): void {
+    $('#modalDetalhes').modal('show')
+    this.indexDetalhe = index
+    this.obsDetalhe = this.reservas[index].Obs
+    this.nomeDetalhe = this.reservas[index].NomeUsuario
+    this.emailDetalhe = this.reservas[index].EmailUsuario
+    this.reservadoDetalhe = this.reservas[index].ReservadoEm
+    this.idDetalhe = this.reservas[index].Id
+  }
+
+  atualizar(): void{
+
   }
 
   mostraErro(detalhe): void {
