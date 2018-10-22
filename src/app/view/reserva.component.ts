@@ -9,6 +9,8 @@ import { CategoriaService } from '../services/categoria.service';
 import { ReservaService } from '../services/reserva.service';
 import { AuthService } from '../services/auth.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
+import 'moment/locale/pt-br';
 declare var jquery: any;
 declare var $: any;
 
@@ -46,10 +48,6 @@ export class ReservaComponent implements OnInit {
       this.idUsuario = 1
     }
     this.getReservas()
-
-    let pipe = new DatePipe('en-US');
-    
-    console.log(pipe.transform('10/20/2018','EEEE'))
   }
 
   limparParcial(): void {
@@ -173,7 +171,10 @@ export class ReservaComponent implements OnInit {
       .subscribe(response => {
         if (response.Status == 0) {
           this.reservas = response.Elementos
-          this.reservas.forEach(r => r.TurnoExtenso = Reserva.turnoExtenso(r.Turno))
+          this.reservas.forEach(r => {
+            r.TurnoExtenso = Reserva.turnoExtenso(r.Turno)
+            r.Data = moment(r.Data, 'DD/MM/YYYY').format('ddd').toUpperCase() + ' ' + r.Data
+          })
         }
         else {
           this.mostraErro(response.Detalhes)
