@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { Reserva } from '../model/reserva.model';
 import { ReservaRegistro } from '../model/reservaregistro.model';
 import { Local } from '../model/local.model';
@@ -190,11 +189,30 @@ export class ReservaComponent implements OnInit {
         }
         else if (response.Status == 0) {
           this.getReservas();
+          this.limparTotal()
         }
         else {
           this.mostraErro(response.Detalhes)
         }
       });
+  }
+
+  remover(index): void {
+    if (confirm('Confirma remoção de ' + this.reservas[index].Data + ' ' + this.reservas[index].NomeLocal + '?')) {
+      let id = this.reservas[index].Id
+      this.reservaService.deleteReserva(id)
+      .subscribe(response => {
+        if (response === undefined){
+          this.mostraErro('Não foi possível realizar a remoção da reserva. Verifique conexão com a Internet.')
+        }
+        else if (response.Status == 0) {
+          this.getReservas();
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+      });
+    }
   }
 
   mostraErro(detalhe): void {
