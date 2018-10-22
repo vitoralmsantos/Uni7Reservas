@@ -136,8 +136,8 @@ export class EquipamentoComponent implements OnInit {
       this.mostraErro('Digite o modelo do equipamento.')
       return
     }
-    if (this.equipamento.Serie === undefined){
-      this.equipamento.Serie = ''
+    if (this.equipamento.Serie === undefined || this.equipamento.Modelo === ''){
+      this.mostraErro('Digite o número da serie')
     }
     if (this.equipamento.Id === undefined) {
       this.inserir()
