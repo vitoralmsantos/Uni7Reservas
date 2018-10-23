@@ -40,6 +40,14 @@ export class ReservaComponent implements OnInit {
   idDetalhe: number
   indexDetalhe: number
 
+  obsFiltro: string
+  idLocalFiltro: number
+  idEquipamentoFiltro: number
+  ngbDateDe: NgbDateStruct
+  horarioDe: number
+  ngbDateAte: NgbDateStruct
+  horarioAte: number
+
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService) { }
 
@@ -233,6 +241,18 @@ export class ReservaComponent implements OnInit {
     this.emailDetalhe = this.reservas[index].EmailUsuario
     this.reservadoDetalhe = this.reservas[index].ReservadoEm
     this.idDetalhe = this.reservas[index].Id
+  }
+
+  abrirFiltro(): void {
+    $('#modalFiltro').modal('show')
+  }
+
+  filtrar(): void {
+    $('#modalFiltro').modal('hide')
+  }
+
+  limparFiltro(): void {
+    $('#modalFiltro').modal('hide')
   }
 
   atualizar(): void{
