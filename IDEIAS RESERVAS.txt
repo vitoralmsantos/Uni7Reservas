@@ -1,9 +1,10 @@
 - Reserva realizada por Admin para YYY; Ao fazer reserva de lote,
-atribuir direto ao usuário e enviar email.
-- Mostrar detalhes menos importantes na relação de reservas em um
-botão mouseover;
-- Se todos os labs estiverem reservados, um usuário pode disparar uma
-mensagem para os profs solicitando a liberação.
-- Mostrar a relação de softwares por labs; mostrar os labs que possuem determinado software.
-- Registro de chamados (instalação de software)
-- Acompanhamento de bolsistas: cada bolsista indicará os labs que abriu e fechou no dia.
+atribuir direto ao usuï¿½rio e enviar email.
+- Se todos os labs estiverem reservados, um usuï¿½rio pode disparar uma
+mensagem para os profs solicitando a liberaï¿½ï¿½o.
+- Mostrar a relaï¿½ï¿½o de softwares por labs; mostrar os labs que possuem determinado software.
+- Registro de chamados (instalaï¿½ï¿½o de software)
+- Acompanhamento de bolsistas: cada bolsista indicarï¿½ os labs que abriu e fechou no dia.
+- Aplicativo do bolsista para registro de observaÃ§Ãµes e "FoiUsado"
+- BotÃ£o de "Avaliar" em cada reserva para avaliar atraso, satisfaÃ§Ã£o e incluir observaÃ§Ãµes
+- Ao atualizar categoria de um equipamento, fazer verificaÃ§Ã£o de "exclusÃ£o" de equipamento daquela categoria anterior
