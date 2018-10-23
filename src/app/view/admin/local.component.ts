@@ -22,12 +22,17 @@ export class LocalComponent implements OnInit {
     this.getLocais();
     this.limpar();
   }
+
+  tipoLocal(local: Local): String {
+    return Local.tipoLocal(local.Tipo)
+  }
  
   getLocais(): void {
     this.localService.getLocais()
       .subscribe(response => {
         if (response.Status == 0) {
           this.locais = response.Elementos
+          this.locais.forEach(u => u.TipoLocal = Local.tipoLocal(u.Tipo))
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -72,6 +77,7 @@ export class LocalComponent implements OnInit {
           this.locais[this.selectedIndex].Reservavel = this.local.Reservavel;
           this.locais[this.selectedIndex].Disponivel = this.local.Disponivel;
           this.locais[this.selectedIndex].Tipo = this.local.Tipo;
+          this.locais[this.selectedIndex].TipoLocal = Local.tipoLocal(this.local.Tipo)
           this.limpar()
         }
         else {
@@ -106,6 +112,7 @@ export class LocalComponent implements OnInit {
     this.local.Reservavel = this.locais[index].Reservavel
     this.local.Disponivel = this.locais[index].Disponivel
     this.local.Tipo = this.locais[index].Tipo
+    this.local.TipoLocal = this.locais[index].TipoLocal
     this.titulo = 'Editar local'
 
   }

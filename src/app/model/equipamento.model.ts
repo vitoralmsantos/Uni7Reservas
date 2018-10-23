@@ -1,3 +1,5 @@
+
+
 export class Equipamento {
     Id: number;
     Serie: string;
@@ -5,6 +7,8 @@ export class Equipamento {
     Disponivel: boolean;
     IdCategoria: number;
     TipoBoolean: string;
+    NomeCategoria: String;
+
 
     public static TipoBoolean(tipo: boolean): string {
         let resultado = ''

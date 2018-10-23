@@ -22,13 +22,12 @@ export class EquipamentoComponent implements OnInit {
   constructor(private equipamentoService: EquipamentoService, private categoriaService: CategoriaService) { }
 
   ngOnInit() {
-    this.getEquipamentos();
     this.limpar();
     this.getCategoria();
   }
 
-  tipoBoolean(equipamento: Equipamento){
-    return Equipamento.TipoBoolean(equipamento.Disponivel)
+  onChangeCategoria(): void {
+    this.equipamento.NomeCategoria = this.categorias.find(c => c.Id == this.equipamento.IdCategoria).Nome
   }
 
   getCategoria(): void {
@@ -36,6 +35,7 @@ export class EquipamentoComponent implements OnInit {
       .subscribe(response => {
       if (response.Status == 0) {
         this.categorias = response.Elementos
+        this.getEquipamentos()
       }
       else {
         this.mostraErro(response.Detalhes)
@@ -49,6 +49,7 @@ export class EquipamentoComponent implements OnInit {
         if (response.Status == 0) {
           this.equipamentos = response.Elementos
           this.equipamentos.forEach(u => u.TipoBoolean = Equipamento.TipoBoolean(u.Disponivel))
+          this.equipamentos.forEach(e => e.NomeCategoria = this.categorias.find(c => c.Id == e.IdCategoria).Nome)
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -86,13 +87,14 @@ export class EquipamentoComponent implements OnInit {
     this.equipamentoService.updateEquipamento(this.equipamento)
       .subscribe(response => {
         if (response === undefined){
-          this.mostraErro('Não foi possível realizar a atualização do usuário.')
+          this.mostraErro('Não foi possível realizar a atualização do equipamento.')
         }
         else if (response.Status == 0) {
           this.equipamentos[this.selectedIndex].Modelo = this.equipamento.Modelo;
           this.equipamentos[this.selectedIndex].Disponivel = this.equipamento.Disponivel;
           this.equipamentos[this.selectedIndex].IdCategoria = this.equipamento.IdCategoria;
           this.equipamentos[this.selectedIndex].Serie = this.equipamento.Serie;
+          this.equipamentos[this.selectedIndex].NomeCategoria = this.equipamento.NomeCategoria;
           this.limpar()
         }
         else {

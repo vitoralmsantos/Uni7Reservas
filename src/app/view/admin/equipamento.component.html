@@ -15,7 +15,7 @@
           <div class="form-row align-items-center" style="margin-bottom: 8px">
             <div class="form-group">
               <label class="label-msg" for="selectTipo">Categoria</label>
-              <select [(ngModel)]='equipamento.IdCategoria' class="form-control" id="selectTipo">
+              <select [(ngModel)]='equipamento.IdCategoria' class="form-control" (ngModelChange)="onChangeCategoria()" id="selectTipo">
                 <option *ngFor="let categoria of categorias" [value]="categoria.Id">{{categoria.Nome}}</option>
               </select>
             </div>
@@ -64,7 +64,7 @@
             <tbody>
               <tr *ngFor="let equi of equipamentos; let i = index">
                 <th scope="row">{{equi.Id}}</th>
-                <td>{{equi.IdCategoria}}</td>
+                <td>{{equi.NomeCategoria}}</td>
                 <td>{{equi.Modelo}}</td>
                 <td>{{equi.Serie}}</td>
                 <td>{{equi.TipoBoolean}}</td>
