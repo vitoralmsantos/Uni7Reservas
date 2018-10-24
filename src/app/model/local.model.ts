@@ -24,7 +24,7 @@ export class Local {
 }
 
 
-enum TIPOLOCAL {
+export enum TIPOLOCAL {
     LABORATORIO = 0,
     SALA = 1,
     AUDITORIO = 2
