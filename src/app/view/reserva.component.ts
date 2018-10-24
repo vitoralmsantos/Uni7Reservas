@@ -27,12 +27,13 @@ export class ReservaComponent implements OnInit {
   localDesabilitado: boolean
   catDesabilitado: boolean
   reservas: Reserva[]
+  reservasExibidas: Reserva[]
   locais: Local[]
   todosLocais: Local[]
   categoria: Categoria[]
   idUsuario: number
   erroDetalhe: string
-  
+
   obsDetalhe: string
   nomeDetalhe: string
   emailDetalhe: string
@@ -40,9 +41,11 @@ export class ReservaComponent implements OnInit {
   idDetalhe: number
   indexDetalhe: number
 
+  categoriasFiltro: Categoria[]
+  locaisFiltro: Local[]
   obsFiltro: string
   idLocalFiltro: number
-  idEquipamentoFiltro: number
+  idCategoriaFiltro: number
   ngbDateDe: NgbDateStruct
   horarioDe: number
   ngbDateAte: NgbDateStruct
@@ -62,6 +65,8 @@ export class ReservaComponent implements OnInit {
       this.idUsuario = 1
     }
     this.getReservas()
+    this.idLocalFiltro = 0
+    this.idCategoriaFiltro = 0
   }
 
   limparParcial(): void {
@@ -192,6 +197,8 @@ export class ReservaComponent implements OnInit {
               $('[data-toggle="tooltip"]').tooltip()
             })
           })
+          this.reservasExibidas = []
+          this.reservas.forEach(r => this.reservasExibidas.push(r))
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -219,17 +226,17 @@ export class ReservaComponent implements OnInit {
     if (confirm('Confirma remoção de ' + this.reservas[index].Data + ' ' + this.reservas[index].NomeLocal + '?')) {
       let id = this.reservas[index].Id
       this.reservaService.deleteReserva(id)
-      .subscribe(response => {
-        if (response === undefined){
-          this.mostraErro('Não foi possível realizar a remoção da reserva. Verifique conexão com a Internet.')
-        }
-        else if (response.Status == 0) {
-          this.getReservas();
-        }
-        else {
-          this.mostraErro(response.Detalhes)
-        }
-      });
+        .subscribe(response => {
+          if (response === undefined) {
+            this.mostraErro('Não foi possível realizar a remoção da reserva. Verifique conexão com a Internet.')
+          }
+          else if (response.Status == 0) {
+            this.getReservas();
+          }
+          else {
+            this.mostraErro(response.Detalhes)
+          }
+        });
     }
   }
 
@@ -244,10 +251,48 @@ export class ReservaComponent implements OnInit {
   }
 
   abrirFiltro(): void {
+    this.localService.getLocais()
+      .subscribe(response => {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível consultar locais. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.locaisFiltro = []
+          this.locaisFiltro.push({ Id: 0, Nome: '', Reservavel: false, Disponivel: false, Tipo: 0 })
+          this.locaisFiltro.push.apply(this.locaisFiltro, response.Elementos)
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+      });
+
+    this.categoriaService.getCategorias()
+      .subscribe(response => {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível consultar equipamentos. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.categoriasFiltro = []
+          this.categoriasFiltro.push({ Id: 0, Nome: '', })
+          this.categoriasFiltro.push.apply(this.categoriasFiltro, response.Elementos)
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+      });
+
     $('#modalFiltro').modal('show')
   }
 
   filtrar(): void {
+    this.reservasExibidas = []
+    this.reservasExibidas.push.apply(this.reservasExibidas, this.reservas)
+    if (this.idLocalFiltro > 0){
+      this.reservasExibidas = this.reservasExibidas.filter(r => r.IdLocal == this.idLocalFiltro)
+    }
+    if (this.idCategoriaFiltro > 0){
+      this.reservasExibidas = this.reservasExibidas.filter(r => r.IdEquipamentos.find(e => e == this.idCategoriaFiltro) != undefined)
+    }
     $('#modalFiltro').modal('hide')
   }
 
@@ -255,7 +300,7 @@ export class ReservaComponent implements OnInit {
     $('#modalFiltro').modal('hide')
   }
 
-  atualizar(): void{
+  atualizar(): void {
 
   }
 

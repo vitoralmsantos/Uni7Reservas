@@ -86,7 +86,7 @@
               <th scope="col">Equipamento</th>
               <th scope="col"></th>
             </tr>
-            <tr *ngFor="let reserva of reservas; let i = index">
+            <tr *ngFor="let reserva of reservasExibidas; let i = index">
               <td>{{reserva.Data}}</td>
               <td>{{reserva.TurnoExtenso}} {{reserva.Horario}}</td>
               <td>{{reserva.NomeLocal}}</td>
@@ -242,13 +242,13 @@
             <div class="col-lg-6">
               <label class="label-msg" for="selectLocalFiltro">Local</label>
               <select [(ngModel)]='idLocalFiltro' class="form-control" id="selectLocalFiltro">
-                <option *ngFor="let local of locais" [value]="local.Id">{{local.Nome}}</option>
+                <option *ngFor="let local of locaisFiltro" [value]="local.Id">{{local.Nome}}</option>
               </select>
             </div>
             <div class="col-lg-6">
               <label class="label-msg" for="selectEquipFiltro">Equipamento</label>
               <select [(ngModel)]='idCategoriaFiltro' class="form-control" id="selectEquipFiltro">
-                <option *ngFor="let equip of categoria" [value]="equip.Id">{{equip.Nome}}</option>
+                <option *ngFor="let equip of categoriasFiltro" [value]="equip.Id">{{equip.Nome}}</option>
               </select>
             </div>
           </div>
