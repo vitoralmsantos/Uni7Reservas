@@ -95,7 +95,8 @@ export class ReservaComponent implements OnInit {
   onChangeSomenteLabs() {
     this.locais = []
     this.locais.push({ Id: 0, Nome: '--Escolha um local--', Reservavel: false, 
-      Disponivel: true, Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '' })
+      Disponivel: true, Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '', 
+      ComentarioReserva: '' })
     if (this.somenteLabs) {
       this.locais.push.apply(this.locais, this.todosLocais.filter(l => Number(l.Tipo) === 0))
     }
@@ -177,7 +178,7 @@ export class ReservaComponent implements OnInit {
         }
         else if (response.Status == 0) {
           this.categoria = []
-          this.categoria.push({ Id: 0, Nome: '--Escolha um equipamento--' })
+          this.categoria.push({ Id: 0, Nome: '--Escolha um equipamento--', ComentarioReserva: '' })
           this.reserva.IdCategoria = 0
           this.categoria.push.apply(this.categoria, response.Elementos)
           this.catDesabilitado = false
@@ -283,7 +284,7 @@ export class ReservaComponent implements OnInit {
           else if (response.Status == 0) {
             this.locaisFiltro = []
             this.locaisFiltro.push({ Id: 0, Nome: '', Reservavel: false, Disponivel: false, 
-              Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '' })
+              Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '', ComentarioReserva: '' })
             this.locaisFiltro.push.apply(this.locaisFiltro, response.Elementos)
           }
           else {
@@ -300,7 +301,7 @@ export class ReservaComponent implements OnInit {
           }
           else if (response.Status == 0) {
             this.categoriasFiltro = []
-            this.categoriasFiltro.push({ Id: 0, Nome: '', })
+            this.categoriasFiltro.push({ Id: 0, Nome: '', ComentarioReserva: ''})
             this.categoriasFiltro.push.apply(this.categoriasFiltro, response.Elementos)
           }
           else {
