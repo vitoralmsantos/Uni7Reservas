@@ -43,6 +43,16 @@ export class ReservaService {
       .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('addReserva')));
   }
 
+  atualizarObs(id: number, obs: string): Observable<any> {
+    let url = `${this.reservaUrl}/obs`;
+    let u = new URLSearchParams();
+    u.set('Id', id.toString());
+    u.set('Obs', obs.toString());
+    
+    return this.http.post<EntidadeResponse<Reserva>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('atualizarObs')));
+  }
+
   deleteReserva(id: Number): Observable<any> {
     let url = `${this.reservaUrl}/${id}`;
     return this.http.delete<EntidadeResponse<Reserva>>(url, this.httpOptions)

@@ -94,7 +94,8 @@ export class ReservaComponent implements OnInit {
 
   onChangeSomenteLabs() {
     this.locais = []
-    this.locais.push({ Id: 0, Nome: '--Escolha um local--', Reservavel: false, Disponivel: true, Tipo: TIPOLOCAL.SALA, TipoLocal: '' })
+    this.locais.push({ Id: 0, Nome: '--Escolha um local--', Reservavel: false, 
+      Disponivel: true, Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '' })
     if (this.somenteLabs) {
       this.locais.push.apply(this.locais, this.todosLocais.filter(l => Number(l.Tipo) === 0))
     }
@@ -254,6 +255,24 @@ export class ReservaComponent implements OnInit {
     this.idDetalhe = this.reservas[index].Id
   }
 
+  atualizar(): void {
+    this.reservaService.atualizarObs(this.idDetalhe, this.obsDetalhe)
+    .subscribe(response => {
+      if (response === undefined) {
+        $('#modalDetalhes').modal('hide')
+        this.mostraErro('Não foi possível atualizar observação. Verifique conexão com Internet.')
+      }
+      else if (response.Status == 0) {
+        this.getReservas()
+        $('#modalDetalhes').modal('hide')
+      }
+      else {
+        $('#modalDetalhes').modal('hide')
+        this.mostraErro(response.Detalhes)
+      }
+    });
+  }
+
   abrirFiltro(): void {
     if (this.locaisFiltro.length == 0) {
       this.localService.getLocais()
@@ -263,7 +282,8 @@ export class ReservaComponent implements OnInit {
           }
           else if (response.Status == 0) {
             this.locaisFiltro = []
-            this.locaisFiltro.push({ Id: 0, Nome: '', Reservavel: false, Disponivel: false, Tipo: TIPOLOCAL.SALA, TipoLocal: '' })
+            this.locaisFiltro.push({ Id: 0, Nome: '', Reservavel: false, Disponivel: false, 
+              Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '' })
             this.locaisFiltro.push.apply(this.locaisFiltro, response.Elementos)
           }
           else {
@@ -377,10 +397,6 @@ export class ReservaComponent implements OnInit {
     this.idCategoriaFiltro = 0
     this.obsFiltro = undefined
     this.filtrar()
-  }
-
-  atualizar(): void {
-
   }
 
   mostraErro(detalhe): void {

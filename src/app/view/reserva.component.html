@@ -41,7 +41,7 @@
                 <option *ngFor="let local of locais" [value]="local.Id">{{local.Nome}}</option>
               </select>
               <div class="float-right" style="font-size: 14px">
-                <input type="checkbox" [(ngModel)]='somenteLabs' [disabled]="desabilitado" (ngModelChange)="onChangeSomenteLabs()">
+                <input type="checkbox" [(ngModel)]='somenteLabs' [disabled]="localDesabilitado" (ngModelChange)="onChangeSomenteLabs()">
                 Somente laboratórios
               </div>
             </div>
