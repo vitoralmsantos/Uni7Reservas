@@ -106,6 +106,7 @@ export class UsuarioComponent implements OnInit {
     this.usuario = new Usuario()
     this.usuario.Tipo = -1
     this.titulo = 'Novo usuário'
+    $('#headerUsuario').removeClass('bg-warning')
   }
 
   carregar(index): void {
@@ -116,6 +117,7 @@ export class UsuarioComponent implements OnInit {
     this.usuario.Tipo = this.usuarios[index].Tipo
     this.usuario.TipoExtenso = this.usuarios[index].TipoExtenso
     this.titulo = 'Editar usuário'
+    $('#headerUsuario').addClass('bg-warning')
   }
 
   registrar(): void {
