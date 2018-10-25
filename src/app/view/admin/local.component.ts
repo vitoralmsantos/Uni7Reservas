@@ -41,6 +41,8 @@ export class LocalComponent implements OnInit {
         if (response.Status == 0) {
           this.locais = response.Elementos
           this.locais.forEach(u => u.TipoLocal = Local.tipoLocal(u.Tipo))
+          this.locais.forEach(u => u.TipoDisponivel = Local.tipoDisponivel(u.Disponivel))
+          this.locais.forEach(u => u.TipoReservavel = Local.tipoReservavel(u.Reservavel))
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -87,6 +89,8 @@ export class LocalComponent implements OnInit {
           this.locais[this.selectedIndex].Disponivel = this.local.Disponivel;
           this.locais[this.selectedIndex].Tipo = this.local.Tipo;
           this.locais[this.selectedIndex].TipoLocal = Local.tipoLocal(this.local.Tipo)
+          this.locais[this.selectedIndex].TipoDisponivel = Local.tipoDisponivel(this.local.Disponivel)
+          this.locais[this.selectedIndex].TipoReservavel = Local.tipoReservavel(this.local.Reservavel)
           this.limpar()
         }
         else {
