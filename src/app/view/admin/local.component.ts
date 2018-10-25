@@ -27,6 +27,10 @@ export class LocalComponent implements OnInit {
     return Local.tipoLocal(local.Tipo)
   }
 
+  tipoDisponivel(local: Local): String {
+    return Local.tipoDisponivel(local.Disponivel)
+  }
+
   tipoBoolean(local: Local): String {
     return Local.tipoReservavel(local.Reservavel)
   }
