@@ -113,6 +113,7 @@ export class RecursoComponent implements OnInit {
   limpar(): void {
     this.recurso = new Recurso()
     this.titulo = 'Novo recurso'
+    this.recurso.Tipo = -1
     $('#headerRecurso').removeClass('bg-warning')
   }
 
@@ -128,6 +129,10 @@ export class RecursoComponent implements OnInit {
     if (this.recurso.Tipo == -1){
       this.mostraErro('Escolha um tipo de recurso.')
       return
+    }
+
+    if (this.ngbDate === undefined) {
+      this.mostraErro('Coloque a data')
     }
     
     if (this.recurso.Id === undefined) {

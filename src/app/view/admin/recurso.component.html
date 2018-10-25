@@ -29,9 +29,10 @@
                 <div class="form-group">
                   <label class="label-msg" for="selectTipo">Tipo</label>
                   <select [(ngModel)]="recurso.Tipo" class="form-control" id="selectTipo">
-                    <option value='0'>Hardware</option>
-                    <option value='1'>Software</option>
-                    <option value='2'>Outro</option>
+                    <option value='-1'>--Escolha um tipo--</option>
+                    <option value='1'>Hardware</option>
+                    <option value='2'>Software</option>
+                    <option value='3'>Outro</option>
                   </select>
                 </div>
               </div>
@@ -91,6 +92,24 @@
             </tbody>
           </table>
 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" tabindex="-1" role="dialog" id="modalErro">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header modal-header-erro">
+          <h5 class="modal-title">Erro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>{{erroDetalhe}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
         </div>
       </div>
     </div>

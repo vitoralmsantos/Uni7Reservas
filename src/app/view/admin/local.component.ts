@@ -61,6 +61,7 @@ export class LocalComponent implements OnInit {
     this.local.Reservavel = false
     this.local.Disponivel = false
     this.titulo = 'Novo local'
+    this.local.Tipo = -1
     $('#headerLocal').removeClass('bg-warning')
   }
 
