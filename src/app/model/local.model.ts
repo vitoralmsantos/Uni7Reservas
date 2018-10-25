@@ -5,6 +5,22 @@ export class Local {
     Disponivel: boolean;
     Tipo: TIPOLOCAL;
     TipoLocal: String;
+    TipoReservavel: String
+
+    public static tipoReservavel(tipo: boolean): String {
+        let resultado = ''
+
+        if (tipo == false) {
+            resultado = "Não"
+        }
+
+        else {
+            resultado = "Sim"
+        }
+
+        return resultado
+
+    }
 
     public static tipoLocal(tipo: number): String {
         let resultado = ''

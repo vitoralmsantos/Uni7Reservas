@@ -66,6 +66,7 @@ export class EquipamentoComponent implements OnInit {
     this.equipamento = new Equipamento()
     this.equipamento.Disponivel = false
     this.titulo = 'Novo equipamento'
+    $('#headerEquipamento').removeClass('bg-warning')
   }
 
   inserir(): void {
@@ -130,6 +131,7 @@ export class EquipamentoComponent implements OnInit {
     this.equipamento.IdCategoria = this.equipamentos[index].IdCategoria
     this.equipamento.Serie = this.equipamentos[index].Serie
     this.titulo = 'Editar equipamento'
+    $('#headerEquipamento').addClass('bg-warning')
   }
 
 
