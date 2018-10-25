@@ -18,6 +18,11 @@
                 <label class="label-msg" for="inputNome">Nome</label>
                 <input [(ngModel)]="categoria.Nome" type="text" class="form-control" id="inputNome">
               </div>
+              
+            </div>
+            <div class="col-lg-12" style="padding-left: 10px; padding-right: 10px; border-top-width: 10px;padding-top: 0px;padding-bottom: 10px;">
+              <label class="label-msg" for="inputObs">Comentário</label>
+              <textarea [(ngModel)]="chamado.Obs" class="form-control" id="inputObs" rows="2"></textarea>
             </div>
           </div>
 
@@ -44,6 +49,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Comentário</th>
                 <th scope="col"></th>
               </tr>
             </thead>
