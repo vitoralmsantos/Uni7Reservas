@@ -109,11 +109,13 @@ export class ChamadoComponent implements OnInit {
     this.chamado.Observacoes = this.chamados[index].Observacoes
     this.chamado.DataLimite = this.chamados[index].DataLimite
     this.titulo = 'Editar chamado'
+    $('#headerChamado').addClass('bg-warning')
   }
 
   limpar(): void {
     this.chamado = new Chamado()
     this.titulo = 'Novo chamado'
+    $('#headerChamado').removeClass('bg-warning')
   }
 
   registrar(): void {

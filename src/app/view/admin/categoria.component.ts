@@ -43,6 +43,7 @@ export class CategoriaComponent implements OnInit {
   limpar(): void {
     this.categoria = new Categoria()
     this.titulo = "Nova categoria"
+    $('#headerCategoria').removeClass('bg-warning')
   }
 
   inserir(): void {
@@ -100,6 +101,7 @@ export class CategoriaComponent implements OnInit {
     this.categoria.Id = this.categorias[index].Id
     this.categoria.Nome = this.categorias[index].Nome
     this.titulo = "Editar categoria"
+    $('#headerCategoria').addClass('bg-warning')
   }
 
 
