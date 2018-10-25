@@ -55,6 +55,7 @@ export class LocalComponent implements OnInit {
     this.local.Reservavel = false
     this.local.Disponivel = false
     this.titulo = 'Novo local'
+    $('#headerLocal').removeClass('bg-warning')
   }
 
   inserir(): void {
@@ -118,6 +119,7 @@ export class LocalComponent implements OnInit {
     this.local.Tipo = this.locais[index].Tipo
     this.local.TipoLocal = this.locais[index].TipoLocal
     this.titulo = 'Editar local'
+    $('#headerLocal').addClass('bg-warning')
 
   }
 

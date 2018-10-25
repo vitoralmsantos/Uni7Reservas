@@ -107,11 +107,13 @@ export class RecursoComponent implements OnInit {
     this.recurso.Tipo = this.recursos[index].Tipo
     this.recurso.Vencimento = this.recursos[index].Vencimento
     this.titulo = 'Editar recurso'
+    $('#headerRecurso').addClass('bg-warning')
   }
 
   limpar(): void {
     this.recurso = new Recurso()
     this.titulo = 'Novo recurso'
+    $('#headerRecurso').removeClass('bg-warning')
   }
 
   registrar(): void {

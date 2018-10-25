@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-header">
+                <div id="headerChamado" class="card-header">
                     {{titulo}}
                 </div>
                 <div class="card-body">
@@ -77,7 +77,7 @@
                                 <td>{{lo.Telefone}}</td>
                                 <td>
                                     <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
-                                        <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-marker"></i></button>
+                                        <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
                                         <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
                                     </div>
                                 </td>
