@@ -28,8 +28,8 @@ export class Reserva {
         return ''
     }
 
-    public static numDataHorarioTurno(data: string, horario: string, turno: string) : number {
-        let num: string = data.substr(6,4) + data.substr(3,2) + data.substr(0,2)
+    public static numDataHorarioTurno(data: string, horario: string, turno: string): number {
+        let num: string = data.substr(6, 4) + data.substr(3, 2) + data.substr(0, 2)
 
         if (turno == 'M' && horario == 'AB') {
             num = num + '1'
@@ -56,5 +56,32 @@ export class Reserva {
             num = num + '8'
         }
         return parseInt(num)
+    }
+
+    public static horarioTurno(num: number) {
+        if (num == 1) {
+            return 'Manhã AB'
+        }
+        else if (num == 2) {
+            return 'Manhã CD'
+        }
+        else if (num == 3) {
+            return 'Manhã EF'
+        }
+        else if (num == 4) {
+            return 'Tarde AB'
+        }
+        else if (num == 5) {
+            return 'Tarde CD'
+        }
+        else if (num == 6) {
+            return 'Tarde EF'
+        }
+        else if (num == 7) {
+            return 'Noite AB'
+        }
+        else if (num == 8) {
+            return 'Noite CD'
+        }
     }
 }

@@ -292,6 +292,9 @@ export class ReservaComponent implements OnInit {
   }
 
   filtrar(): void {
+    if (this.ngbDateDe == null) this.ngbDateDe = undefined
+    if (this.ngbDateAte == null) this.ngbDateAte = undefined
+    if (this.obsFiltro !== undefined && this.obsFiltro !== null && this.obsFiltro.length == 0) this.obsFiltro = undefined
     this.descricaoFiltro = ''
     this.reservasExibidas = []
     this.reservasExibidas.push.apply(this.reservasExibidas, this.reservas)
@@ -303,10 +306,12 @@ export class ReservaComponent implements OnInit {
       let mesDe = String(100 + this.ngbDateDe.month).substr(1, 2)
       let dataDe = diaDe + '/' + mesDe + '/' + this.ngbDateDe.year
       numDataTurnoHorarioDe = Reserva.numDataHorarioTurno(dataDe, '', '')
-      this.descricaoFiltro += 'De ' + this.descricaoFiltro + dataDe
-      if (this.horarioDe !== undefined) {
-        numDataTurnoHorarioDe = numDataTurnoHorarioDe + this.horarioDe
+      if (this.horarioDe === undefined) {
+        this.horarioDe = 1
       }
+      numDataTurnoHorarioDe = numDataTurnoHorarioDe + this.horarioDe
+
+      this.descricaoFiltro += 'De ' + dataDe + ' ' + Reserva.horarioTurno(this.horarioDe)
     }
 
     //Formata Até
@@ -316,8 +321,15 @@ export class ReservaComponent implements OnInit {
       let mesAte = String(100 + this.ngbDateAte.month).substr(1, 2)
       let dataAte = diaAte + '/' + mesAte + '/' + this.ngbDateAte.year
       numDataTurnoHorarioAte = Reserva.numDataHorarioTurno(dataAte, '', '')
-      if (this.horarioAte !== undefined) {
-        numDataTurnoHorarioAte = numDataTurnoHorarioAte + this.horarioAte
+      if (this.horarioAte === undefined) {
+        this.horarioAte = 1
+      }
+      numDataTurnoHorarioAte = numDataTurnoHorarioAte + this.horarioAte
+      if (this.descricaoFiltro.length > 0) {
+        this.descricaoFiltro += ', até ' + dataAte + ' ' + Reserva.horarioTurno(this.horarioAte)
+      }
+      else {
+        this.descricaoFiltro += 'Até ' + dataAte + ' ' + Reserva.horarioTurno(this.horarioAte)
       }
     }
     this.reservasExibidas = this.reservasExibidas.filter(r =>
@@ -325,14 +337,32 @@ export class ReservaComponent implements OnInit {
 
     if (this.idLocalFiltro > 0) {
       this.reservasExibidas = this.reservasExibidas.filter(r => r.IdLocal == this.idLocalFiltro)
+      if (this.descricaoFiltro.length > 0) {
+        this.descricaoFiltro += ', no local ' + this.locaisFiltro.find(l => l.Id == this.idLocalFiltro).Nome
+      }
+      else {
+        this.descricaoFiltro += 'No local ' + this.locaisFiltro.find(l => l.Id == this.idLocalFiltro).Nome
+      }
     }
 
     if (this.idCategoriaFiltro > 0) {
       this.reservasExibidas = this.reservasExibidas.filter(r => r.IdEquipamentos.find(e => e == this.idCategoriaFiltro) != undefined)
+      if (this.descricaoFiltro.length > 0) {
+        this.descricaoFiltro += ', com equipamento ' + this.categoriasFiltro.find(l => l.Id == this.idCategoriaFiltro).Nome
+      }
+      else {
+        this.descricaoFiltro += 'Com equipamento ' + this.categoriasFiltro.find(l => l.Id == this.idCategoriaFiltro).Nome
+      }
     }
 
     if (this.obsFiltro !== undefined) {
       this.reservasExibidas = this.reservasExibidas.filter(r => r.Obs.includes(this.obsFiltro, 0))
+      if (this.descricaoFiltro.length > 0) {
+        this.descricaoFiltro += ', contendo na observação ' + this.obsFiltro
+      }
+      else {
+        this.descricaoFiltro += 'Contendo na observação ' + this.obsFiltro
+      }
     }
 
     $('#modalFiltro').modal('hide')
@@ -345,7 +375,7 @@ export class ReservaComponent implements OnInit {
     this.horarioAte = undefined
     this.idLocalFiltro = 0
     this.idCategoriaFiltro = 0
-    this.obsFiltro = ''
+    this.obsFiltro = undefined
     this.filtrar()
   }
 
