@@ -104,9 +104,17 @@
           </table>
         </div>
         <div class="card-footer">
-          <div class="float-right">
-            <button class="btn btn-info btn-sm" (click)="abrirFiltro()"><i class="fas fa-filter"></i> Filtro</button>
+          <div class="row">
+            <div class="col-lg-9">
+              <span class="label-msg">{{descricaoFiltro}}</span>
+            </div>
+            <div class="col-lg-3">
+              <span class="float-right">
+                <button class="btn btn-info btn-sm" (click)="abrirFiltro()"><i class="fas fa-filter"></i> Filtro</button>
+              </span>
+            </div>
           </div>
+
         </div>
       </div>
     </div>

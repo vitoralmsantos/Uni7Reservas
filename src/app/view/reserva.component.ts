@@ -50,6 +50,7 @@ export class ReservaComponent implements OnInit {
   horarioDe: number
   ngbDateAte: NgbDateStruct
   horarioAte: number
+  descricaoFiltro: string
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService) { }
@@ -67,6 +68,8 @@ export class ReservaComponent implements OnInit {
     this.getReservas()
     this.idLocalFiltro = 0
     this.idCategoriaFiltro = 0
+    this.locaisFiltro = []
+    this.categoriasFiltro = []
   }
 
   limparParcial(): void {
@@ -109,8 +112,8 @@ export class ReservaComponent implements OnInit {
       return;
     }
 
-    let dia = String(100 + this.ngbDate.day).substring(1, 3);
-    let mes = String(100 + this.ngbDate.month).substring(1, 3);
+    let dia = String(100 + this.ngbDate.day).substr(1, 2);
+    let mes = String(100 + this.ngbDate.month).substr(1, 2);
 
     this.reserva.Data = dia + '/' + mes + '/' + this.ngbDate.year
 
@@ -192,6 +195,7 @@ export class ReservaComponent implements OnInit {
           this.reservas = response.Elementos
           this.reservas.forEach(r => {
             r.TurnoExtenso = Reserva.turnoExtenso(r.Turno)
+            r.NumDataHorarioTurno = Reserva.numDataHorarioTurno(r.Data, r.Horario, r.Turno)
             r.Data = moment(r.Data, 'DD/MM/YYYY').format('ddd').toUpperCase() + ' ' + r.Data
             $(function () {
               $('[data-toggle="tooltip"]').tooltip()
@@ -251,53 +255,98 @@ export class ReservaComponent implements OnInit {
   }
 
   abrirFiltro(): void {
-    this.localService.getLocais()
-      .subscribe(response => {
-        if (response === undefined) {
-          this.mostraErro('Não foi possível consultar locais. Verifique conexão com Internet.')
-        }
-        else if (response.Status == 0) {
-          this.locaisFiltro = []
-          this.locaisFiltro.push({ Id: 0, Nome: '', Reservavel: false, Disponivel: false, Tipo: TIPOLOCAL.SALA, TipoLocal: '' })
-          this.locaisFiltro.push.apply(this.locaisFiltro, response.Elementos)
-        }
-        else {
-          this.mostraErro(response.Detalhes)
-        }
-      });
+    if (this.locaisFiltro.length == 0) {
+      this.localService.getLocais()
+        .subscribe(response => {
+          if (response === undefined) {
+            this.mostraErro('Não foi possível consultar locais. Verifique conexão com Internet.')
+          }
+          else if (response.Status == 0) {
+            this.locaisFiltro = []
+            this.locaisFiltro.push({ Id: 0, Nome: '', Reservavel: false, Disponivel: false, Tipo: TIPOLOCAL.SALA, TipoLocal: '' })
+            this.locaisFiltro.push.apply(this.locaisFiltro, response.Elementos)
+          }
+          else {
+            this.mostraErro(response.Detalhes)
+          }
+        });
+    }
 
-    this.categoriaService.getCategorias()
-      .subscribe(response => {
-        if (response === undefined) {
-          this.mostraErro('Não foi possível consultar equipamentos. Verifique conexão com Internet.')
-        }
-        else if (response.Status == 0) {
-          this.categoriasFiltro = []
-          this.categoriasFiltro.push({ Id: 0, Nome: '', })
-          this.categoriasFiltro.push.apply(this.categoriasFiltro, response.Elementos)
-        }
-        else {
-          this.mostraErro(response.Detalhes)
-        }
-      });
-
+    if (this.categoriasFiltro.length == 0) {
+      this.categoriaService.getCategorias()
+        .subscribe(response => {
+          if (response === undefined) {
+            this.mostraErro('Não foi possível consultar equipamentos. Verifique conexão com Internet.')
+          }
+          else if (response.Status == 0) {
+            this.categoriasFiltro = []
+            this.categoriasFiltro.push({ Id: 0, Nome: '', })
+            this.categoriasFiltro.push.apply(this.categoriasFiltro, response.Elementos)
+          }
+          else {
+            this.mostraErro(response.Detalhes)
+          }
+        });
+    }
     $('#modalFiltro').modal('show')
   }
 
   filtrar(): void {
+    this.descricaoFiltro = ''
     this.reservasExibidas = []
     this.reservasExibidas.push.apply(this.reservasExibidas, this.reservas)
-    if (this.idLocalFiltro > 0){
+
+    //Formata De
+    let numDataTurnoHorarioDe = 0
+    if (this.ngbDateDe !== undefined) {
+      let diaDe = String(100 + this.ngbDateDe.day).substr(1, 2)
+      let mesDe = String(100 + this.ngbDateDe.month).substr(1, 2)
+      let dataDe = diaDe + '/' + mesDe + '/' + this.ngbDateDe.year
+      numDataTurnoHorarioDe = Reserva.numDataHorarioTurno(dataDe, '', '')
+      this.descricaoFiltro += 'De ' + this.descricaoFiltro + dataDe
+      if (this.horarioDe !== undefined) {
+        numDataTurnoHorarioDe = numDataTurnoHorarioDe + this.horarioDe
+      }
+    }
+
+    //Formata Até
+    let numDataTurnoHorarioAte = Infinity
+    if (this.ngbDateAte !== undefined) {
+      let diaAte = String(100 + this.ngbDateAte.day).substr(1, 2)
+      let mesAte = String(100 + this.ngbDateAte.month).substr(1, 2)
+      let dataAte = diaAte + '/' + mesAte + '/' + this.ngbDateAte.year
+      numDataTurnoHorarioAte = Reserva.numDataHorarioTurno(dataAte, '', '')
+      if (this.horarioAte !== undefined) {
+        numDataTurnoHorarioAte = numDataTurnoHorarioAte + this.horarioAte
+      }
+    }
+    this.reservasExibidas = this.reservasExibidas.filter(r =>
+      r.NumDataHorarioTurno >= numDataTurnoHorarioDe && r.NumDataHorarioTurno <= numDataTurnoHorarioAte)
+
+    if (this.idLocalFiltro > 0) {
       this.reservasExibidas = this.reservasExibidas.filter(r => r.IdLocal == this.idLocalFiltro)
     }
-    if (this.idCategoriaFiltro > 0){
+
+    if (this.idCategoriaFiltro > 0) {
       this.reservasExibidas = this.reservasExibidas.filter(r => r.IdEquipamentos.find(e => e == this.idCategoriaFiltro) != undefined)
     }
+
+    if (this.obsFiltro !== undefined) {
+      this.reservasExibidas = this.reservasExibidas.filter(r => r.Obs.includes(this.obsFiltro, 0))
+    }
+
     $('#modalFiltro').modal('hide')
   }
 
   limparFiltro(): void {
-    $('#modalFiltro').modal('hide')
+    this.ngbDateDe = undefined
+    this.ngbDateAte = undefined
+    this.horarioDe = undefined
+    this.horarioAte = undefined
+    this.idLocalFiltro = 0
+    this.idCategoriaFiltro = 0
+    this.obsFiltro = ''
+    this.filtrar()
   }
 
   atualizar(): void {
