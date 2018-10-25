@@ -254,6 +254,24 @@ export class ReservaComponent implements OnInit {
     this.idDetalhe = this.reservas[index].Id
   }
 
+  atualizar(): void {
+    this.reservaService.atualizarObs(this.idDetalhe, this.obsDetalhe)
+    .subscribe(response => {
+      if (response === undefined) {
+        $('#modalDetalhes').modal('hide')
+        this.mostraErro('Não foi possível atualizar observação. Verifique conexão com Internet.')
+      }
+      else if (response.Status == 0) {
+        this.getReservas()
+        $('#modalDetalhes').modal('hide')
+      }
+      else {
+        $('#modalDetalhes').modal('hide')
+        this.mostraErro(response.Detalhes)
+      }
+    });
+  }
+
   abrirFiltro(): void {
     if (this.locaisFiltro.length == 0) {
       this.localService.getLocais()
@@ -377,10 +395,6 @@ export class ReservaComponent implements OnInit {
     this.idCategoriaFiltro = 0
     this.obsFiltro = undefined
     this.filtrar()
-  }
-
-  atualizar(): void {
-
   }
 
   mostraErro(detalhe): void {
