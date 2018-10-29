@@ -114,6 +114,7 @@ export class RecursoComponent implements OnInit {
     this.recurso = new Recurso()
     this.titulo = 'Novo recurso'
     this.recurso.Tipo = -1
+    this.ngbDate = null
     $('#headerRecurso').removeClass('bg-warning')
   }
 
