@@ -33,6 +33,8 @@ export class ReservaComponent implements OnInit {
   categoria: Categoria[]
   idUsuario: number
   erroDetalhe: string
+  spinnerReservas: boolean
+  spinnerIniciaReservas: boolean
 
   obsDetalhe: string
   nomeDetalhe: string
@@ -47,9 +49,9 @@ export class ReservaComponent implements OnInit {
   idLocalFiltro: number
   idCategoriaFiltro: number
   ngbDateDe: NgbDateStruct
-  horarioDe: number
+  horarioDe: string
   ngbDateAte: NgbDateStruct
-  horarioAte: number
+  horarioAte: string
   descricaoFiltro: string
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
@@ -94,9 +96,11 @@ export class ReservaComponent implements OnInit {
 
   onChangeSomenteLabs() {
     this.locais = []
-    this.locais.push({ Id: 0, Nome: '--Escolha um local--', Reservavel: false, 
-      Disponivel: true, Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '', 
-      ComentarioReserva: '' })
+    this.locais.push({
+      Id: 0, Nome: '--Escolha um local--', Reservavel: false,
+      Disponivel: true, Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '',
+      ComentarioReserva: ''
+    })
     if (this.somenteLabs) {
       this.locais.push.apply(this.locais, this.todosLocais.filter(l => Number(l.Tipo) === 0))
     }
@@ -114,6 +118,7 @@ export class ReservaComponent implements OnInit {
       return;
     }
 
+    this.spinnerIniciaReservas = true
     let dia = String(100 + this.ngbDate.day).substr(1, 2);
     let mes = String(100 + this.ngbDate.month).substr(1, 2);
 
@@ -152,6 +157,8 @@ export class ReservaComponent implements OnInit {
       this.reserva.Horario = 'CD';
     }
 
+    let liberado = 0
+
     this.localService.getDisponibilidade(this.reserva.Data, this.reserva.Horario, this.reserva.Turno)
       .subscribe(response => {
         if (response === undefined) {
@@ -167,6 +174,10 @@ export class ReservaComponent implements OnInit {
         else {
           this.mostraErro(response.Detalhes)
           this.limparParcial()
+        }
+        liberado = liberado + 1
+        if (liberado == 2) {
+          this.spinnerIniciaReservas = false
         }
       });
 
@@ -187,10 +198,15 @@ export class ReservaComponent implements OnInit {
           this.mostraErro(response.Detalhes)
           this.limparParcial()
         }
+        liberado = liberado + 1
+        if (liberado == 2) {
+          this.spinnerIniciaReservas = false
+        }
       });
   }
 
   getReservas(): void {
+    this.spinnerReservas = true
     this.reservaService.getPorUsuario(this.idUsuario)
       .subscribe(response => {
         if (response.Status == 0) {
@@ -209,6 +225,7 @@ export class ReservaComponent implements OnInit {
         else {
           this.mostraErro(response.Detalhes)
         }
+        this.spinnerReservas = false
       });
   }
 
@@ -258,20 +275,20 @@ export class ReservaComponent implements OnInit {
 
   atualizar(): void {
     this.reservaService.atualizarObs(this.idDetalhe, this.obsDetalhe)
-    .subscribe(response => {
-      if (response === undefined) {
-        $('#modalDetalhes').modal('hide')
-        this.mostraErro('Não foi possível atualizar observação. Verifique conexão com Internet.')
-      }
-      else if (response.Status == 0) {
-        this.getReservas()
-        $('#modalDetalhes').modal('hide')
-      }
-      else {
-        $('#modalDetalhes').modal('hide')
-        this.mostraErro(response.Detalhes)
-      }
-    });
+      .subscribe(response => {
+        if (response === undefined) {
+          $('#modalDetalhes').modal('hide')
+          this.mostraErro('Não foi possível atualizar observação. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.getReservas()
+          $('#modalDetalhes').modal('hide')
+        }
+        else {
+          $('#modalDetalhes').modal('hide')
+          this.mostraErro(response.Detalhes)
+        }
+      });
   }
 
   abrirFiltro(): void {
@@ -283,8 +300,10 @@ export class ReservaComponent implements OnInit {
           }
           else if (response.Status == 0) {
             this.locaisFiltro = []
-            this.locaisFiltro.push({ Id: 0, Nome: '', Reservavel: false, Disponivel: false, 
-              Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '', ComentarioReserva: '' })
+            this.locaisFiltro.push({
+              Id: 0, Nome: '', Reservavel: false, Disponivel: false,
+              Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '', ComentarioReserva: ''
+            })
             this.locaisFiltro.push.apply(this.locaisFiltro, response.Elementos)
           }
           else {
@@ -301,7 +320,7 @@ export class ReservaComponent implements OnInit {
           }
           else if (response.Status == 0) {
             this.categoriasFiltro = []
-            this.categoriasFiltro.push({ Id: 0, Nome: '', ComentarioReserva: ''})
+            this.categoriasFiltro.push({ Id: 0, Nome: '', ComentarioReserva: '' })
             this.categoriasFiltro.push.apply(this.categoriasFiltro, response.Elementos)
           }
           else {
@@ -325,14 +344,14 @@ export class ReservaComponent implements OnInit {
     if (this.ngbDateDe !== undefined) {
       let diaDe = String(100 + this.ngbDateDe.day).substr(1, 2)
       let mesDe = String(100 + this.ngbDateDe.month).substr(1, 2)
-      let dataDe = diaDe + '/' + mesDe + '/' + this.ngbDateDe.year
-      numDataTurnoHorarioDe = Reserva.numDataHorarioTurno(dataDe, '', '')
+      let dataDe = this.ngbDateDe.year + mesDe + diaDe
+      
       if (this.horarioDe === undefined) {
-        this.horarioDe = 1
+        this.horarioDe = '1'
       }
-      numDataTurnoHorarioDe = numDataTurnoHorarioDe + this.horarioDe
+      numDataTurnoHorarioDe = parseInt(dataDe + this.horarioDe)
 
-      this.descricaoFiltro += 'De ' + dataDe + ' ' + Reserva.horarioTurno(this.horarioDe)
+      this.descricaoFiltro += 'De ' + dataDe + ' ' + Reserva.horarioTurno(parseInt(this.horarioDe))
     }
 
     //Formata Até
@@ -340,19 +359,19 @@ export class ReservaComponent implements OnInit {
     if (this.ngbDateAte !== undefined) {
       let diaAte = String(100 + this.ngbDateAte.day).substr(1, 2)
       let mesAte = String(100 + this.ngbDateAte.month).substr(1, 2)
-      let dataAte = diaAte + '/' + mesAte + '/' + this.ngbDateAte.year
-      numDataTurnoHorarioAte = Reserva.numDataHorarioTurno(dataAte, '', '')
+      let dataAte = this.ngbDateAte.year + mesAte + diaAte
       if (this.horarioAte === undefined) {
-        this.horarioAte = 1
+        this.horarioAte = '1'
       }
-      numDataTurnoHorarioAte = numDataTurnoHorarioAte + this.horarioAte
+      numDataTurnoHorarioAte = parseInt(dataAte + this.horarioAte)
       if (this.descricaoFiltro.length > 0) {
-        this.descricaoFiltro += ', até ' + dataAte + ' ' + Reserva.horarioTurno(this.horarioAte)
+        this.descricaoFiltro += ' até ' + dataAte + ' ' + Reserva.horarioTurno(parseInt(this.horarioAte))
       }
       else {
-        this.descricaoFiltro += 'Até ' + dataAte + ' ' + Reserva.horarioTurno(this.horarioAte)
+        this.descricaoFiltro += 'Até ' + dataAte + ' ' + Reserva.horarioTurno(parseInt(this.horarioAte))
       }
     }
+
     this.reservasExibidas = this.reservasExibidas.filter(r =>
       r.NumDataHorarioTurno >= numDataTurnoHorarioDe && r.NumDataHorarioTurno <= numDataTurnoHorarioAte)
 
