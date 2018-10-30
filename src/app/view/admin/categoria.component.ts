@@ -68,7 +68,8 @@ export class CategoriaComponent implements OnInit {
           this.mostraErro('Não foi possível realizar a atualização do usuário.')
         }
         else if (response.Status == 0) {
-          this.categorias[this.selectedIndex].Nome = response.Categoria.Nome;
+          this.categorias[this.selectedIndex].Nome = this.categoria.Nome;
+          this.categorias[this.selectedIndex].ComentarioReserva = this.categoria.ComentarioReserva;
           this.limpar()
         }
         else {
@@ -100,6 +101,7 @@ export class CategoriaComponent implements OnInit {
     this.selectedIndex = index
     this.categoria.Id = this.categorias[index].Id
     this.categoria.Nome = this.categorias[index].Nome
+    this.categoria.ComentarioReserva = this.categorias[index].ComentarioReserva
     this.titulo = "Editar categoria"
     $('#headerCategoria').addClass('bg-warning')
   }
