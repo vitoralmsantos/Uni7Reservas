@@ -50,6 +50,7 @@ export class RelatorioReservasComponent implements OnInit {
     this.ngbDateAte = undefined
     this.horarioDe = undefined
     this.horarioAte = undefined
+    this.tipo = 1
     this.idLocalFiltro = 0
     this.idCategoriaFiltro = 0
     this.obsFiltro = undefined
@@ -115,6 +116,8 @@ export class RelatorioReservasComponent implements OnInit {
       dataAte = diaAte + '/' + mesAte + '/' + this.ngbDateAte.year
     }
 
+    if (this.obsFiltro === undefined) this.obsFiltro = ''
+
     this.reservaService.getPorFiltro(dataDe, dataAte, this.tipo, this.idLocalFiltro, this.idCategoriaFiltro, this.obsFiltro)
       .subscribe(response => {
         if (response === undefined) {
@@ -131,7 +134,6 @@ export class RelatorioReservasComponent implements OnInit {
             })
           })
 
-          if (this.obsFiltro !== undefined && this.obsFiltro !== null && this.obsFiltro.length == 0) this.obsFiltro = undefined
           this.descricaoFiltro = ''
 
           //Formata De
@@ -171,10 +173,20 @@ export class RelatorioReservasComponent implements OnInit {
             r.NumDataHorarioTurno >= numDataTurnoHorarioDe && r.NumDataHorarioTurno <= numDataTurnoHorarioAte)
 
           if (this.tipo == 1) {
-            
+            if (this.descricaoFiltro.length > 0) {
+              this.descricaoFiltro += 'De laboratórios'
+            }
+            else {
+              this.descricaoFiltro += ', de laboratórios'
+            }
           }
           else if (this.tipo == 2) {
-
+            if (this.descricaoFiltro.length > 0) {
+              this.descricaoFiltro += 'De equipamentos'
+            }
+            else {
+              this.descricaoFiltro += ', de equipamentos'
+            }
           }
           else if (this.tipo == 3) {
             if (this.idLocalFiltro > 0) {
@@ -197,7 +209,6 @@ export class RelatorioReservasComponent implements OnInit {
           }
 
           if (this.obsFiltro !== undefined) {
-            this.reservas = this.reservas.filter(r => r.Obs.includes(this.obsFiltro, 0))
             if (this.descricaoFiltro.length > 0) {
               this.descricaoFiltro += ', contendo na observação ' + this.obsFiltro
             }

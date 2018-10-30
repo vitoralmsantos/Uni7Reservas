@@ -59,9 +59,9 @@
           <div class="row">
             <div class="col-lg-12">
               <label class="label-msg">Tipo de Reserva</label><br>
-              <input type="radio" [(ngModel)]="tipo" value="1"> Laboratórios<br>
-              <input type="radio" [(ngModel)]="tipo" value="2"> Equipamentos<br>
-              <input type="radio" [(ngModel)]="tipo" value="3"> Local ou equipamento específico
+              <input type="radio" [(ngModel)]="tipo" [value]="1"> Laboratórios<br>
+              <input type="radio" [(ngModel)]="tipo" [value]="2"> Equipamentos<br>
+              <input type="radio" [(ngModel)]="tipo" [value]="3"> Local ou equipamento específico
             </div>
           </div>
           <div class="row" *ngIf="tipo==3">
@@ -188,6 +188,7 @@
           </div>
         </div>
         <div class="modal-footer">
+          {{descricaoFiltro}}
           <div class="float-right">
             <button id="btCancelar" class="btn btn-default" data-dismiss="modal">Fechar</button>
             <button id="btCadastrar" class="btn btn-success" (click)="atualizar()">Atualizar</button>
