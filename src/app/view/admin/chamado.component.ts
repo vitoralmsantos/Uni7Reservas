@@ -45,6 +45,10 @@ export class ChamadoComponent implements OnInit {
 
   
   inserir(): void {
+    let dia = String(100 + this.ngbDate.day).substr(1, 2);
+    let mes = String(100 + this.ngbDate.month).substr(1, 2);
+
+    this.chamado.DataLimite = dia + '/' + mes + '/' + this.ngbDate.year
     this.chamadoService.addChamado(this.chamado)
       .subscribe(response => {
         if (response === undefined){

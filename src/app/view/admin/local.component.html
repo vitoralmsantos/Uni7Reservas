@@ -10,7 +10,7 @@
 
       <div class="card">
         <div id="headerLocal" class="card-header">
-          {{titulo}}
+          <strong>{{titulo}}</strong>
         </div>
         <div class="card-body">
           <div class="form-row align-items-center" style="margin-bottom: 8px">
@@ -39,12 +39,19 @@
                   <label class="label-msg" for="selectTipo">Tipo</label>
                   <select [(ngModel)]="local.Tipo" class="form-control" id="selectTipo">
                     <option value='-1'>--Escolha um tipo--</option>
-                    <option value='1'>Laboratório</option>
-                    <option value='2'>Sala</option>
-                    <option value='3'>Auditório</option>
+                    <option value='0'>Laboratório</option>
+                    <option value='1'>Sala</option>
+                    <option value='2'>Auditório</option>
                   </select>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <label class="label-msg" for="inputObs">Comentário</label>
+              <textarea [(ngModel)]="local.ComentarioReserva" class="form-control" id="inputObs" rows="2"></textarea>
             </div>
           </div>
 
