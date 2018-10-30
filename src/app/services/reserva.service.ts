@@ -29,8 +29,9 @@ export class ReservaService {
       .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getPorUsuario')));
   }
 
-  getPorFiltro(dataDe: string, dataAte: string): Observable<EntidadesResponse<Reserva>> {
-    let url = `${this.reservaUrl}/filtro/?dataDe=${dataDe}&dataAte=${dataAte}`;
+  getPorFiltro(dataDe: string, dataAte: string, tipo: number, idLocal: number, 
+    idCategoria: number, obs: string): Observable<EntidadesResponse<Reserva>> {
+    let url = `${this.reservaUrl}/filtro/?dataDe=${dataDe}&dataAte=${dataAte}&tipo=${tipo}&idLocal=${idLocal}&idCategoria=${idCategoria}&obs=${obs}`;
     return this.http.get<EntidadesResponse<Reserva>>(url)
       .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getPorFiltro')));
   }

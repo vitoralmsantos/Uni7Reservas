@@ -57,13 +57,23 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
+              <label class="label-msg">Tipo de Reserva</label><br>
+              <input type="radio" [(ngModel)]="tipo" value="1"> Laboratórios<br>
+              <input type="radio" [(ngModel)]="tipo" value="2"> Equipamentos<br>
+              <input type="radio" [(ngModel)]="tipo" value="3"> Local ou equipamento específico
+            </div>
+          </div>
+          <div class="row" *ngIf="tipo==3">
+            <div class="col-lg-12">
               <label class="label-msg" for="selectLocalFiltro">Local</label>
               <select [(ngModel)]='idLocalFiltro' class="form-control" id="selectLocalFiltro">
                 <option *ngFor="let local of locaisFiltro" [value]="local.Id">{{local.Nome}}</option>
               </select>
             </div>
-            <div class="col-lg-6">
+          </div>
+          <div class="row" *ngIf="tipo==3">
+            <div class="col-lg-12">
               <label class="label-msg" for="selectEquipFiltro">Equipamento</label>
               <select [(ngModel)]='idCategoriaFiltro' class="form-control" id="selectEquipFiltro">
                 <option *ngFor="let equip of categoriasFiltro" [value]="equip.Id">{{equip.Nome}}</option>
@@ -87,7 +97,7 @@
     </div>
     <div class="col-lg-8">
       <div class="card">
-        <div id="reservasParaImprimir"  class="card-body">
+        <div id="reservasParaImprimir" class="card-body">
           <div class="spinner" *ngIf="spinnerReservas"><i class="fa fa-spinner fa-spin"></i> Consultando
             reservas...</div>
           <table class="table table-hover table-sm">
@@ -111,7 +121,7 @@
         </div>
         <div class="card-footer">
           <div class="float-right">
-              <button id="btCadastrar" class="btn btn-success" (click)="print()">Imprimir</button>
+            <button id="btCadastrar" class="btn btn-success" (click)="print()">Imprimir</button>
           </div>
         </div>
       </div>

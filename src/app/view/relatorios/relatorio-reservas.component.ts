@@ -32,6 +32,7 @@ export class RelatorioReservasComponent implements OnInit {
   descricaoFiltro: string
   erroDetalhe: string
   reservas: Reserva[]
+  tipo: number
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService) { }
@@ -114,7 +115,7 @@ export class RelatorioReservasComponent implements OnInit {
       dataAte = diaAte + '/' + mesAte + '/' + this.ngbDateAte.year
     }
 
-    this.reservaService.getPorFiltro(dataDe, dataAte)
+    this.reservaService.getPorFiltro(dataDe, dataAte, this.tipo, this.idLocalFiltro, this.idCategoriaFiltro, this.obsFiltro)
       .subscribe(response => {
         if (response === undefined) {
           this.mostraErro('Não foi possível consultar reservas. Verifique conexão com Internet.')
@@ -169,21 +170,29 @@ export class RelatorioReservasComponent implements OnInit {
           this.reservas = this.reservas.filter(r =>
             r.NumDataHorarioTurno >= numDataTurnoHorarioDe && r.NumDataHorarioTurno <= numDataTurnoHorarioAte)
 
-          if (this.idLocalFiltro > 0) {
-            if (this.descricaoFiltro.length > 0) {
-              this.descricaoFiltro += ', no local ' + this.locaisFiltro.find(l => l.Id == this.idLocalFiltro).Nome
-            }
-            else {
-              this.descricaoFiltro += 'No local ' + this.locaisFiltro.find(l => l.Id == this.idLocalFiltro).Nome
-            }
+          if (this.tipo == 1) {
+            
           }
+          else if (this.tipo == 2) {
 
-          if (this.idCategoriaFiltro > 0) {
-            if (this.descricaoFiltro.length > 0) {
-              this.descricaoFiltro += ', com equipamento ' + this.categoriasFiltro.find(l => l.Id == this.idCategoriaFiltro).Nome
+          }
+          else if (this.tipo == 3) {
+            if (this.idLocalFiltro > 0) {
+              if (this.descricaoFiltro.length > 0) {
+                this.descricaoFiltro += ', no local ' + this.locaisFiltro.find(l => l.Id == this.idLocalFiltro).Nome
+              }
+              else {
+                this.descricaoFiltro += 'No local ' + this.locaisFiltro.find(l => l.Id == this.idLocalFiltro).Nome
+              }
             }
-            else {
-              this.descricaoFiltro += 'Com equipamento ' + this.categoriasFiltro.find(l => l.Id == this.idCategoriaFiltro).Nome
+
+            if (this.idCategoriaFiltro > 0) {
+              if (this.descricaoFiltro.length > 0) {
+                this.descricaoFiltro += ', com equipamento ' + this.categoriasFiltro.find(l => l.Id == this.idCategoriaFiltro).Nome
+              }
+              else {
+                this.descricaoFiltro += 'Com equipamento ' + this.categoriasFiltro.find(l => l.Id == this.idCategoriaFiltro).Nome
+              }
             }
           }
 
@@ -216,11 +225,11 @@ export class RelatorioReservasComponent implements OnInit {
           //........Customized style.......
           </style>
         </head>
-    <body onload="window.print();window.close()">${printContents}</body>
+        <body onload="window.print();window.close()">${printContents}</body>
       </html>`
     );
     popupWin.document.close();
-}
+  }
 
   mostraErro(detalhe): void {
     this.erroDetalhe = detalhe

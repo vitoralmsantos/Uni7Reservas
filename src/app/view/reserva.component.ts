@@ -209,7 +209,10 @@ export class ReservaComponent implements OnInit {
     this.spinnerReservas = true
     this.reservaService.getPorUsuario(this.idUsuario)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível consultar as reservas. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
           this.reservas = response.Elementos
           this.reservas.forEach(r => {
             r.TurnoExtenso = Reserva.turnoExtenso(r.Turno)
@@ -230,6 +233,11 @@ export class ReservaComponent implements OnInit {
   }
 
   reservar(): void {
+    if (this.reserva.IdLocal == 0){
+      this.mostraErro('Escolha um local.')
+      return
+    }
+
     this.reservaService.addReserva(this.reserva)
       .subscribe(response => {
         if (response === undefined) {
