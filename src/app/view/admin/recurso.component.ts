@@ -45,6 +45,10 @@ export class RecursoComponent implements OnInit {
 
   
   inserir(): void {
+    let dia = String(100 + this.ngbDate.day).substr(1, 2);
+    let mes = String(100 + this.ngbDate.month).substr(1, 2);
+
+    this.recurso.Vencimento = dia + '/' + mes + '/' + this.ngbDate.year
     this.recursoService.addRecurso(this.recurso)
       .subscribe(response => {
         if (response === undefined){

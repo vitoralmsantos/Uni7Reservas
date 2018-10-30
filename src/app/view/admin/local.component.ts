@@ -92,6 +92,7 @@ export class LocalComponent implements OnInit {
           this.locais[this.selectedIndex].TipoLocal = Local.tipoLocal(this.local.Tipo)
           this.locais[this.selectedIndex].TipoDisponivel = Local.tipoDisponivel(this.local.Disponivel)
           this.locais[this.selectedIndex].TipoReservavel = Local.tipoReservavel(this.local.Reservavel)
+          this.locais[this.selectedIndex].ComentarioReserva = this.local.ComentarioReserva
           this.limpar()
         }
         else {
@@ -127,6 +128,7 @@ export class LocalComponent implements OnInit {
     this.local.Disponivel = this.locais[index].Disponivel
     this.local.Tipo = this.locais[index].Tipo
     this.local.TipoLocal = this.locais[index].TipoLocal
+    this.local.ComentarioReserva = this.locais[index].ComentarioReserva
     this.titulo = 'Editar local'
     $('#headerLocal').addClass('bg-warning')
 
