@@ -369,7 +369,7 @@ export class ReservaComponent implements OnInit {
       let mesAte = String(100 + this.ngbDateAte.month).substr(1, 2)
       let dataAte = this.ngbDateAte.year + mesAte + diaAte
       if (this.horarioAte === undefined) {
-        this.horarioAte = '1'
+        this.horarioAte = '8'
       }
       numDataTurnoHorarioAte = parseInt(dataAte + this.horarioAte)
       if (this.descricaoFiltro.length > 0) {

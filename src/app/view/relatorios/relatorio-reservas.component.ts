@@ -148,7 +148,8 @@ export class RelatorioReservasComponent implements OnInit {
             }
             numDataTurnoHorarioDe = parseInt(dataDe + this.horarioDe)
 
-            this.descricaoFiltro += 'De ' + dataDe + ' ' + Reserva.horarioTurno(parseInt(this.horarioDe))
+            this.descricaoFiltro += 'De ' + diaDe + '/' + mesDe + '/' + this.ngbDateDe.year + ' ' + 
+              Reserva.horarioTurno(parseInt(this.horarioDe))
           }
 
           //Formata Até
@@ -162,10 +163,12 @@ export class RelatorioReservasComponent implements OnInit {
             }
             numDataTurnoHorarioAte = parseInt(dataAte + this.horarioAte)
             if (this.descricaoFiltro.length > 0) {
-              this.descricaoFiltro += ' até ' + dataAte + ' ' + Reserva.horarioTurno(parseInt(this.horarioAte))
+              this.descricaoFiltro += ', até ' + diaAte + '/' + mesAte + '/' + this.ngbDateAte.year + ' ' + 
+                Reserva.horarioTurno(parseInt(this.horarioAte))
             }
             else {
-              this.descricaoFiltro += 'Até ' + dataAte + ' ' + Reserva.horarioTurno(parseInt(this.horarioAte))
+              this.descricaoFiltro += 'Até ' + diaAte + '/' + mesAte + '/' + this.ngbDateAte.year + ' ' + 
+                Reserva.horarioTurno(parseInt(this.horarioAte))
             }
           }
 
@@ -173,7 +176,7 @@ export class RelatorioReservasComponent implements OnInit {
             r.NumDataHorarioTurno >= numDataTurnoHorarioDe && r.NumDataHorarioTurno <= numDataTurnoHorarioAte)
 
           if (this.tipo == 1) {
-            if (this.descricaoFiltro.length > 0) {
+            if (this.descricaoFiltro.length == 0) {
               this.descricaoFiltro += 'De laboratórios'
             }
             else {
@@ -181,7 +184,7 @@ export class RelatorioReservasComponent implements OnInit {
             }
           }
           else if (this.tipo == 2) {
-            if (this.descricaoFiltro.length > 0) {
+            if (this.descricaoFiltro.length == 0) {
               this.descricaoFiltro += 'De equipamentos'
             }
             else {
@@ -208,7 +211,7 @@ export class RelatorioReservasComponent implements OnInit {
             }
           }
 
-          if (this.obsFiltro !== undefined) {
+          if (this.obsFiltro.length > 0) {
             if (this.descricaoFiltro.length > 0) {
               this.descricaoFiltro += ', contendo na observação ' + this.obsFiltro
             }
@@ -223,7 +226,7 @@ export class RelatorioReservasComponent implements OnInit {
       });
   }
 
-  print(): void {
+  imprimir(): void {
     let printContents, popupWin;
     printContents = document.getElementById('reservasParaImprimir').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
@@ -232,9 +235,8 @@ export class RelatorioReservasComponent implements OnInit {
       <html>
         <head>
           <title>Relatório de reservas</title>
-          <style>
-          //........Customized style.......
-          </style>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         </head>
         <body onload="window.print();window.close()">${printContents}</body>
       </html>`
