@@ -38,6 +38,27 @@ export class UsuarioService {
       .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('autenticarUsuario')));
   }
 
+  updateMeuDados(usuario: Usuario): Observable<any> {
+    let u = new URLSearchParams();
+    u.set('Id', usuario.Id.toString());
+    u.set('Nome', usuario.Nome.toString());
+    u.set('Email', usuario.Email.toString());
+
+    let url = `${this.usuarioUrl}/meusdados/${usuario.Id}`;
+    return this.http.put<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('updateMeuDados')));
+  }
+
+  updateSenha(id: number, senha: string): Observable<any> {
+    let u = new URLSearchParams();
+    u.set('Id', id.toString());
+    u.set('Senha', senha.toString());
+
+    let url = `${this.usuarioUrl}/alterarsenha/${id}`;
+    return this.http.put<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('updateSenha')));
+  }
+
   updateUsuario(usuario: Usuario): Observable<any> {
     let u = new URLSearchParams();
     u.set('Id', usuario.Id.toString());
