@@ -59,6 +59,8 @@ export class ReservaComponent implements OnInit {
 
   ngOnInit() {
     this.titulo = 'Cadastrar Novo'
+    this.spinnerIniciaReservas = false
+    this.spinnerReservas = false
     this.limparTotal()
     if (Number.parseInt(this.authService.retrieveUserId()) != 0) {
       this.idUsuario = Number.parseInt(this.authService.retrieveUserId())

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Local } from '../../model/local.model';
+import { Categoria } from '../../model/categoria.model';
 import { LocalService } from '../../services/local.service';
-declare var jquery:any;
-declare var $ :any;
+import { CategoriaService } from '../../services/categoria.service';
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'uni7res-local',
@@ -10,17 +12,22 @@ declare var $ :any;
   styleUrls: ['./local.component.css']
 })
 export class LocalComponent implements OnInit {
-  locais: Local[];
-  local: Local;
-  erroDetalhe: string;
-  selectedIndex: number;
-  titulo: string;
+  locais: Local[]
+  local: Local
+  erroDetalhe: string
+  selectedIndex: number
+  titulo: string
+  categorias: Categoria[]
+  spinnerRestricoes: boolean
+  localRestricao: string
 
-  constructor(private localService: LocalService) { }
+  constructor(private localService: LocalService, private categoriaService: CategoriaService) { }
 
   ngOnInit() {
     this.getLocais();
     this.limpar();
+    this.spinnerRestricoes = false
+    this.localRestricao = ''
   }
 
   tipoLocal(local: Local): String {
@@ -34,11 +41,14 @@ export class LocalComponent implements OnInit {
   tipoBoolean(local: Local): String {
     return Local.tipoReservavel(local.Reservavel)
   }
- 
+
   getLocais(): void {
     this.localService.getLocais()
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível consultar locais. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
           this.locais = response.Elementos
           this.locais.forEach(u => u.TipoLocal = Local.tipoLocal(u.Tipo))
           this.locais.forEach(u => u.TipoDisponivel = Local.tipoDisponivel(u.Disponivel))
@@ -68,8 +78,8 @@ export class LocalComponent implements OnInit {
   inserir(): void {
     this.localService.addLocal(this.local)
       .subscribe(response => {
-        if (response === undefined){
-          this.mostraErro('Não foi possível realizar o cadastro do usuário.')
+        if (response === undefined) {
+          this.mostraErro('Não foi possível realizar o cadastro do local. Verifique conexão com Internet.')
         }
         else if (response.Status == 0) {
           this.limpar()
@@ -84,7 +94,10 @@ export class LocalComponent implements OnInit {
   atualizar(): void {
     this.localService.updateLocal(this.local)
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível atualizar o local. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
           this.locais[this.selectedIndex].Nome = this.local.Nome;
           this.locais[this.selectedIndex].Reservavel = this.local.Reservavel;
           this.locais[this.selectedIndex].Disponivel = this.local.Disponivel;
@@ -105,18 +118,18 @@ export class LocalComponent implements OnInit {
     if (confirm('Confirma remoção de ' + this.locais[index].Nome)) {
       let id = this.locais[index].Id
       this.localService.deleteLocal(id)
-      .subscribe(response => {
-        if (response === undefined){
-          this.mostraErro('Não foi possível realizar a remoção do local.')
-        }
-        else if (response.Status == 0) {
-          this.limpar()
-          this.getLocais();
-        }
-        else {
-          this.mostraErro(response.Detalhes)
-        }
-      });
+        .subscribe(response => {
+          if (response === undefined) {
+            this.mostraErro('Não foi possível realizar a remoção do local. Verifique conexão com Internet.')
+          }
+          else if (response.Status == 0) {
+            this.limpar()
+            this.getLocais();
+          }
+          else {
+            this.mostraErro(response.Detalhes)
+          }
+        });
     }
   }
 
@@ -135,11 +148,11 @@ export class LocalComponent implements OnInit {
   }
 
   registrar(): void {
-    if (this.local.Nome === undefined || this.local.Nome === ''){
+    if (this.local.Nome === undefined || this.local.Nome === '') {
       this.mostraErro('Digite o nome do local.')
       return
     }
-    if (this.local.Tipo == -1){
+    if (this.local.Tipo == -1) {
       this.mostraErro('Escolha um tipo de local.')
       return
     }
@@ -149,6 +162,25 @@ export class LocalComponent implements OnInit {
     else {
       this.atualizar()
     }
+  }
+
+  carregarRestricoes(index: number): void {
+    this.spinnerRestricoes = true
+    this.localService.getRestricoes(this.locais[index].Id)
+      .subscribe(response => {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível consultar restrições do local. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.categorias = response.Elementos
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+        this.spinnerRestricoes = false
+      });
+    this.localRestricao = this.locais[index].Nome
+    $('#modalRestricoes').modal('show')
   }
 
   mostraErro(detalhe): void {

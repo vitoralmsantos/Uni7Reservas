@@ -30,7 +30,10 @@ export class UsuarioComponent implements OnInit {
   getUsuarios(): void {
     this.usuarioService.getUsuarios()
       .subscribe(response => {
-        if (response.Status == 0) {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível consultar usuários. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
           this.usuarios = response.Elementos
           this.usuarios.forEach(u => u.TipoExtenso = Usuario.tipoExtenso(u.Tipo))
         }
@@ -51,8 +54,8 @@ export class UsuarioComponent implements OnInit {
   inserir(): void {
     this.usuarioService.addUsuario(this.usuario)
       .subscribe(response => {
-        if (response === undefined){
-          this.mostraErro('Não foi possível realizar o cadastro do usuário.')
+        if (response === undefined) {
+          this.mostraErro('Não foi possível realizar o cadastro do usuário. Verifique conexão com Internet.')
         }
         else if (response.Status == 0) {
           this.limpar()

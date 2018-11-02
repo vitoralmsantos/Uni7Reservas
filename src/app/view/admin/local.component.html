@@ -68,10 +68,8 @@
       </div>
     </div>
     <div class="col-lg-8">
-
       <div class="card">
         <div class="card-body">
-
           <table class="table table-hover table-sm">
             <thead>
               <tr>
@@ -95,6 +93,7 @@
                 <td>
                   <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
                     <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
+                    <button type="button" (click)="carregarRestricoes(i)" class="btn btn-link"><i class="fas text-warning fa-exclamation-circle"></i></button>
                     <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
                   </div>
                 </td>
@@ -106,6 +105,49 @@
       </div>
     </div>
   </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="modalRestricoes">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header modal-header-info">
+          <h5 class="modal-title">Restrições de {{localRestricao}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="spinner" *ngIf="spinnerRestricoes"><i class="fa fa-spinner fa-spin"></i> Consultando locais e
+            restrições...</div>
+          <table class="table table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let categoria of categorias; let i = index">
+                <th scope="row">{{categoria.Id}}</th>
+                <td>{{categoria.Nome}}</td>
+                <td>
+                  <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
+                    <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <div class="float-right">
+            <button id="btCancelar" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal" tabindex="-1" role="dialog" id="modalErro">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

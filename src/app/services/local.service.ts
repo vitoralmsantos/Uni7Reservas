@@ -3,10 +3,10 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Local } from '../model/local.model';
-import { LocaisResponse } from './response/locais.response';
-import { LocalResponse } from './response/local.response';
 import { EntidadeResponse } from './response/entidade.response';
 import { EntidadesResponse } from './response/entidades.response';
+import { Categoria } from '../model/categoria.model';
+import { BaseResponse } from './response/base.response';
 
 @Injectable({ providedIn: 'root' })
 export class LocalService {
@@ -37,6 +37,12 @@ export class LocalService {
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>(`getLocal id=${id}`)));
   }
 
+  getRestricoes(id: number): Observable<EntidadesResponse<Categoria>> {
+    const url = `${this.localUrl}/restricoes/${id}`;
+    return this.http.get<EntidadesResponse<Categoria>>(url)
+      .pipe(catchError(this.handleError<EntidadesResponse<Categoria>>(`getRestricoes id=${id}`)));
+  }
+
   updateLocal(local: Local): Observable<any> {
     let u = new URLSearchParams();
     u.set('Id', local.Id.toString());
@@ -50,6 +56,7 @@ export class LocalService {
     return this.http.put<EntidadeResponse<Local>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>('updateLocal')));
   }
+
   addLocal(local: Local): Observable<any> {
     let u = new URLSearchParams();
     u.set('Nome', local.Nome.toString());
@@ -62,10 +69,30 @@ export class LocalService {
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>('addLocal')));
   }
 
+  addRestricao(idLocal: number, idCategoria: number): Observable<any> {
+    let u = new URLSearchParams();
+    u.set('IdLocal', idLocal.toString());
+    u.set('IdCategoria', idCategoria.toString());
+
+    let url = `${this.localUrl}/cadastrarrestricao`;
+    return this.http.post<BaseResponse>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<BaseResponse>('addRestricao')));
+  }
+
   deleteLocal(id: Number): Observable<any> {
     let url = `${this.localUrl}/${id}`;
     return this.http.delete<EntidadeResponse<Local>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>('deleteLocal')));
+  }
+
+  deleteRestricao(idLocal: number, idCategoria: number): Observable<any> {
+    let u = new URLSearchParams();
+    u.set('IdLocal', idLocal.toString());
+    u.set('IdCategoria', idCategoria.toString());
+
+    let url = `${this.localUrl}/removerrestricao`;
+    return this.http.post<BaseResponse>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<BaseResponse>('deleteRestricao')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
