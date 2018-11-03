@@ -43,6 +43,12 @@ export class LocalService {
       .pipe(catchError(this.handleError<EntidadesResponse<Categoria>>(`getRestricoes id=${id}`)));
   }
 
+  getNaoRestricoes(id: number): Observable<EntidadesResponse<Categoria>> {
+    const url = `${this.localUrl}/naorestricoes/${id}`;
+    return this.http.get<EntidadesResponse<Categoria>>(url)
+      .pipe(catchError(this.handleError<EntidadesResponse<Categoria>>(`getNaoRestricoes id=${id}`)));
+  }
+
   updateLocal(local: Local): Observable<any> {
     let u = new URLSearchParams();
     u.set('Id', local.Id.toString());

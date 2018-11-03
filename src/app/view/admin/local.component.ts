@@ -17,7 +17,9 @@ export class LocalComponent implements OnInit {
   erroDetalhe: string
   selectedIndex: number
   titulo: string
-  categorias: Categoria[]
+  restricoes: Categoria[]
+  naorestricoes: Categoria[]
+  naorestricaoId: number
   spinnerRestricoes: boolean
   localRestricao: string
 
@@ -28,6 +30,8 @@ export class LocalComponent implements OnInit {
     this.limpar();
     this.spinnerRestricoes = false
     this.localRestricao = ''
+    this.restricoes = []
+    this.naorestricoes = []
   }
 
   tipoLocal(local: Local): String {
@@ -165,22 +169,78 @@ export class LocalComponent implements OnInit {
   }
 
   carregarRestricoes(index: number): void {
+    this.selectedIndex = index
     this.spinnerRestricoes = true
+    let liberar = 0
     this.localService.getRestricoes(this.locais[index].Id)
       .subscribe(response => {
         if (response === undefined) {
           this.mostraErro('Não foi possível consultar restrições do local. Verifique conexão com Internet.')
         }
         else if (response.Status == 0) {
-          this.categorias = response.Elementos
+          this.restricoes = response.Elementos
         }
         else {
           this.mostraErro(response.Detalhes)
         }
-        this.spinnerRestricoes = false
+        liberar = liberar + 1
+        if (liberar == 2) this.spinnerRestricoes = false
+      });
+
+      this.localService.getNaoRestricoes(this.locais[index].Id)
+      .subscribe(response => {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível consultar categorias. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.naorestricoes = []
+          this.naorestricoes.push({ Id: 0, Nome: '--Escolha um equipamento--', ComentarioReserva: '' })
+          this.naorestricoes = response.Elementos
+          this.naorestricaoId = 0
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+        liberar = liberar + 1
+        if (liberar == 2) this.spinnerRestricoes = false
       });
     this.localRestricao = this.locais[index].Nome
     $('#modalRestricoes').modal('show')
+  }
+
+  restringir(): void {
+    if (this.naorestricaoId == 0){
+      this.mostraErro('Escolha um tipo de equipamento.')
+      return
+    }
+    this.localService.addRestricao(this.locais[this.selectedIndex].Id, this.naorestricaoId)
+      .subscribe(response => {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível cadastrar restrição para o local. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.carregarRestricoes(this.selectedIndex)
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+      });
+  }
+
+  removerRestricao(index): void {
+    console.log(this.restricoes[index].Id)
+    this.localService.deleteRestricao(this.locais[this.selectedIndex].Id, this.restricoes[index].Id)
+      .subscribe(response => {
+        if (response === undefined) {
+          this.mostraErro('Não foi possível remover restrição para o local. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.carregarRestricoes(this.selectedIndex)
+        }
+        else {
+          this.mostraErro(response.Detalhes)
+        }
+      });
   }
 
   mostraErro(detalhe): void {
