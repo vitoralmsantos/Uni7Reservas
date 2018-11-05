@@ -26,6 +26,7 @@ export class ReservaComponent implements OnInit {
   somenteLabs: boolean
   localDesabilitado: boolean
   catDesabilitado: boolean
+  obsDesabilitado: boolean
   reservas: Reserva[]
   reservasExibidas: Reserva[]
   locais: Local[]
@@ -84,6 +85,7 @@ export class ReservaComponent implements OnInit {
     this.categoria = []
     this.localDesabilitado = true
     this.catDesabilitado = true
+    this.obsDesabilitado = true
     this.reserva.IdUsuario = this.idUsuario
   }
 
@@ -180,6 +182,7 @@ export class ReservaComponent implements OnInit {
         liberado = liberado + 1
         if (liberado == 2) {
           this.spinnerIniciaReservas = false
+          this.obsDesabilitado = false
         }
       });
 
@@ -191,7 +194,7 @@ export class ReservaComponent implements OnInit {
         }
         else if (response.Status == 0) {
           this.categoria = []
-          this.categoria.push({ Id: 0, Nome: '--Escolha um equipamento--', ComentarioReserva: '' })
+          this.categoria.push({ Id: 0, Nome: '--Sem equipamento--', ComentarioReserva: '' })
           this.reserva.IdCategoria = 0
           this.categoria.push.apply(this.categoria, response.Elementos)
           this.catDesabilitado = false
@@ -203,6 +206,7 @@ export class ReservaComponent implements OnInit {
         liberado = liberado + 1
         if (liberado == 2) {
           this.spinnerIniciaReservas = false
+          this.obsDesabilitado = false
         }
       });
   }

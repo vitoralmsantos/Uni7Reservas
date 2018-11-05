@@ -60,7 +60,7 @@
           <div class="row">
             <div class="col-lg-12">
               <label class="label-msg" for="inputObs">Observações</label>
-              <textarea [(ngModel)]="reserva.Obs" class="form-control" id="inputObs" rows="2"></textarea>
+              <textarea [(ngModel)]="reserva.Obs" class="form-control" id="inputObs" rows="2" [disabled]="obsDesabilitado"></textarea>
             </div>
           </div>
         </div>
