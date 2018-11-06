@@ -29,7 +29,7 @@ export class ReservaService {
       .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getPorUsuario')));
   }
 
-  getPorFiltro(dataDe: string, dataAte: string, tipo: number, idLocal: number, 
+  getPorFiltro(dataDe: string, dataAte: string, tipo: number, idLocal: number,
     idCategoria: number, obs: string): Observable<EntidadesResponse<Reserva>> {
     let url = `${this.reservaUrl}/filtro/?dataDe=${dataDe}&dataAte=${dataAte}&tipo=${tipo}&idLocal=${idLocal}&idCategoria=${idCategoria}&obs=${obs}`;
     return this.http.get<EntidadesResponse<Reserva>>(url)
@@ -45,7 +45,7 @@ export class ReservaService {
     u.set('IdLocal', reserva.IdLocal.toString());
     u.set('IdUsuario', reserva.IdUsuario.toString());
     u.set('IdCategoria', reserva.IdCategoria.toString());
-    
+
     return this.http.post<EntidadeResponse<Reserva>>(this.reservaUrl, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('addReserva')));
   }
@@ -55,9 +55,20 @@ export class ReservaService {
     let u = new URLSearchParams();
     u.set('Id', id.toString());
     u.set('Obs', obs.toString());
-    
+
     return this.http.post<EntidadeResponse<Reserva>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('atualizarObs')));
+  }
+
+  atualizarAvaliacao(id: number, satisfacao: number, comentarioUsuario: string): Observable<any> {
+    let url = `${this.reservaUrl}/avaliacao`;
+    let u = new URLSearchParams();
+    u.set('Id', id.toString());
+    u.set('Satisfacao', satisfacao.toString());
+    u.set('ComentarioUsuario', comentarioUsuario.toString());
+
+    return this.http.post<EntidadeResponse<Reserva>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<Reserva>>('atualizarAvaliacao')));
   }
 
   deleteReserva(id: Number): Observable<any> {

@@ -55,9 +55,10 @@ export class ReservaComponent implements OnInit {
   horarioAte: string
   descricaoFiltro: string
 
+  idAvaliacao: number
+  indexAvaliacao: number
   comentarioUsuario: string
   satisfacao: number
-  atraso: boolean
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService) { }
@@ -81,7 +82,6 @@ export class ReservaComponent implements OnInit {
     this.categoriasFiltro = []
     this.satisfacao = 0
     this.comentarioUsuario = ''
-    this.atraso = false
   }
 
   limparParcial(): void {
@@ -246,7 +246,7 @@ export class ReservaComponent implements OnInit {
   }
 
   reservar(): void {
-    if (this.reserva.IdLocal == 0){
+    if (this.reserva.IdLocal == 0) {
       this.mostraErro('Escolha um local.')
       return
     }
@@ -314,10 +314,37 @@ export class ReservaComponent implements OnInit {
 
   abrirAvaliacao(index): void {
     $('#modalAvaliar').modal('show')
-    this.indexDetalhe = index
+    this.indexAvaliacao = index
     this.comentarioUsuario = this.reservas[index].ComentarioUsuario
     this.satisfacao = this.reservas[index].Satisfacao
-    this.atraso = this.reservas[index].Atraso
+    this.idAvaliacao = this.reservas[index].Id
+  }
+
+  avaliar(): void {
+    if (this.satisfacao == 0) {
+      $('#modalAvaliar').modal('hide')
+      this.mostraErro('Informe a sua avaliação.')
+      return
+    }
+    if (this.comentarioUsuario === null || this.comentarioUsuario === undefined) {
+      this.comentarioUsuario = ''
+    }
+
+    this.reservaService.atualizarAvaliacao(this.idAvaliacao, this.satisfacao, this.comentarioUsuario)
+      .subscribe(response => {
+        if (response === undefined) {
+          $('#modalAvaliar').modal('hide')
+          this.mostraErro('Não foi possível atualizar avaliação. Verifique conexão com Internet.')
+        }
+        else if (response.Status == 0) {
+          this.getReservas()
+          $('#modalAvaliar').modal('hide')
+        }
+        else {
+          $('#modalAvaliar').modal('hide')
+          this.mostraErro(response.Detalhes)
+        }
+      });
   }
 
   abrirFiltro(): void {
@@ -374,7 +401,7 @@ export class ReservaComponent implements OnInit {
       let diaDe = String(100 + this.ngbDateDe.day).substr(1, 2)
       let mesDe = String(100 + this.ngbDateDe.month).substr(1, 2)
       let dataDe = this.ngbDateDe.year + mesDe + diaDe
-      
+
       if (this.horarioDe === undefined) {
         this.horarioDe = '1'
       }
