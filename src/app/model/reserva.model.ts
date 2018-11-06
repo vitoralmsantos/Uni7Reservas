@@ -14,6 +14,9 @@ export class Reserva {
     IdEquipamentos: number[]
     Equipamentos: string[]
     ReservadoEm: string
+    ComentarioUsuario: string
+    Satisfacao: number
+    Atraso: boolean
 
     public static turnoExtenso(turno: string): string {
         if (turno == 'M') {

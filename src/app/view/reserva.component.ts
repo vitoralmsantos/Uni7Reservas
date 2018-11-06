@@ -55,6 +55,10 @@ export class ReservaComponent implements OnInit {
   horarioAte: string
   descricaoFiltro: string
 
+  comentarioUsuario: string
+  satisfacao: number
+  atraso: boolean
+
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService) { }
 
@@ -75,6 +79,9 @@ export class ReservaComponent implements OnInit {
     this.idCategoriaFiltro = 0
     this.locaisFiltro = []
     this.categoriasFiltro = []
+    this.satisfacao = 0
+    this.comentarioUsuario = ''
+    this.atraso = false
   }
 
   limparParcial(): void {
@@ -303,6 +310,14 @@ export class ReservaComponent implements OnInit {
           this.mostraErro(response.Detalhes)
         }
       });
+  }
+
+  abrirAvaliacao(index): void {
+    $('#modalAvaliar').modal('show')
+    this.indexDetalhe = index
+    this.comentarioUsuario = this.reservas[index].ComentarioUsuario
+    this.satisfacao = this.reservas[index].Satisfacao
+    this.atraso = this.reservas[index].Atraso
   }
 
   abrirFiltro(): void {

@@ -92,9 +92,9 @@
                 <td>{{lo.ComentarioReserva}}</td>
                 <td>
                   <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
-                    <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>
-                    <button type="button" (click)="carregarRestricoes(i)" class="btn btn-link"><i class="fas text-warning fa-exclamation-circle"></i></button>
-                    <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
+                    <button (click)="carregar(i)" title="Editar" class="btn btn-link"><i class="fas fa-edit"></i></button>
+                    <button (click)="carregarRestricoes(i)" title="Restrições" class="btn btn-link"><i class="fas text-warning fa-exclamation-circle"></i></button>
+                    <button (click)="remover(i)" title="Remover" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
                   </div>
                 </td>
               </tr>

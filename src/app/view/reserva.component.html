@@ -10,8 +10,9 @@
     <div class="col-lg-4">
       <div class="card">
         <div class="card-body">
-            <div class="spinner" *ngIf="spinnerIniciaReservas"><i class="fa fa-spinner fa-spin"></i> Consultando locais e equipamentos...</div>
-            <div class="row">
+          <div class="spinner" *ngIf="spinnerIniciaReservas"><i class="fa fa-spinner fa-spin"></i> Consultando locais e
+            equipamentos...</div>
+          <div class="row">
             <div class="col-lg-6">
               <label class="label-msg" for="inputData">Data</label>
               <ng-template #t let-date="date">
@@ -95,9 +96,10 @@
               <td>
                 <div>
                   <div style="margin-bottom:-8px;margin-top:-8px" class="btn-group float-right">
-                    <button type="button" (click)="editar(i)" class="btn btn-link" data-toggle="tooltip" data-placement="top"
-                      title="{{reserva.Obs}}"><i class="fas fa-file-alt"></i></button>
-                    <button type="button" (click)="remover(i)" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
+                    <button (click)="abrirAvaliacao(i)" title="Avaliar reserva" class="btn btn-link"><i class="fas fa-star text-warning"></i></button>
+                    <button (click)="editar(i)" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="{{reserva.Obs}}"><i
+                        class="fas fa-file-alt"></i></button>
+                    <button (click)="remover(i)" title="Remover reserva" class="btn btn-link"><i class="fas fa-trash-alt text-danger"></i></button>
                   </div>
                 </div>
               </td>
@@ -185,6 +187,50 @@
           <div class="float-right">
             <button id="btCancelar" class="btn btn-default" data-dismiss="modal">Fechar</button>
             <button id="btCadastrar" class="btn btn-success" (click)="atualizar()">Atualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" id="modalAvaliar">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Avaliação da Reserva</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-3">
+              <span class="label-msg">Sua avaliação:</span>
+            </div>
+            <div class="col-lg-9">
+              <span class="fa fa-star checked" *ngIf="satisfacao > 0">d</span>
+              <span class="fa fa-star checked" *ngIf="satisfacao > 1">d</span>
+              <span class="fa fa-star checked" *ngIf="satisfacao > 2">d</span>
+              <span class="fa fa-star checked" *ngIf="satisfacao > 3">d</span>
+              <span class="fa fa-star checked" *ngIf="satisfacao > 4">d</span>
+              <span class="fa fa-star" *ngIf="satisfacao < 1">d</span>
+              <span class="fa fa-star" *ngIf="satisfacao < 2">d</span>
+              <span class="fa fa-star" *ngIf="satisfacao < 3">d</span>
+              <span class="fa fa-star" *ngIf="satisfacao < 4">d</span>
+              <span class="fa fa-star" *ngIf="satisfacao < 5">d</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <label class="label-msg" for="inputComentarios">Comentários</label>
+              <textarea [(ngModel)]="comentarioUsuario" class="form-control" id="inputComentarios" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="float-right">
+            <button id="btCancelar" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button id="btCadastrar" class="btn btn-success" (click)="avaliar()">Avaliar</button>
           </div>
         </div>
       </div>
