@@ -16,6 +16,7 @@ export class Reserva {
     ReservadoEm: string
     ComentarioUsuario: string
     Satisfacao: number
+    ExibeAvaliacao: boolean
 
     public static turnoExtenso(turno: string): string {
         if (turno == 'M') {

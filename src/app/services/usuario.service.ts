@@ -44,7 +44,7 @@ export class UsuarioService {
     u.set('Nome', usuario.Nome.toString());
     u.set('Email', usuario.Email.toString());
 
-    let url = `${this.usuarioUrl}/meusdados/${usuario.Id}`;
+    let url = `${this.usuarioUrl}/atualizardados/${usuario.Id}`;
     return this.http.put<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('updateMeuDados')));
   }
