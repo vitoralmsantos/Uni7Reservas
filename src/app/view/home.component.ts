@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../services/usuario.service';
-import { Usuario } from '../model/usuario.model';
 import { AuthService } from '../services/auth.service';
-import { TokenResponse } from '../services/response/token.response';
 declare var jquery: any;
 declare var $: any;
 

@@ -24,12 +24,14 @@ import { AvaliacaoComponent } from './view/admin/avaliacao.component';
 import { CategoriaComponent } from './view/admin/categoria.component';
 import { RecursoComponent } from './view/admin/recurso.component';
 import { ChamadoComponent } from './view/admin/chamado.component';
+import { SairComponent } from './view/sair.component';
 
 const appRoutes: Routes = [  
   { path: '', component: HomeComponent},
   { path: 'principal', component: PrincipalComponent,
       children:[
         {path : '', component: ReservaComponent},
+        {path : 'sair', component: SairComponent},
         {path : 'reserva', component: ReservaComponent},
         {path : 'perfil', component: PerfilComponent},
         {path : 'relatorios', component: RelatoriosComponent,
@@ -70,7 +72,8 @@ const appRoutes: Routes = [
     AvaliacaoComponent,
     CategoriaComponent,
     RecursoComponent,
-    ChamadoComponent
+    ChamadoComponent,
+    SairComponent
   ],
   imports: [
     RouterModule.forRoot(

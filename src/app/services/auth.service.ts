@@ -16,8 +16,10 @@ export class AuthService {
 
     public retrieveToken() {
         let storedToken: string = localStorage.getItem(this.tokenKey);
-        if (!storedToken) throw 'no token found';
-        return storedToken;
+        if (!storedToken) 
+            return '';
+        else
+            return storedToken;
     }
 
     public retrieveUserId() {
