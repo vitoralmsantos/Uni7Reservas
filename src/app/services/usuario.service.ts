@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Usuario } from '../model/usuario.model';
 import { EntidadesResponse } from './response/entidades.response';
 import { EntidadeResponse } from './response/entidade.response';
+import { TokenResponse } from './response/token.response';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
@@ -34,8 +35,8 @@ export class UsuarioService {
     u.set('Email', email);
     u.set('Senha', senha);
 
-    return this.http.post<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
-      .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('autenticarUsuario')));
+    return this.http.post<EntidadeResponse<TokenResponse>>(url, u.toString(), this.httpOptions)
+      .pipe(catchError(this.handleError<EntidadeResponse<TokenResponse>>('autenticarUsuario')));
   }
 
   updateMeuDados(usuario: Usuario): Observable<any> {

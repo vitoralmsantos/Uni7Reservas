@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../services/usuario.service';
 import { Usuario } from '../model/usuario.model';
 import { AuthService } from '../services/auth.service';
+import { TokenResponse } from '../services/response/token.response';
 declare var jquery: any;
 declare var $: any;
 
@@ -15,8 +16,6 @@ export class HomeComponent implements OnInit {
 
   email: string
   senha: string
-  usuario: Usuario
-
   erroDetalhe: string;
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -24,7 +23,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.usuario = new Usuario()
   }
 
   login() {
@@ -34,16 +32,14 @@ export class HomeComponent implements OnInit {
           this.mostrarErro('Não foi possível realizar a autenticação. Verifique sua conexão com a Internet.')
         }
         else if (response.Status == 0) {
-          this.usuario = response.Usuario
-          this.authService.storeUserId(this.usuario.Id)
-          
+          this.authService.storeToken(response.Token)
+          this.authService.storeUserId(response.UserID)
+          this.router.navigate(['/principal'], { relativeTo: this.route });
         }
         else {
           this.mostrarErro(response.Detalhes)
         }
       });
-
-      this.router.navigate(['/principal'], { relativeTo: this.route });
   }
 
   mostrarErro(detalhe): void {
