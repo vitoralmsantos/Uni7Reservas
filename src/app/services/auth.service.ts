@@ -16,7 +16,7 @@ export class AuthService {
 
     public retrieveToken() {
         let storedToken: string = localStorage.getItem(this.tokenKey);
-        if (!storedToken) 
+        if (storedToken === 'undefined' || storedToken == null)
             return '';
         else
             return storedToken;

@@ -1,31 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Usuario } from '../model/usuario.model';
 import { EntidadesResponse } from './response/entidades.response';
 import { EntidadeResponse } from './response/entidade.response';
 import { TokenResponse } from './response/token.response';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
 
   readonly httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+    params: new HttpParams()
+      .set('x-api-key', this.authService.retrieveToken())
+      .set('x-userid', this.authService.retrieveUserId())
   };
 
   private usuarioUrl = 'http://localhost:51859/api/usuario';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getUsuarios(): Observable<EntidadesResponse<Usuario>> {
-    return this.http.get<EntidadesResponse<Usuario>>(this.usuarioUrl)
+    return this.http.get<EntidadesResponse<Usuario>>(this.usuarioUrl, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Usuario>>('getUsuarios')));
   }
 
   getUsuario(id: number): Observable<EntidadeResponse<Usuario>> {
     const url = `${this.usuarioUrl}/consulta/${id}`;
-    return this.http.get<EntidadeResponse<Usuario>>(url)
+    return this.http.get<EntidadeResponse<Usuario>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>(`getUsuario id=${id}`)));
   }
 
@@ -35,7 +39,7 @@ export class UsuarioService {
     u.set('Email', email);
     u.set('Senha', senha);
 
-    return this.http.post<EntidadeResponse<TokenResponse>>(url, u.toString(), this.httpOptions)
+    return this.http.post<EntidadeResponse<TokenResponse>>(url, u.toString())
       .pipe(catchError(this.handleError<EntidadeResponse<TokenResponse>>('autenticarUsuario')));
   }
 

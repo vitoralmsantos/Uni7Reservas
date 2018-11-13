@@ -1,38 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { ReservaRegistro } from '../model/reservaregistro.model';
 import { EntidadeResponse } from './response/entidade.response';
 import { EntidadesResponse } from './response/entidades.response';
 import { Reserva } from '../model/reserva.model';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
 
-  readonly httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+    params: new HttpParams()
+      .set('x-api-key', this.authService.retrieveToken())
+      .set('x-userid', this.authService.retrieveUserId())
   };
 
   private reservaUrl = 'http://localhost:51859/api/reserva';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getReservas(): Observable<EntidadesResponse<Reserva>> {
-    return this.http.get<EntidadesResponse<Reserva>>(this.reservaUrl)
+    return this.http.get<EntidadesResponse<Reserva>>(this.reservaUrl, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getReservas')));
   }
 
   getPorUsuario(idUsuario: number): Observable<EntidadesResponse<Reserva>> {
-    let url = `${this.reservaUrl}/usuario/${idUsuario}`;
-    return this.http.get<EntidadesResponse<Reserva>>(url)
+    let url = `${this.reservaUrl}/usuario/${idUsuario}`
+    return this.http.get<EntidadesResponse<Reserva>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getPorUsuario')));
   }
 
   getPorFiltro(dataDe: string, dataAte: string, tipo: number, idLocal: number,
     idCategoria: number, obs: string): Observable<EntidadesResponse<Reserva>> {
     let url = `${this.reservaUrl}/filtro/?dataDe=${dataDe}&dataAte=${dataAte}&tipo=${tipo}&idLocal=${idLocal}&idCategoria=${idCategoria}&obs=${obs}`;
-    return this.http.get<EntidadesResponse<Reserva>>(url)
+    return this.http.get<EntidadesResponse<Reserva>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Reserva>>('getPorFiltro')));
   }
 
