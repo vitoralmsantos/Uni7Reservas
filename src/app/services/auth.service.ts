@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private tokenKey: string = 'app_token';
-    private userId: string = 'user_id';
+    public tokenKey: string = 'app_token';
+    public userId: string = 'user_id';
 
     public storeToken(content: Object) {
         localStorage.setItem(this.tokenKey, JSON.stringify(content));

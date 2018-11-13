@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Chamado } from '../model/chamado.model';
 import { EntidadeResponse } from './response/entidade.response';
 import { EntidadesResponse } from './response/entidades.response';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChamadoService {
 
   readonly httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+    params: new HttpParams()
+      .set(this.authService.tokenKey, this.authService.retrieveToken())
+      .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
   private chamadoUrl = 'http://localhost:51859/api/chamado';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getChamados(): Observable<EntidadesResponse<Chamado>> {
-    return this.http.get<EntidadesResponse<Chamado>>(this.chamadoUrl)
+    return this.http.get<EntidadesResponse<Chamado>>(this.chamadoUrl, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Chamado>>('getChamados')));
   }
 
   getChamado(id: number): Observable<EntidadeResponse<Chamado>> {
     const url = `${this.chamadoUrl}/consulta/${id}`;
-    return this.http.get<EntidadeResponse<Chamado>>(url)
+    return this.http.get<EntidadeResponse<Chamado>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Chamado>>(`getChamado id=${id}`)));
   }
 

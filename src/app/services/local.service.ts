@@ -1,51 +1,55 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Local } from '../model/local.model';
 import { EntidadeResponse } from './response/entidade.response';
 import { EntidadesResponse } from './response/entidades.response';
 import { Categoria } from '../model/categoria.model';
 import { BaseResponse } from './response/base.response';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class LocalService {
 
   readonly httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+    params: new HttpParams()
+      .set(this.authService.tokenKey, this.authService.retrieveToken())
+      .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
   private localUrl = 'http://localhost:51859/api/local';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getLocais(): Observable<EntidadesResponse<Local>> {
-    return this.http.get<EntidadesResponse<Local>>(this.localUrl)
+    return this.http.get<EntidadesResponse<Local>>(this.localUrl, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Local>>('getLocais')));
   }
 
   //Consulta locais disponíveis para reservas
   getDisponibilidade(data: string, horario: string, turno: string): Observable<EntidadesResponse<Local>> {
     let url = `${this.localUrl}/disponibilidade/?data=${data}&horario=${horario}&turno=${turno}`;
-    return this.http.get<EntidadesResponse<Local>>(url)
+    return this.http.get<EntidadesResponse<Local>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Local>>('getDisponibilidade')));
   }
 
   getLocal(id: number): Observable<EntidadeResponse<Local>> {
     const url = `${this.localUrl}/consulta/${id}`;
-    return this.http.get<EntidadeResponse<Local>>(url)
+    return this.http.get<EntidadeResponse<Local>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>(`getLocal id=${id}`)));
   }
 
   getRestricoes(id: number): Observable<EntidadesResponse<Categoria>> {
     const url = `${this.localUrl}/restricoes/${id}`;
-    return this.http.get<EntidadesResponse<Categoria>>(url)
+    return this.http.get<EntidadesResponse<Categoria>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Categoria>>(`getRestricoes id=${id}`)));
   }
 
   getNaoRestricoes(id: number): Observable<EntidadesResponse<Categoria>> {
     const url = `${this.localUrl}/naorestricoes/${id}`;
-    return this.http.get<EntidadesResponse<Categoria>>(url)
+    return this.http.get<EntidadesResponse<Categoria>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Categoria>>(`getNaoRestricoes id=${id}`)));
   }
 

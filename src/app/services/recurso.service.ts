@@ -1,32 +1,34 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { RecursosResponse } from './response/recursos.response';
-import { RecursoResponse } from './response/recurso.response';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Recurso } from '../model/recurso.model';
 import { EntidadeResponse } from './response/entidade.response';
 import { EntidadesResponse } from './response/entidades.response';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class RecursoService {
 
   readonly httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+    params: new HttpParams()
+      .set(this.authService.tokenKey, this.authService.retrieveToken())
+      .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
   private recursoUrl = 'http://localhost:51859/api/recurso';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getRecursos(): Observable<EntidadesResponse<Recurso>> {
-    return this.http.get<EntidadesResponse<Recurso>>(this.recursoUrl)
+    return this.http.get<EntidadesResponse<Recurso>>(this.recursoUrl, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Recurso>>('getRecursos')));
   }
 
   getRecurso(id: number): Observable<EntidadeResponse<Recurso>> {
     const url = `${this.recursoUrl}/consulta/${id}`;
-    return this.http.get<EntidadeResponse<Recurso>>(url)
+    return this.http.get<EntidadeResponse<Recurso>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Recurso>>(`getRecurso id=${id}`)));
   }
 

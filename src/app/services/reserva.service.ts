@@ -11,11 +11,11 @@ import { AuthService } from '../services/auth.service';
 @Injectable({ providedIn: 'root' })
 export class ReservaService {
 
-  httpOptions = {
+  readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
     params: new HttpParams()
-      .set('x-api-key', this.authService.retrieveToken())
-      .set('x-userid', this.authService.retrieveUserId())
+      .set(this.authService.tokenKey, this.authService.retrieveToken())
+      .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
   private reservaUrl = 'http://localhost:51859/api/reserva';

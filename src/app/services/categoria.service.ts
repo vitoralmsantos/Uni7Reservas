@@ -1,37 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { EntidadesResponse } from './response/entidades.response';
 import { EntidadeResponse } from './response/entidade.response';
 import { Categoria } from '../model/categoria.model';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriaService {
 
   readonly httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+    params: new HttpParams()
+      .set(this.authService.tokenKey, this.authService.retrieveToken())
+      .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
   private categoriaUrl = 'http://localhost:51859/api/categoria';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getCategorias(): Observable<EntidadesResponse<Categoria>> {
-    return this.http.get<EntidadesResponse<Categoria>>(this.categoriaUrl)
+    return this.http.get<EntidadesResponse<Categoria>>(this.categoriaUrl, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Categoria>>('getCategorias')));
   }
 
   getCategoria(id: number): Observable<EntidadeResponse<Categoria>> {
     const url = `${this.categoriaUrl}/consulta/${id}`;
-    return this.http.get<EntidadeResponse<Categoria>>(url)
+    return this.http.get<EntidadeResponse<Categoria>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Categoria>>(`getCategoria id=${id}`)));
   }
 
   //Consulta categorias disponíveis para reservas
   getDisponibilidade(data: string, horario: string, turno: string): Observable<EntidadesResponse<Categoria>> {
     let url = `${this.categoriaUrl}/disponibilidade/?data=${data}&horario=${horario}&turno=${turno}`;
-    return this.http.get<EntidadesResponse<Categoria>>(url)
+    return this.http.get<EntidadesResponse<Categoria>>(url, this.httpOptions)
       .pipe(catchError(this.handleError<EntidadesResponse<Categoria>>('getDisponibilidade')));
   }
 
@@ -45,7 +49,7 @@ export class CategoriaService {
     return this.http.put<EntidadeResponse<Categoria>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Categoria>>('updateCategoria')));
   }
-  
+
   addCategoria(categoria: Categoria): Observable<any> {
     let u = new URLSearchParams();
     u.set('Nome', categoria.Nome.toString());

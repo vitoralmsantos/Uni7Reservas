@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Usuario } from '../model/usuario.model';
 import { EntidadesResponse } from './response/entidades.response';
 import { EntidadeResponse } from './response/entidade.response';
@@ -14,8 +14,8 @@ export class UsuarioService {
   readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
     params: new HttpParams()
-      .set('x-api-key', this.authService.retrieveToken())
-      .set('x-userid', this.authService.retrieveUserId())
+      .set('api-key', this.authService.retrieveToken())
+      .set('userid', this.authService.retrieveUserId())
   };
 
   private usuarioUrl = 'http://localhost:51859/api/usuario';
@@ -39,7 +39,7 @@ export class UsuarioService {
     u.set('Email', email);
     u.set('Senha', senha);
 
-    return this.http.post<EntidadeResponse<TokenResponse>>(url, u.toString())
+    return this.http.post<EntidadeResponse<TokenResponse>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<TokenResponse>>('autenticarUsuario')));
   }
 
