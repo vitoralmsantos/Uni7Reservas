@@ -69,7 +69,7 @@ export class CategoriaComponent implements OnInit {
         }
         else if (response.Status == 0) {
           this.categorias[this.selectedIndex].Nome = this.categoria.Nome;
-          this.categorias[this.selectedIndex].ComentarioReserva = this.categoria.ComentarioReserva;
+          this.categorias[this.selectedIndex].Comentario = this.categoria.Comentario;
           this.limpar()
         }
         else {
@@ -101,7 +101,7 @@ export class CategoriaComponent implements OnInit {
     this.selectedIndex = index
     this.categoria.Id = this.categorias[index].Id
     this.categoria.Nome = this.categorias[index].Nome
-    this.categoria.ComentarioReserva = this.categorias[index].ComentarioReserva
+    this.categoria.Comentario = this.categorias[index].Comentario
     this.titulo = "Editar categoria"
     $('#headerCategoria').addClass('bg-warning')
   }

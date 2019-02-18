@@ -43,7 +43,7 @@ export class CategoriaService {
     let u = new URLSearchParams();
     u.set('Id', categoria.Id.toString());
     u.set('Nome', categoria.Nome.toString());
-    u.set('ComentarioReserva', categoria.ComentarioReserva.toString());
+    u.set('ComentarioReserva', categoria.Comentario.toString());
 
     let url = `${this.categoriaUrl}/${categoria.Id}`;
     return this.http.put<EntidadeResponse<Categoria>>(url, u.toString(), this.httpOptions)
@@ -53,7 +53,7 @@ export class CategoriaService {
   addCategoria(categoria: Categoria): Observable<any> {
     let u = new URLSearchParams();
     u.set('Nome', categoria.Nome.toString());
-    u.set('ComentarioReserva', categoria.ComentarioReserva.toString());
+    u.set('ComentarioReserva', categoria.Comentario.toString());
 
     return this.http.post<EntidadeResponse<Categoria>>(this.categoriaUrl, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Categoria>>('addCategoria')));

@@ -109,7 +109,7 @@ export class LocalComponent implements OnInit {
           this.locais[this.selectedIndex].TipoLocal = Local.tipoLocal(this.local.Tipo)
           this.locais[this.selectedIndex].TipoDisponivel = Local.tipoDisponivel(this.local.Disponivel)
           this.locais[this.selectedIndex].TipoReservavel = Local.tipoReservavel(this.local.Reservavel)
-          this.locais[this.selectedIndex].ComentarioReserva = this.local.ComentarioReserva
+          this.locais[this.selectedIndex].Comentario = this.local.Comentario
           this.limpar()
         }
         else {
@@ -145,7 +145,7 @@ export class LocalComponent implements OnInit {
     this.local.Disponivel = this.locais[index].Disponivel
     this.local.Tipo = this.locais[index].Tipo
     this.local.TipoLocal = this.locais[index].TipoLocal
-    this.local.ComentarioReserva = this.locais[index].ComentarioReserva
+    this.local.Comentario = this.locais[index].Comentario
     this.titulo = 'Editar local'
     $('#headerLocal').addClass('bg-warning')
 
@@ -194,7 +194,7 @@ export class LocalComponent implements OnInit {
         }
         else if (response.Status == 0) {
           this.naorestricoes = []
-          this.naorestricoes.push({ Id: 0, Nome: '--Escolha um equipamento--', ComentarioReserva: '' })
+          this.naorestricoes.push({ Id: 0, Nome: '--Escolha um equipamento--', Comentario: '' })
           this.naorestricoes = response.Elementos
           this.naorestricaoId = 0
         }

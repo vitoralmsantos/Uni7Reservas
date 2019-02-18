@@ -67,7 +67,7 @@ export class RelatorioReservasComponent implements OnInit {
             this.locaisFiltro = []
             this.locaisFiltro.push({
               Id: 0, Nome: '', Reservavel: false, Disponivel: false,
-              Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '', ComentarioReserva: ''
+              Tipo: TIPOLOCAL.SALA, TipoLocal: '', TipoReservavel: '', TipoDisponivel: '', Comentario: ''
             })
             this.locaisFiltro.push.apply(this.locaisFiltro, response.Elementos)
           }
@@ -87,7 +87,7 @@ export class RelatorioReservasComponent implements OnInit {
           }
           else if (response.Status == 0) {
             this.categoriasFiltro = []
-            this.categoriasFiltro.push({ Id: 0, Nome: '', ComentarioReserva: '' })
+            this.categoriasFiltro.push({ Id: 0, Nome: '', Comentario: '' })
             this.categoriasFiltro.push.apply(this.categoriasFiltro, response.Elementos)
           }
           else {
