@@ -7,6 +7,7 @@ import { LocalService } from '../services/local.service';
 import { CategoriaService } from '../services/categoria.service';
 import { ReservaService } from '../services/reserva.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
@@ -61,9 +62,13 @@ export class ReservaComponent implements OnInit {
   satisfacao: number
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
-    private reservaService: ReservaService, private authService: AuthService) { }
+    private reservaService: ReservaService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.retrieveUserId() == '0') {
+      this.router.navigateByUrl('/');
+    }
+
     this.titulo = 'Cadastrar Novo'
     this.spinnerIniciaReservas = false
     this.spinnerReservas = false
@@ -237,6 +242,7 @@ export class ReservaComponent implements OnInit {
           })
           this.reservasExibidas = []
           this.reservas.forEach(r => this.reservasExibidas.push(r))
+          this.filtrar()
         }
         else {
           this.mostraErro(response.Detalhes)
@@ -257,7 +263,7 @@ export class ReservaComponent implements OnInit {
           this.mostraErro('Não foi possível realizar a reserva solicitada. Verifique conexão com Internet.')
         }
         else if (response.Status == 0) {
-          this.getReservas();
+          this.getReservas()
           this.limparTotal()
         }
         else {

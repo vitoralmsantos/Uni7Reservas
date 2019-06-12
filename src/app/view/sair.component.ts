@@ -14,8 +14,7 @@ export class SairComponent implements OnInit {
   ngOnInit() {
     this.authService.storeToken(null)
     this.authService.storeUserId(null)
-
-    this.router.navigate([''], { relativeTo: this.route });
+    this.router.navigateByUrl('/');
   }
 
 }

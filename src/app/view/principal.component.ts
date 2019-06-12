@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'uni7res-principal',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.retrieveUserId() == '0') {
+      this.router.navigateByUrl('/');
+    }
   }
 
 }

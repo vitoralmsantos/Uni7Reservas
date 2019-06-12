@@ -11,7 +11,10 @@ export class AuthService {
     }
 
     public storeUserId(id: number) {
-        localStorage.setItem(this.userId, id.toString());
+        if (id == null)
+            localStorage.setItem(this.userId, '0');
+        else
+            localStorage.setItem(this.userId, id.toString());
     }
 
     public retrieveToken() {

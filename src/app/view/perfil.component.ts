@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../services/usuario.service';
 import { Usuario } from '../model/usuario.model';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+
 declare var jquery:any;
 declare var $ :any;
 
