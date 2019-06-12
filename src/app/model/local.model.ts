@@ -7,7 +7,7 @@ export class Local {
     TipoLocal: String;
     TipoReservavel: String;
     TipoDisponivel: String;
-    ComentarioReserva: String;
+    Comentario: String;
 
     public static tipoDisponivel(tipo: boolean): String {
         let resultado = ''

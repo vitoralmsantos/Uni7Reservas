@@ -57,7 +57,7 @@
               <tr *ngFor="let categoria of categorias; let i = index">
                 <th scope="row">{{categoria.Id}}</th>
                 <td>{{categoria.Nome}}</td>
-                <td>{{categoria.ComentarioReserva}}</td>
+                <td>{{categoria.Comentario}}</td>
                 <td>
                   <div style="margin-bottom:-8px;margin-top:-8px" class="float-right">
                     <button type="button" (click)="carregar(i)" class="btn btn-link"><i class="fas fa-edit"></i></button>

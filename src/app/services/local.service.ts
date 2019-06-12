@@ -60,7 +60,10 @@ export class LocalService {
     u.set('Reservavel', local.Reservavel.toString());
     u.set('Disponivel', local.Disponivel.toString());
     u.set('Tipo', local.Tipo.toString());
-    u.set('ComentarioReserva', local.ComentarioReserva.toString());
+    if (local.Comentario === undefined || local.Comentario == null) {
+      local.Comentario = ''
+    }
+    u.set('ComentarioReserva', local.Comentario.toString());
 
     let url = `${this.localUrl}/${local.Id}`;
     return this.http.put<EntidadeResponse<Local>>(url, u.toString(), this.httpOptions)
@@ -73,7 +76,10 @@ export class LocalService {
     u.set('Reservavel', local.Reservavel.toString());
     u.set('Disponivel', local.Disponivel.toString());
     u.set('Tipo', local.Tipo.toString());
-    u.set('ComentarioReserva', local.ComentarioReserva.toString());
+    if (local.Comentario === undefined || local.Comentario == null) {
+      local.Comentario = ''
+    }
+    u.set('ComentarioReserva', local.Comentario.toString());
 
     return this.http.post<EntidadeResponse<Local>>(this.localUrl, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>('addLocal')));
