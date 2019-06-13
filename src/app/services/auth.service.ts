@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Usuario } from '../model/usuario.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
     public tokenKey: string = 'app_token';
     public userId: string = 'user_id';
+    public objUsuario: string = 'objUsuario';
 
     public storeToken(content: Object) {
         localStorage.setItem(this.tokenKey, JSON.stringify(content));
@@ -15,6 +17,10 @@ export class AuthService {
             localStorage.setItem(this.userId, '0');
         else
             localStorage.setItem(this.userId, id.toString());
+    }
+
+    public storeUsuario(usuario: Usuario) {
+        localStorage.setItem(this.objUsuario, JSON.stringify(usuario));
     }
 
     public retrieveToken() {
@@ -31,5 +37,10 @@ export class AuthService {
             return "0";
         else
             return storedUserId;
+    }
+
+    public retrieveUsuario() : Usuario {
+        let usuario: Usuario = JSON.parse(localStorage.getItem(this.objUsuario))
+        return usuario;
     }
 }

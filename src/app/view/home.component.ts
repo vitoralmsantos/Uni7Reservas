@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
         else if (response.Status == 0) {
           this.authService.storeToken(response.Token)
           this.authService.storeUserId(response.UserID)
+          this.authService.storeUsuario(response.Usuario)
           this.router.navigate(['/principal'], { relativeTo: this.route });
         }
         else {
