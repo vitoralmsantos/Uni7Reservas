@@ -30,17 +30,11 @@ export class PerfilComponent implements OnInit {
       this.router.navigateByUrl('/');
     }
 
-    this.usuario = new Usuario()
+    this.usuario = this.authService.retrieveUsuario()
     this.senhaAtual = ''
     this.novaSenha = ''
     this.confNovaSenha = ''
-    if (Number.parseInt(this.authService.retrieveUserId()) != 0) {
-      this.usuario.Id = Number.parseInt(this.authService.retrieveUserId())
-    }
-    else {
-      //Usuário não autenticado
-      this.usuario.Id = 1
-    }
+    
     this.getUsuario()
   }
 

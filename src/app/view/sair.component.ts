@@ -14,6 +14,7 @@ export class SairComponent implements OnInit {
   ngOnInit() {
     this.authService.storeToken(null)
     this.authService.storeUserId(null)
+    this.authService.storeUsuario(null)
     this.router.navigateByUrl('/');
   }
 

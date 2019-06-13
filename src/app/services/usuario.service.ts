@@ -49,8 +49,8 @@ export class UsuarioService {
     u.set('Nome', usuario.Nome.toString());
     u.set('Email', usuario.Email.toString());
 
-    let url = `${this.usuarioUrl}/atualizardados/${usuario.Id}`;
-    return this.http.put<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
+    let url = `${this.usuarioUrl}/atualizardados`;
+    return this.http.post<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('updateMeuDados')));
   }
 
@@ -59,8 +59,8 @@ export class UsuarioService {
     u.set('Id', id.toString());
     u.set('Senha', senha.toString());
 
-    let url = `${this.usuarioUrl}/alterarsenha/${id}`;
-    return this.http.put<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
+    let url = `${this.usuarioUrl}/alterarsenha`;
+    return this.http.post<EntidadeResponse<Usuario>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Usuario>>('updateSenha')));
   }
 
