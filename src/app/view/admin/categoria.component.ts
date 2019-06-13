@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Categoria } from '../../model/categoria.model';
 import { CategoriaService } from '../../services/categoria.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/model/usuario.model';
 declare var jquery:any;
 declare var $ :any;
 
@@ -16,9 +19,15 @@ export class CategoriaComponent implements OnInit {
   selectedIndex: number;
   titulo: String;
 
-  constructor(private categoriaService: CategoriaService) { }
+  constructor(private categoriaService: CategoriaService, private authService: AuthService, 
+    private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.retrieveUserId() == '0' 
+    || !Usuario.permissao(this.authService.retrieveUsuario().Tipo, '/principal/admin/categoria')) {
+      this.router.navigateByUrl('/');
+    }
+
     this.getCategorias();
     this.limpar();
   }

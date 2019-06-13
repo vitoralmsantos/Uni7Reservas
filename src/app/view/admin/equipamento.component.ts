@@ -3,6 +3,9 @@ import { EquipamentoService } from '../../services/equipamento.service';
 import { Equipamento } from '../../model/equipamento.model';
 import { Categoria } from '../../model/categoria.model';
 import { CategoriaService } from '../../services/categoria.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/model/usuario.model';
 declare var jquery:any;
 declare var $ :any;
 
@@ -19,9 +22,16 @@ export class EquipamentoComponent implements OnInit {
   categorias: Categoria[];
   titulo: string;
 
-  constructor(private equipamentoService: EquipamentoService, private categoriaService: CategoriaService) { }
+  constructor(private equipamentoService: EquipamentoService, 
+    private categoriaService: CategoriaService, private authService: AuthService, 
+    private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.retrieveUserId() == '0' 
+    || !Usuario.permissao(this.authService.retrieveUsuario().Tipo, '/principal/admin/equipamento')) {
+      this.router.navigateByUrl('/');
+    }
+
     this.limpar();
     this.getCategoria();
   }

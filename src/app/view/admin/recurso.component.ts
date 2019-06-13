@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Recurso } from '../../model/recurso.model';
 import { RecursoService } from '../../services/recurso.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/model/usuario.model';
 declare var jquery:any;
 declare var $ :any;
 
@@ -19,9 +22,14 @@ export class RecursoComponent implements OnInit {
   selectedIndex: number;
   titulo: string;
 
-  constructor(private recursoService: RecursoService) { }
+  constructor(private recursoService: RecursoService, private authService: AuthService, 
+    private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.retrieveUserId() == '0' 
+    || !Usuario.permissao(this.authService.retrieveUsuario().Tipo, '/principal/admin/recurso')) {
+      this.router.navigateByUrl('/');
+    }
     this.getRecursos();
     this.limpar();
   }

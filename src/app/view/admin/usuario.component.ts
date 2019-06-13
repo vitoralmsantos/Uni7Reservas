@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../model/usuario.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 declare var jquery:any;
 declare var $ :any;
 
@@ -16,9 +18,15 @@ export class UsuarioComponent implements OnInit {
   selectedIndex: number
   titulo: string
 
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(private usuarioService: UsuarioService, private authService: AuthService, 
+    private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.retrieveUserId() == '0' 
+    || !Usuario.permissao(this.authService.retrieveUsuario().Tipo, '/principal/admin/usuario')) {
+      this.router.navigateByUrl('/');
+    }
+
     this.getUsuarios()
     this.limpar()
   }

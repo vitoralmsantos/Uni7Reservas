@@ -26,6 +26,18 @@ export class Usuario {
 
         return resultado
     }
+
+    public static permissao(tipo: TIPOUSUARIO, path: string): boolean {
+        return (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/relatorios/avaliacao' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/admin/usuario' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/admin/categoria' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/admin/equipamento' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/admin/local' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/admin/recurso' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.BOLSISTA)
+            || (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.SECRETARIO)
+    }
 }
 
 enum TIPOUSUARIO {

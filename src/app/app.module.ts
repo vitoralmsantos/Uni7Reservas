@@ -20,7 +20,6 @@ import { AdminComponent } from './view/admin/admin.component';
 import { RelatorioReservasComponent } from './view/relatorios/relatorio-reservas.component';
 import { RelatorioAvaliacaoComponent } from './view/relatorios/relatorio-avaliacao.component';
 import { RelatoriosComponent } from './view/relatorios/relatorios.component';
-import { AvaliacaoComponent } from './view/admin/avaliacao.component';
 import { CategoriaComponent } from './view/admin/categoria.component';
 import { RecursoComponent } from './view/admin/recurso.component';
 import { ChamadoComponent } from './view/admin/chamado.component';
@@ -45,7 +44,6 @@ const appRoutes: Routes = [
             {path : 'usuario', component: UsuarioComponent},
             {path : 'local', component: LocalComponent},
             {path : 'equipamento', component: EquipamentoComponent},
-            {path: 'avaliacao', component: AvaliacaoComponent},
             {path: 'categoria', component: CategoriaComponent},
             {path: 'recurso', component: RecursoComponent},
             {path: 'chamado', component: ChamadoComponent}
@@ -69,7 +67,6 @@ const appRoutes: Routes = [
     RelatorioReservasComponent,
     RelatorioAvaliacaoComponent,
     RelatoriosComponent,
-    AvaliacaoComponent,
     CategoriaComponent,
     RecursoComponent,
     ChamadoComponent,

@@ -22,9 +22,14 @@ export class PerfilComponent implements OnInit {
   msgDetalhe: string
   erroDetalhe: string
 
-  constructor(private usuarioService: UsuarioService, private authService: AuthService) { }
+  constructor(private usuarioService: UsuarioService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+
+    if (this.authService.retrieveUserId() == '0')  {
+      this.router.navigateByUrl('/');
+    }
+
     this.usuario = new Usuario()
     this.senhaAtual = ''
     this.novaSenha = ''

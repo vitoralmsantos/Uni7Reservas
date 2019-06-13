@@ -3,6 +3,7 @@ import { Reserva } from '../model/reserva.model';
 import { ReservaRegistro } from '../model/reservaregistro.model';
 import { Local, TIPOLOCAL } from '../model/local.model';
 import { Categoria } from '../model/categoria.model';
+import { Usuario } from '../model/usuario.model';
 import { LocalService } from '../services/local.service';
 import { CategoriaService } from '../services/categoria.service';
 import { ReservaService } from '../services/reserva.service';
@@ -65,7 +66,7 @@ export class ReservaComponent implements OnInit {
     private reservaService: ReservaService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    if (this.authService.retrieveUserId() == '0') {
+    if (this.authService.retrieveUserId() == '0' ) {
       this.router.navigateByUrl('/');
     }
 

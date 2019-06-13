@@ -10,6 +10,8 @@ import { AuthService } from '../../services/auth.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/model/usuario.model';
 declare var jquery: any;
 declare var $: any;
 
@@ -35,9 +37,14 @@ export class RelatorioReservasComponent implements OnInit {
   tipo: number
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
-    private reservaService: ReservaService, private authService: AuthService) { }
+    private reservaService: ReservaService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if (this.authService.retrieveUserId() == '0' 
+    || !Usuario.permissao(this.authService.retrieveUsuario().Tipo, '/principal/relatorios/reservas')) {
+      this.router.navigateByUrl('/');
+    }
+
     this.locaisFiltro = []
     this.categoriasFiltro = []
     this.getLocais()
