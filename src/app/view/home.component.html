@@ -1,14 +1,14 @@
 <div class="bodybackground">
     <div class="container" style="margin-top:80px">
         <div class="row">
-            <div class="col-lg-8">
-                <div class="text-center">
-                    <img class="img-fluid" style="max-width: 320px" src="../../assets/uni7_logo.png">
-                </div>
+            <div class="col-lg-12 text-center">
+                <img class="img-fluid" style="max-width: 240px" src="../../assets/uni7_logo.png">
             </div>
-
-            <!-- Login -->
-            <div class="col-lg-4 card" style="background-color: rgba(255, 255, 255, 0.8)">
+        </div>
+        <!-- Login -->
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4" style="background-color:#E8EEE8; margin-top: 40px">
                 <div class="card-body">
                     <div class="form-row align-items-center" style="margin-bottom: 8px">
                         <label class="sr-only" for="inlineFormInputGroupEmail">E-mail</label>
@@ -27,8 +27,8 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fas fa-key fa-fw"></i></div>
                             </div>
-                            <input type="password" [(ngModel)]="senha" class="form-control" id="inlineFormInputGroupSenha"
-                                placeholder="Senha">
+                            <input type="password" [(ngModel)]="senha" class="form-control"
+                                id="inlineFormInputGroupSenha" placeholder="Senha">
                         </div>
                     </div>
 
@@ -36,7 +36,8 @@
                         <button id="btAutenticar" (click)="login()" class="btn btn-success btn-block">Entrar</button>
                     </div>
 
-                    <div style="width: 100%"><a class="btn btn-link" data-toggle="modal" href="#modalEsqueci" style="width: auto">>>Esqueci
+                    <div style="width: 100%"><a class="btn btn-link" data-toggle="modal" href="#modalEsqueci"
+                            style="width: auto">>>Esqueci
                             a senha</a></div>
                     <hr />
                     <a class="btn btn-light" data-toggle="modal" href="#modalCadastro" style="width: 100%">Desejo
@@ -45,10 +46,10 @@
                     </a>
                 </div>
             </div>
+            <div class="col-lg-4"></div>
         </div>
     </div>
 </div>
-
 <!-- Modal Erro -->
 <div class="modal" tabindex="-1" role="dialog" id="modalErro">
     <div class="modal-dialog" role="document">
@@ -135,7 +136,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <hr />
-                        <button id="btCadastrar" Text="Cadastrar" OnClick="btCadastrar_Click" class="btn btn-success pull-right"></button>
+                        <button id="btCadastrar" Text="Cadastrar" OnClick="btCadastrar_Click"
+                            class="btn btn-success pull-right"></button>
                     </div>
                 </div>
             </div>
@@ -160,7 +162,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <hr />
-                        <input id="Button2" Text="Enviar" OnClick="btEsqueci_Click" class="btn btn-success pull-right" />
+                        <input id="Button2" Text="Enviar" OnClick="btEsqueci_Click"
+                            class="btn btn-success pull-right" />
                     </div>
                 </div>
             </div>
@@ -198,8 +201,8 @@
                                         style="width:100%" />
                                 </div>
                                 <div class="form-group-lg">
-                                    <input type="text" id="tbTelefoneContato" class="form-control" placeholder="seu telefone"
-                                        style="width:100%" />
+                                    <input type="text" id="tbTelefoneContato" class="form-control"
+                                        placeholder="seu telefone" style="width:100%" />
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -215,7 +218,8 @@
                             <div class="col-lg-2">
                                 <br />
                                 <div class="form-group-lg" style="margin-bottom: 8px">
-                                    <button id="btContato" OnClick="btContato_Click" class="btn btn-success btn-block">Enviar</button>
+                                    <button id="btContato" OnClick="btContato_Click"
+                                        class="btn btn-success btn-block">Enviar</button>
                                 </div>
                             </div>
                             <div class="col-lg-5">
