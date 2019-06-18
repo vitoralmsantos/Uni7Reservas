@@ -12,7 +12,7 @@ export class Usuario {
             resultado = "Administrador(a)"
         }
         else if (tipo == 1){
-            resultado = "Secretário(a)"
+            resultado = "Apoio administrativo"
         }
         else if (tipo == 2){
             resultado = "Coordenador(a)"
@@ -25,7 +25,8 @@ export class Usuario {
     }
 
     public static permissao(tipo: TIPOUSUARIO, path: string): boolean {
-        return (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.ADMIN)
+        return (path === '/principal/reservaadmin' && tipo === TIPOUSUARIO.ADMIN)
+            || (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.ADMIN)
             || (path === '/principal/relatorios/avaliacao' && tipo === TIPOUSUARIO.ADMIN)
             || (path === '/principal/admin/usuario' && tipo === TIPOUSUARIO.ADMIN)
             || (path === '/principal/admin/categoria' && tipo === TIPOUSUARIO.ADMIN)
@@ -36,7 +37,7 @@ export class Usuario {
     }
 }
 
-enum TIPOUSUARIO {
+export enum TIPOUSUARIO {
     ADMIN = 0,
     SUPORTE = 1,
     COORDENADOR = 2,

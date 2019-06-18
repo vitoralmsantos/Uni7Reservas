@@ -12,6 +12,7 @@ import { RootComponent } from './view/root.component';
 import { HomeComponent } from './view/home.component';
 import { PrincipalComponent } from './view/principal.component';
 import { ReservaComponent } from './view/reserva.component';
+import { ReservaAdminComponent } from './view/reservaadmin.component';
 import { PerfilComponent } from './view/perfil.component';
 import { UsuarioComponent } from './view/admin/usuario.component';
 import { LocalComponent } from './view/admin/local.component';
@@ -29,9 +30,9 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'principal', component: PrincipalComponent,
       children:[
-        {path : '', component: ReservaComponent},
         {path : 'sair', component: SairComponent},
         {path : 'reserva', component: ReservaComponent},
+        {path : 'reservaadmin', component: ReservaAdminComponent},
         {path : 'perfil', component: PerfilComponent},
         {path : 'relatorios', component: RelatoriosComponent,
           children:[
@@ -58,6 +59,7 @@ const appRoutes: Routes = [
     PrincipalComponent,
     HomeComponent,
     RootComponent,
+    ReservaAdminComponent,
     ReservaComponent,
     PerfilComponent,
     UsuarioComponent,

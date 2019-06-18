@@ -16,15 +16,17 @@ declare var jquery: any;
 declare var $: any;
 
 @Component({
-  selector: 'uni7res-reserva',
-  templateUrl: './reserva.component.html',
+  selector: 'uni7res-reservaadmin',
+  templateUrl: './reservaadmin.component.html',
   styleUrls: ['./reserva.component.css']
 })
-export class ReservaComponent implements OnInit {
+export class ReservaAdminComponent implements OnInit {
   titulo: string
   reserva: ReservaRegistro
-  ngbDate: NgbDateStruct
+  ngbDateDeReserva: NgbDateStruct
+  ngbDateAteReserva: NgbDateStruct
   horario: number
+  tipoReserva: number
   somenteLabs: boolean
   localDesabilitado: boolean
   catDesabilitado: boolean
@@ -66,7 +68,9 @@ export class ReservaComponent implements OnInit {
     private reservaService: ReservaService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    if (this.authService.retrieveUserId() == '0' ) {
+
+    if (this.authService.retrieveUserId() == '0' 
+    || !Usuario.permissao(this.authService.retrieveUsuario().Tipo, '/principal/reservaadmin')) {
       this.router.navigateByUrl('/');
       return
     }
@@ -100,6 +104,8 @@ export class ReservaComponent implements OnInit {
   limparTotal(): void {
     this.limparParcial()
     this.horario = 0
+    this.tipoReserva = 1
+    this.ngbDateAteReserva = undefined
   }
 
   onChangeHorario() {
@@ -126,15 +132,15 @@ export class ReservaComponent implements OnInit {
   iniciarReserva(): void {
     this.limparParcial()
 
-    if (this.ngbDate === undefined || this.horario == 0) {
+    if (this.ngbDateDeReserva === undefined || this.horario == 0) {
       return;
     }
 
     this.spinnerIniciaReservas = true
-    let dia = String(100 + this.ngbDate.day).substr(1, 2);
-    let mes = String(100 + this.ngbDate.month).substr(1, 2);
+    let dia = String(100 + this.ngbDateDeReserva.day).substr(1, 2);
+    let mes = String(100 + this.ngbDateDeReserva.month).substr(1, 2);
 
-    this.reserva.Data = dia + '/' + mes + '/' + this.ngbDate.year
+    this.reserva.Data = dia + '/' + mes + '/' + this.ngbDateDeReserva.year
 
     if (this.horario == 1) {
       this.reserva.Turno = 'M';

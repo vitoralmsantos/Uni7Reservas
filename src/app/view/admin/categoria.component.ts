@@ -26,6 +26,7 @@ export class CategoriaComponent implements OnInit {
     if (this.authService.retrieveUserId() == '0' 
     || !Usuario.permissao(this.authService.retrieveUsuario().Tipo, '/principal/admin/categoria')) {
       this.router.navigateByUrl('/');
+      return
     }
 
     this.getCategorias();
