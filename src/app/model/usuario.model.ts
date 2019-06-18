@@ -20,9 +20,6 @@ export class Usuario {
         else if (tipo == 3){
             resultado = "Professor(a)"
         }
-        else if (tipo == 4){
-            resultado = "Bolsista"
-        }
 
         return resultado
     }
@@ -35,15 +32,13 @@ export class Usuario {
             || (path === '/principal/admin/equipamento' && tipo === TIPOUSUARIO.ADMIN)
             || (path === '/principal/admin/local' && tipo === TIPOUSUARIO.ADMIN)
             || (path === '/principal/admin/recurso' && tipo === TIPOUSUARIO.ADMIN)
-            || (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.BOLSISTA)
-            || (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.SECRETARIO)
+            || (path === '/principal/relatorios/reservas' && tipo === TIPOUSUARIO.SUPORTE)
     }
 }
 
 enum TIPOUSUARIO {
     ADMIN = 0,
-    SECRETARIO = 1,
+    SUPORTE = 1,
     COORDENADOR = 2,
-    PROFESSOR = 3,
-    BOLSISTA = 4
+    PROFESSOR = 3
 }
