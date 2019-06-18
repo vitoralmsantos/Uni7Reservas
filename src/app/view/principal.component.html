@@ -14,14 +14,16 @@
         <a class="nav-link" routerLink="/principal/perfil">Perfil</a>
       </li>
 
-      <li class="nav-item dropdown" *ngIf="this.usuario.Tipo == 0">
+      <li class="nav-item dropdown" *ngIf="this.usuario.Tipo == 0  || this.usuario.Tipo == 1 || this.usuario.Tipo == 4">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Relatórios
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/principal/relatorios/reservas">Reservas</a>
-          <a class="dropdown-item" routerLink="/principal/relatorios/avaliacao">Avaliações</a>
+          <a class="dropdown-item" routerLink="/principal/relatorios/reservas"
+            *ngIf="this.usuario.Tipo == 0  || this.usuario.Tipo == 1 || this.usuario.Tipo == 4">Reservas</a>
+          <a class="dropdown-item" routerLink="/principal/relatorios/avaliacao"
+          *ngIf="this.usuario.Tipo == 0">Avaliações</a>
         </div>
       </li>
 
