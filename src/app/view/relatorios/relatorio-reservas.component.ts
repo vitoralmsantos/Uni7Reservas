@@ -35,6 +35,7 @@ export class RelatorioReservasComponent implements OnInit {
   erroDetalhe: string
   reservas: Reserva[]
   tipo: number
+  spinnerReservas: boolean
 
   constructor(private localService: LocalService, private categoriaService: CategoriaService,
     private reservaService: ReservaService, private authService: AuthService, private router: Router) { }
@@ -50,6 +51,7 @@ export class RelatorioReservasComponent implements OnInit {
     this.getLocais()
     this.getEquipamentos()
     this.limparFiltro()
+    this.spinnerReservas = false
   }
 
   limparFiltro(): void {
@@ -105,6 +107,7 @@ export class RelatorioReservasComponent implements OnInit {
   }
 
   filtrar(): void {
+    this.spinnerReservas = true
     let dataDe = ''
     let dataAte = ''
 
@@ -230,6 +233,7 @@ export class RelatorioReservasComponent implements OnInit {
         else {
           this.mostraErro(response.Detalhes)
         }
+        this.spinnerReservas = false
       });
   }
 
