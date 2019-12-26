@@ -17,7 +17,7 @@ export class RecursoService {
       .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
-  private recursoUrl = 'http://localhost:51859/api/recurso';
+  private recursoUrl = this.authService.BASEPATH + 'recurso';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

@@ -17,7 +17,7 @@ export class EquipamentoService {
       .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
-  private equipamentoUrl = 'http://localhost:51859/api/equipamento';
+  private equipamentoUrl = this.authService.BASEPATH + 'equipamento';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

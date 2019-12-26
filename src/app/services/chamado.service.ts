@@ -17,7 +17,7 @@ export class ChamadoService {
       .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
-  private chamadoUrl = 'http://localhost:51859/api/chamado';
+  private chamadoUrl = this.authService.BASEPATH + 'chamado';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

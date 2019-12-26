@@ -19,7 +19,7 @@ export class LocalService {
       .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
-  private localUrl = 'http://localhost:51859/api/local';
+  private localUrl = this.authService.BASEPATH + 'local';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

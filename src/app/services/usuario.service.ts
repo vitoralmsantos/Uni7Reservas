@@ -18,7 +18,7 @@ export class UsuarioService {
       .set('userid', this.authService.retrieveUserId())
   };
 
-  private usuarioUrl = 'http://localhost:51859/api/usuario';
+  private usuarioUrl = this.authService.BASEPATH + 'usuario';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

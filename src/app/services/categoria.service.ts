@@ -17,7 +17,7 @@ export class CategoriaService {
       .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
-  private categoriaUrl = 'http://localhost:51859/api/categoria';
+  private categoriaUrl = this.authService.BASEPATH + 'categoria';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

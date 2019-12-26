@@ -18,7 +18,7 @@ export class ReservaService {
       .set(this.authService.userId, this.authService.retrieveUserId())
   };
 
-  private reservaUrl = 'http://localhost:51859/api/reserva';
+  private reservaUrl = this.authService.BASEPATH + 'reserva';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
