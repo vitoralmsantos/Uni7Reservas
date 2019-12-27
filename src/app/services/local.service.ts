@@ -65,8 +65,8 @@ export class LocalService {
     }
     u.set('ComentarioReserva', local.Comentario.toString());
 
-    let url = `${this.localUrl}/${local.Id}`;
-    return this.http.put<EntidadeResponse<Local>>(url, u.toString(), this.httpOptions)
+    let url = `${this.localUrl}/atualizar`;
+    return this.http.post<EntidadeResponse<Local>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>('updateLocal')));
   }
 
@@ -96,8 +96,10 @@ export class LocalService {
   }
 
   deleteLocal(id: Number): Observable<any> {
-    let url = `${this.localUrl}/${id}`;
-    return this.http.delete<EntidadeResponse<Local>>(url, this.httpOptions)
+    let url = `${this.localUrl}/remover`;
+    let u = new URLSearchParams();
+    u.set('Id', id.toString());
+    return this.http.post<EntidadeResponse<Local>>(url, u.toString(), this.httpOptions)
       .pipe(catchError(this.handleError<EntidadeResponse<Local>>('deleteLocal')));
   }
 
